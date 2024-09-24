@@ -1,9 +1,9 @@
 /***************************************************************************//**
  * @file
- * @brief Board Control
+ * @brief Simple Button Driver User Config
  *******************************************************************************
  * # License
- * <b>Copyright 2022 Silicon Laboratories Inc. www.silabs.com</b>
+ * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
  *******************************************************************************
  *
  * SPDX-License-Identifier: Zlib
@@ -28,29 +28,34 @@
  *
  ******************************************************************************/
 
-#ifndef SL_BOARD_CONTROL_CONFIG_H
-#define SL_BOARD_CONTROL_CONFIG_H
+#ifndef SL_SIMPLE_BUTTON_BTN0_CONFIG_H
+#define SL_SIMPLE_BUTTON_BTN0_CONFIG_H
+
+#include "em_gpio.h"
+#include "sl_simple_button.h"
 
 // <<< Use Configuration Wizard in Context Menu >>>
 
-// <q SL_BOARD_ENABLE_VCOM> Enable Virtual COM UART
-// <i> Default: 0
-#define SL_BOARD_ENABLE_VCOM                    1
-
+// <o SL_SIMPLE_BUTTON_BTN0_MODE>
+// <SL_SIMPLE_BUTTON_MODE_INTERRUPT=> Interrupt
+// <SL_SIMPLE_BUTTON_MODE_POLL_AND_DEBOUNCE=> Poll and Debounce
+// <SL_SIMPLE_BUTTON_MODE_POLL=> Poll
+// <i> Default: SL_SIMPLE_BUTTON_MODE_INTERRUPT
+#define SL_SIMPLE_BUTTON_BTN0_MODE       SL_SIMPLE_BUTTON_MODE_INTERRUPT
 // <<< end of configuration section >>>
 
 // <<< sl:start pin_tool >>>
 
-// <gpio> SL_BOARD_ENABLE_VCOM
-// $[GPIO_SL_BOARD_ENABLE_VCOM]
-#ifndef SL_BOARD_ENABLE_VCOM_PORT               
-#define SL_BOARD_ENABLE_VCOM_PORT                gpioPortF
+// <gpio> SL_SIMPLE_BUTTON_BTN0
+// $[GPIO_SL_SIMPLE_BUTTON_BTN0]
+#ifndef SL_SIMPLE_BUTTON_BTN0_PORT              
+#define SL_SIMPLE_BUTTON_BTN0_PORT               gpioPortB
 #endif
-#ifndef SL_BOARD_ENABLE_VCOM_PIN                
-#define SL_BOARD_ENABLE_VCOM_PIN                 7
+#ifndef SL_SIMPLE_BUTTON_BTN0_PIN               
+#define SL_SIMPLE_BUTTON_BTN0_PIN                9
 #endif
-// [GPIO_SL_BOARD_ENABLE_VCOM]$
+// [GPIO_SL_SIMPLE_BUTTON_BTN0]$
 
 // <<< sl:end pin_tool >>>
 
-#endif // SL_BOARD_CONTROL_CONFIG_H
+#endif // SL_SIMPLE_BUTTON_BTN0_CONFIG_H

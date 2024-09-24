@@ -14,14 +14,14 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-#include "blink.h"
+#include "sleeptimer_app.h"
 
 /***************************************************************************//**
  * Initialize application.
  ******************************************************************************/
 void app_init(void)
 {
-  blink_init();
+  sleeptimer_app_init();
 }
 
 /***************************************************************************//**
@@ -29,5 +29,5 @@ void app_init(void)
  ******************************************************************************/
 void app_process_action(void)
 {
-  blink_process_action();
+  sleeptimer_app_process_action();
 }

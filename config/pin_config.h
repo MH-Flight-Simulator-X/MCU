@@ -20,6 +20,17 @@
 // [DAC0]$
 
 // $[DBG]
+// DBG SWO on PF2
+#ifndef DBG_SWO_PORT                            
+#define DBG_SWO_PORT                             gpioPortF
+#endif
+#ifndef DBG_SWO_PIN                             
+#define DBG_SWO_PIN                              2
+#endif
+#ifndef DBG_ROUTE_LOC                           
+#define DBG_ROUTE_LOC                            0
+#endif
+
 // [DBG]$
 
 // $[EBI]
@@ -92,6 +103,25 @@
 // [TIMER3]$
 
 // $[UART0]
+// UART0 RX on PE1
+#ifndef UART0_RX_PORT                           
+#define UART0_RX_PORT                            gpioPortE
+#endif
+#ifndef UART0_RX_PIN                            
+#define UART0_RX_PIN                             1
+#endif
+#ifndef UART0_ROUTE_LOC                         
+#define UART0_ROUTE_LOC                          1
+#endif
+
+// UART0 TX on PE0
+#ifndef UART0_TX_PORT                           
+#define UART0_TX_PORT                            gpioPortE
+#endif
+#ifndef UART0_TX_PIN                            
+#define UART0_TX_PIN                             0
+#endif
+
 // [UART0]$
 
 // $[UART1]

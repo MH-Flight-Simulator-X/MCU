@@ -1,9 +1,9 @@
 /***************************************************************************//**
  * @file
- * @brief Board Control
+ * @brief Device initialization for clocks.
  *******************************************************************************
  * # License
- * <b>Copyright 2022 Silicon Laboratories Inc. www.silabs.com</b>
+ * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
  *******************************************************************************
  *
  * SPDX-License-Identifier: Zlib
@@ -27,30 +27,23 @@
  * 3. This notice may not be removed or altered from any source distribution.
  *
  ******************************************************************************/
+#include "sl_device_init_clocks.h"
 
-#ifndef SL_BOARD_CONTROL_CONFIG_H
-#define SL_BOARD_CONTROL_CONFIG_H
+#include "em_cmu.h"
 
-// <<< Use Configuration Wizard in Context Menu >>>
+sl_status_t sl_device_init_clocks(void)
+{
+  CMU_CLOCK_SELECT_SET(HF, HFXO);
 
-// <q SL_BOARD_ENABLE_VCOM> Enable Virtual COM UART
-// <i> Default: 0
-#define SL_BOARD_ENABLE_VCOM                    1
-
-// <<< end of configuration section >>>
-
-// <<< sl:start pin_tool >>>
-
-// <gpio> SL_BOARD_ENABLE_VCOM
-// $[GPIO_SL_BOARD_ENABLE_VCOM]
-#ifndef SL_BOARD_ENABLE_VCOM_PORT               
-#define SL_BOARD_ENABLE_VCOM_PORT                gpioPortF
+  CMU_ClockEnable(cmuClock_HFLE, true);
+  CMU_CLOCK_SELECT_SET(LFA, LFXO);
+  CMU_CLOCK_SELECT_SET(LFB, LFXO);
+#if defined(_CMU_LFCCLKSEL_MASK)
+  CMU_CLOCK_SELECT_SET(LFC, LFXO);
 #endif
-#ifndef SL_BOARD_ENABLE_VCOM_PIN                
-#define SL_BOARD_ENABLE_VCOM_PIN                 7
+#if defined(_CMU_LFECLKSEL_MASK)
+  CMU_CLOCK_SELECT_SET(LFE, LFXO);
 #endif
-// [GPIO_SL_BOARD_ENABLE_VCOM]$
 
-// <<< sl:end pin_tool >>>
-
-#endif // SL_BOARD_CONTROL_CONFIG_H
+  return SL_STATUS_OK;
+}

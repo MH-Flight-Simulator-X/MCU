@@ -1,6 +1,6 @@
 /***************************************************************************//**
  * @file
- * @brief Blink examples functions
+ * @brief Sleeptimer examples functions
  *******************************************************************************
  * # License
  * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
@@ -15,17 +15,17 @@
  *
  ******************************************************************************/
 
-#ifndef BLINK_H
-#define BLINK_H
+#ifndef SLEEPTIMER_APP_H
+#define SLEEPTIMER_APP_H
 
 /***************************************************************************//**
- * Initialize blink example
+ * Initialize example
  ******************************************************************************/
-void blink_init(void);
+void sleeptimer_app_init(void);
 
 /***************************************************************************//**
- * Blink ticking function
+ * BTicking function
  ******************************************************************************/
-void blink_process_action(void);
+void sleeptimer_app_process_action(void);
 
-#endif  // BLINK_H
+#endif  // SLEEPTIMER_APP_H

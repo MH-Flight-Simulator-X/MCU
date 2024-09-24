@@ -1,9 +1,9 @@
 /***************************************************************************//**
  * @file
- * @brief Board Control
+ * @brief Simple Button Driver Instances
  *******************************************************************************
  * # License
- * <b>Copyright 2022 Silicon Laboratories Inc. www.silabs.com</b>
+ * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
  *******************************************************************************
  *
  * SPDX-License-Identifier: Zlib
@@ -28,29 +28,20 @@
  *
  ******************************************************************************/
 
-#ifndef SL_BOARD_CONTROL_CONFIG_H
-#define SL_BOARD_CONTROL_CONFIG_H
+#ifndef SL_SIMPLE_BUTTON_INSTANCES_H
+#define SL_SIMPLE_BUTTON_INSTANCES_H
 
-// <<< Use Configuration Wizard in Context Menu >>>
+#include "sl_simple_button.h"
 
-// <q SL_BOARD_ENABLE_VCOM> Enable Virtual COM UART
-// <i> Default: 0
-#define SL_BOARD_ENABLE_VCOM                    1
+extern const sl_button_t sl_button_btn0;
+extern const sl_button_t sl_button_btn1;
 
-// <<< end of configuration section >>>
+extern const sl_button_t *sl_simple_button_array[];
 
-// <<< sl:start pin_tool >>>
+#define SL_SIMPLE_BUTTON_COUNT 2
+#define SL_SIMPLE_BUTTON_INSTANCE(n) (sl_simple_button_array[n])
 
-// <gpio> SL_BOARD_ENABLE_VCOM
-// $[GPIO_SL_BOARD_ENABLE_VCOM]
-#ifndef SL_BOARD_ENABLE_VCOM_PORT               
-#define SL_BOARD_ENABLE_VCOM_PORT                gpioPortF
-#endif
-#ifndef SL_BOARD_ENABLE_VCOM_PIN                
-#define SL_BOARD_ENABLE_VCOM_PIN                 7
-#endif
-// [GPIO_SL_BOARD_ENABLE_VCOM]$
+void sl_simple_button_init_instances(void);
+void sl_simple_button_poll_instances(void);
 
-// <<< sl:end pin_tool >>>
-
-#endif // SL_BOARD_CONTROL_CONFIG_H
+#endif // SL_SIMPLE_BUTTON_INSTANCES_H
