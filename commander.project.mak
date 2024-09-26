@@ -10,7 +10,7 @@ ifeq ($(UNAME),MINGW)
 SDK_PATH := /$(shell $(POSIX_TOOL_PATH)echo $(BASE_SDK_PATH) | sed s/://)
 endif
 SDK_PATH ?= $(BASE_SDK_PATH)
-COPIED_SDK_PATH ?= gecko_sdk_4.4.4
+COPIED_SDK_PATH ?= gecko_sdk
 
 # This uses the explicit build rules below
 PROJECT_SOURCE_FILES =
