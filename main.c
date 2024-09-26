@@ -32,6 +32,7 @@ int main(void)
   // Note that if the kernel is present, processing task(s) will be created by
   // this call.
   sl_system_init();
+  int i = 0;
 
   // Initialize the application. For example, create periodic timer(s) or
   // task(s) if the kernel is present.

@@ -6,6 +6,7 @@ sl_debug_swo_config.h=-1703642692
 sl_device_init_hfxo_config.h=-1233029975
 sl_device_init_lfxo_config.h=-1503725550
 sl_iostream_uart_vcom_config.h=109983590
+sl_memlcd_display_custom_config.h=-1688617554
 sl_memory_config.h=-995392215
 sl_power_manager_config.h=-1985446573
 sl_simple_button_btn0_config.h=1522829679

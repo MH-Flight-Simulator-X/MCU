@@ -2,3 +2,6 @@ gecko_sdk_4.4.4
 GNU\ ARM\ v12.2.1\ -\ Default
 .DS_Store
 build/
+gecko_sdk/
+.uceditor
+.projectlinkstore

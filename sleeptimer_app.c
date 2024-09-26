@@ -1,19 +1,19 @@
-/***************************************************************************//**
- * @file
- * @brief Sleeptimer examples functions
- *******************************************************************************
- * # License
- * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * @file
+                                                                               * @brief Sleeptimer examples functions
+                                                                               *******************************************************************************
+                                                                               * # License
+                                                                               * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
+                                                                               *******************************************************************************
+                                                                               *
+                                                                               * The licensor of this software is Silicon Laboratories Inc. Your use of this
+                                                                               * software is governed by the terms of Silicon Labs Master Software License
+                                                                               * Agreement (MSLA) available at
+                                                                               * www.silabs.com/about-us/legal/master-software-license-agreement. This
+                                                                               * software is distributed to you in Source Code format and is governed by the
+                                                                               * sections of the MSLA applicable to Source Code.
+                                                                               *
+                                                                               ******************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -28,19 +28,19 @@
  ******************************************************************************/
 
 #ifndef BUTTON_INSTANCE_0
-#define BUTTON_INSTANCE_0   sl_button_btn0
+#define BUTTON_INSTANCE_0 sl_button_btn0
 #endif
 
 #ifndef BUTTON_INSTANCE_1
-#define BUTTON_INSTANCE_1   sl_button_btn1
+#define BUTTON_INSTANCE_1 sl_button_btn1
 #endif
 
 #ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0      sl_led_led0
+#define LED_INSTANCE_0 sl_led_led0
 #endif
 
 #ifndef LED_INSTANCE_1
-#define LED_INSTANCE_1      sl_led_led1
+#define LED_INSTANCE_1 sl_led_led1
 #endif
 
 #define TIMEOUT_MS 10000
@@ -92,9 +92,9 @@ static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle,
  **************************   GLOBAL FUNCTIONS   *******************************
  ******************************************************************************/
 
-/***************************************************************************//**
- * Initialize example.
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * Initialize example.
+                                                                               ******************************************************************************/
 void sleeptimer_app_init(void)
 {
   /* Output on vcom usart instance */
@@ -104,96 +104,117 @@ void sleeptimer_app_init(void)
   printf("Use buttons to start and restart timers\r\n");
 
   // Create timer for waking up the system periodically.
-  sl_sleeptimer_start_periodic_timer_ms(&periodic_timer,
-                                        TIMEOUT_MS,
-                                        on_periodic_timeout, NULL,
-                                        0,
-                                        SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+  // sl_sleeptimer_start_periodic_timer_ms(&periodic_timer,
+  //                                       TIMEOUT_MS,
+  //                                       on_periodic_timeout, NULL,
+  //                                       0,
+  //                                       SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 
-  // Create one-shot timer for waking up the system.
-  sl_sleeptimer_start_timer_ms(&one_shot_timer,
-                               TIMEOUT_MS,
-                               on_one_shot_timeout, NULL,
-                               0,
-                               SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+  // // Create one-shot timer for waking up the system.
+  // sl_sleeptimer_start_timer_ms(&one_shot_timer,
+  //                              TIMEOUT_MS,
+  //                              on_one_shot_timeout, NULL,
+  //                              0,
+  //                              SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 
-  // Create periodic timer to report status of other timers
-  sl_sleeptimer_start_periodic_timer_ms(&status_timer,
-                                        1000,
-                                        on_status_timeout, NULL,
-                                        0,
-                                        SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+  // // Create periodic timer to report status of other timers
+  // sl_sleeptimer_start_periodic_timer_ms(&status_timer,
+  //                                       1000,
+  //                                       on_status_timeout, NULL,
+  //                                       0,
+  //                                       SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
-/***************************************************************************//**
- * Ticking function.
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * Ticking function.
+                                                                               ******************************************************************************/
 void sleeptimer_app_process_action(void)
 {
   uint32_t remaining;
 
   // Periodically report the status of the other timers
-  if (print_status == true) {
+  if (print_status == true)
+  {
     print_status = false;
-    if (0 == sl_sleeptimer_get_timer_time_remaining(&one_shot_timer, &remaining) ) {
+    if (0 == sl_sleeptimer_get_timer_time_remaining(&one_shot_timer, &remaining))
+    {
       printf("One shot timer has %lu ms remaining\r\n", sl_sleeptimer_tick_to_ms(remaining));
     }
-    if (0 == sl_sleeptimer_get_timer_time_remaining(&periodic_timer, &remaining) ) {
+    if (0 == sl_sleeptimer_get_timer_time_remaining(&periodic_timer, &remaining))
+    {
       printf("Periodic timer has %lu ms remaining\r\n", sl_sleeptimer_tick_to_ms(remaining));
     }
   }
-  if (on_periodic_callback_print_status == true) {
+  if (on_periodic_callback_print_status == true)
+  {
     on_periodic_callback_print_status = false;
     printf("Led 0 toggles as Periodic timer expired\r\n");
   }
-  if (on_one_shot_expire_print_status == true) {
+  if (on_one_shot_expire_print_status == true)
+  {
     on_one_shot_expire_print_status = false;
     printf("Led 1 toggles as One-shot timer expired\r\n");
   }
 }
 
-/***************************************************************************//**
- * Function called on button change
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * Function called on button change
+                                                                               ******************************************************************************/
 void sl_button_on_change(const sl_button_t *handle)
 {
   bool is_running = false;
-  if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED) {
+  if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
+  {
     // Button 1 controls the one-shot timer
-    if (&BUTTON_INSTANCE_1 == handle) {
-      if (sl_sleeptimer_is_timer_running(&one_shot_timer, &is_running) == 0) {
-        if (is_running) {
-          // If timer is running, stop it
-          printf("Oneshot timer is stopped by Button 1\r\n");
-          sl_sleeptimer_stop_timer(&one_shot_timer);
-        } else {
-          // If timer is stopped, restart it
-          printf("Oneshot timer is restarted by Button 1\r\n");
-          sl_sleeptimer_restart_timer_ms(&one_shot_timer,
-                                         TIMEOUT_MS,
-                                         on_one_shot_timeout, NULL,
-                                         0,
-                                         SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-        }
-      }
+    if (&BUTTON_INSTANCE_1 == handle)
+    {
+      sl_led_toggle(&LED_INSTANCE_1);
+
+      // if (sl_sleeptimer_is_timer_running(&one_shot_timer, &is_running) == 0)
+      // {
+      //   if (is_running)
+      //   {
+      //     // sl_status_t display_status = sl_board_enable_display();
+      //     // If timer is running, stop it
+      //     printf("Oneshot timer is stopped by Button 1\r\n");
+      //     sl_sleeptimer_stop_timer(&one_shot_timer);
+      //   }
+      //   else
+      //   {
+      //     // If timer is stopped, restart it
+      //     printf("Oneshot timer is restarted by Button 1\r\n");
+      //     sl_sleeptimer_restart_timer_ms(&one_shot_timer,
+      //                                    TIMEOUT_MS,
+      //                                    on_one_shot_timeout, NULL,
+      //                                    0,
+      //                                    SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+      //   }
+      // }
     }
-    if (&BUTTON_INSTANCE_0 == handle) {
-      // Button 0 controls the periodic timer
-      if (sl_sleeptimer_is_timer_running(&periodic_timer, &is_running) == 0) {
-        if (is_running) {
-          // If timer is running, stop it
-          printf("Periodic timer is stopped by Button 0\r\n");
-          sl_sleeptimer_stop_timer(&periodic_timer);
-        } else {
-          // If timer is stopped, restart it
-          printf("Periodic timer is restarted by Button 0\r\n");
-          sl_sleeptimer_restart_periodic_timer_ms(&periodic_timer,
-                                                  TIMEOUT_MS,
-                                                  on_periodic_timeout, NULL,
-                                                  0,
-                                                  SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-        }
-      }
+    if (&BUTTON_INSTANCE_0 == handle)
+    {
+      sl_led_toggle(&LED_INSTANCE_0);
+
+      // // Button 0 controls the periodic timer
+      // if (sl_sleeptimer_is_timer_running(&periodic_timer, &is_running) == 0)
+      // {
+      //   if (is_running)
+      //   {
+      //     // If timer is running, stop it
+      //     printf("Periodic timer is stopped by Button 0\r\n");
+      //     sl_sleeptimer_stop_timer(&periodic_timer);
+      //   }
+      //   else
+      //   {
+      //     // If timer is stopped, restart it
+      //     printf("Periodic timer is restarted by Button 0\r\n");
+      //     sl_sleeptimer_restart_periodic_timer_ms(&periodic_timer,
+      //                                             TIMEOUT_MS,
+      //                                             on_periodic_timeout, NULL,
+      //                                             0,
+      //                                             SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+      //   }
+      // }
     }
   }
 }
