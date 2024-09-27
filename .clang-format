@@ -1,0 +1,5 @@
+AlignConsecutiveDeclarations: true
+AlignAfterOpenBracket: Align
+BreakBeforeBraces: Allman
+ColumnLimit: 120
+AlignEscapedNewlinesLeft: true
