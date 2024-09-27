@@ -1,19 +1,19 @@
-/***************************************************************************/ /**
-                                                                               * @file
-                                                                               * @brief Sleeptimer examples functions
-                                                                               *******************************************************************************
-                                                                               * # License
-                                                                               * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
-                                                                               *******************************************************************************
-                                                                               *
-                                                                               * The licensor of this software is Silicon Laboratories Inc. Your use of this
-                                                                               * software is governed by the terms of Silicon Labs Master Software License
-                                                                               * Agreement (MSLA) available at
-                                                                               * www.silabs.com/about-us/legal/master-software-license-agreement. This
-                                                                               * software is distributed to you in Source Code format and is governed by the
-                                                                               * sections of the MSLA applicable to Source Code.
-                                                                               *
-                                                                               ******************************************************************************/
+/***************************************************************************//**
+ * @file
+ * @brief Sleeptimer examples functions
+ *******************************************************************************
+ * # License
+ * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
+ *******************************************************************************
+ *
+ * The licensor of this software is Silicon Laboratories Inc. Your use of this
+ * software is governed by the terms of Silicon Labs Master Software License
+ * Agreement (MSLA) available at
+ * www.silabs.com/about-us/legal/master-software-license-agreement. This
+ * software is distributed to you in Source Code format and is governed by the
+ * sections of the MSLA applicable to Source Code.
+ *
+ ******************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -92,9 +92,9 @@ static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle,
  **************************   GLOBAL FUNCTIONS   *******************************
  ******************************************************************************/
 
-/***************************************************************************/ /**
-                                                                               * Initialize example.
-                                                                               ******************************************************************************/
+/***************************************************************************//**
+ * Initialize example.
+ ******************************************************************************/
 void sleeptimer_app_init(void)
 {
   /* Output on vcom usart instance */
@@ -125,9 +125,9 @@ void sleeptimer_app_init(void)
   //                                       SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
-/***************************************************************************/ /**
-                                                                               * Ticking function.
-                                                                               ******************************************************************************/
+/***************************************************************************//**
+ * Ticking function.
+ ******************************************************************************/
 void sleeptimer_app_process_action(void)
 {
   uint32_t remaining;
@@ -157,9 +157,9 @@ void sleeptimer_app_process_action(void)
   }
 }
 
-/***************************************************************************/ /**
-                                                                               * Function called on button change
-                                                                               ******************************************************************************/
+/***************************************************************************//**
+ * Function called on button change
+ ******************************************************************************/
 void sl_button_on_change(const sl_button_t *handle)
 {
   bool is_running = false;
@@ -170,51 +170,12 @@ void sl_button_on_change(const sl_button_t *handle)
     {
       sl_led_toggle(&LED_INSTANCE_1);
 
-      // if (sl_sleeptimer_is_timer_running(&one_shot_timer, &is_running) == 0)
-      // {
-      //   if (is_running)
-      //   {
-      //     // sl_status_t display_status = sl_board_enable_display();
-      //     // If timer is running, stop it
-      //     printf("Oneshot timer is stopped by Button 1\r\n");
-      //     sl_sleeptimer_stop_timer(&one_shot_timer);
-      //   }
-      //   else
-      //   {
-      //     // If timer is stopped, restart it
-      //     printf("Oneshot timer is restarted by Button 1\r\n");
-      //     sl_sleeptimer_restart_timer_ms(&one_shot_timer,
-      //                                    TIMEOUT_MS,
-      //                                    on_one_shot_timeout, NULL,
-      //                                    0,
-      //                                    SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-      //   }
-      // }
     }
     if (&BUTTON_INSTANCE_0 == handle)
     {
       sl_led_toggle(&LED_INSTANCE_0);
 
-      // // Button 0 controls the periodic timer
-      // if (sl_sleeptimer_is_timer_running(&periodic_timer, &is_running) == 0)
-      // {
-      //   if (is_running)
-      //   {
-      //     // If timer is running, stop it
-      //     printf("Periodic timer is stopped by Button 0\r\n");
-      //     sl_sleeptimer_stop_timer(&periodic_timer);
-      //   }
-      //   else
-      //   {
-      //     // If timer is stopped, restart it
-      //     printf("Periodic timer is restarted by Button 0\r\n");
-      //     sl_sleeptimer_restart_periodic_timer_ms(&periodic_timer,
-      //                                             TIMEOUT_MS,
-      //                                             on_periodic_timeout, NULL,
-      //                                             0,
-      //                                             SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-      //   }
-      // }
+
     }
   }
 }

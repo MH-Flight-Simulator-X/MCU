@@ -15,6 +15,7 @@
  *
  ******************************************************************************/
 #include "sleeptimer_app.h"
+#include "physics_engine.h"
 
 /***************************************************************************//**
  * Initialize application.
@@ -29,5 +30,6 @@ void app_init(void)
  ******************************************************************************/
 void app_process_action(void)
 {
-  sleeptimer_app_process_action();
+  // sleeptimer_app_process_action();
+  run();
 }
