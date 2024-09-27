@@ -1,6 +1,6 @@
 # Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
-project_name: commander
-label: commander
+project_name: flying_soft
+label: flying_soft
 description: |
   This example project demonstrates periodic and one-shot timers using the low-frequency real-time clock peripheral. Timers can be stopped and restarted using the buttons. Timer status is reported on the virtual COM serial port.
 category: Example|Platform
