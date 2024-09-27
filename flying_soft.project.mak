@@ -60,7 +60,10 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/service/power_manager/inc \
  -I$(COPIED_SDK_PATH)/platform/common/toolchain/inc \
  -I$(COPIED_SDK_PATH)/platform/service/system/inc \
- -I$(COPIED_SDK_PATH)/platform/service/sleeptimer/inc
+ -I$(COPIED_SDK_PATH)/platform/service/sleeptimer/inc \
+ -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/inc \
+ -I$(COPIED_SDK_PATH)/hardware/kit/common/drivers
+
 
 GROUP_START =-Wl,--start-group
 GROUP_END =-Wl,--end-group
