@@ -7,6 +7,9 @@
 
 # Default goal
 all: debug
+include .env
+GCC_PATH:
+	echo ${GCC_PATH}
 
 ####################################################################
 # Definitions                                                      #
@@ -15,7 +18,7 @@ all: debug
 # Values set by the initial generation
 PROJECTNAME = flying_soft
 ARM_GCC_DIR_WIN = 
-ARM_GCC_DIR_OSX = /Applications/ArmGNUToolchain/12.2.mpacbti-rel1/arm-none-eabi/
+ARM_GCC_DIR_OSX = /Applications/ArmGNUToolchain/12.2.mpacbti-rel1/arm-none-eabi
 ARM_GCC_DIR_LINUX = 
 POST_BUILD_EXE_WIN = 
 POST_BUILD_EXE_OSX =

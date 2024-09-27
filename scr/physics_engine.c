@@ -8,13 +8,13 @@
 
 typedef struct
 {
-    _Float16 x;
-    _Float16 y;
-    _Float16 z;
+    int x;
+    int y;
+    int z;
 
-    _Float16 dx;
-    _Float16 dy;
-    _Float16 dz;
+    int dx;
+    int dy;
+    int dz;
 
     int hp;
 
@@ -22,10 +22,10 @@ typedef struct
 
 typedef struct
 {
-    _Float16 amplitude;
-    _Float16 x;
-    _Float16 y;
-    _Float16 z;
+    int amplitude;
+    int x;
+    int y;
+    int z;
 } force_t;
 
 void apply_force(object_t *object, force_t *force)

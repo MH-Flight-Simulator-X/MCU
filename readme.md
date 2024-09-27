@@ -7,7 +7,7 @@ To build this project, you need to have the following downloaded and placed in t
 - Gecko SDK
 - GNU Arm toolchain
 
-Build by running:
+Build by running from the root directory:
 
 ```
 make -f flying_soft.Makefile -j12
@@ -15,7 +15,7 @@ make -f flying_soft.Makefile -j12
 
 ## Flash:
 
-To flash the file onto the MCU, we use Segger's J-Link Software, then connect to the Gecko with the CLI:
+To flash the file onto the MCU, we use Segger's J-Link Software by running each of these commands in terminal:
 
 ```
 JLinkExe -device EFM32GG990F1024 -if SWD -speed 4000 -autoconnect 1
