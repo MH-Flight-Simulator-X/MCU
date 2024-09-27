@@ -10,7 +10,7 @@ To build this project, you need to have the following downloaded and placed in t
 Build by running:
 
 ```
-make -f commander.Makefile -j12
+make -f flying_soft.Makefile -j12
 ```
 
 ## Flash:
@@ -22,7 +22,7 @@ JLinkExe -device EFM32GG990F1024 -if SWD -speed 4000 -autoconnect 1
 ```
 
 ```
-LoadFile /path/to/commander.hex
+LoadFile /path/to/flying_soft.hex
 ```
 
 ```

@@ -13,12 +13,12 @@ all: debug
 ####################################################################
 
 # Values set by the initial generation
-PROJECTNAME = commander
+PROJECTNAME = flying_soft
 ARM_GCC_DIR_WIN = 
-ARM_GCC_DIR_OSX = /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/12.2.rel1_2023.7/
+ARM_GCC_DIR_OSX = /Applications/ArmGNUToolchain/12.2.mpacbti-rel1/arm-none-eabi/
 ARM_GCC_DIR_LINUX = 
 POST_BUILD_EXE_WIN = 
-POST_BUILD_EXE_OSX = /Applications/Simplicity Studio.app/Contents/Eclipse/developer/adapter_packs/commander/Commander.app/Contents/MacOS/commander
+POST_BUILD_EXE_OSX =
 POST_BUILD_EXE_LINUX = 
 
 # Pre-defined definitions in this file
@@ -92,7 +92,7 @@ LD      = "$(ARM_GCC_DIR)/bin/arm-none-eabi-gcc"
 # Include sub-makefiles                                            #
 # Define a makefile here to add files/settings to the build.       #
 ####################################################################
--include commander.project.mak
+-include flying_soft.project.mak
 
 
 ####################################################################

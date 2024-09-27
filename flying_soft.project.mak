@@ -41,6 +41,7 @@ ASM_DEFS += \
 INCLUDES += \
  -Iconfig \
  -Iautogen \
+ -Iinc \
  -I. \
  -I$(COPIED_SDK_PATH)/platform/Device/SiliconLabs/EFM32GG/Include \
  -I$(COPIED_SDK_PATH)/platform/common/inc \
@@ -440,10 +441,10 @@ $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.o: $(COPI
 CDEPS += $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.d
 OBJS += $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.o
 
-$(OUTPUT_DIR)/project/app.o: app.c
+$(OUTPUT_DIR)/project/app.o: scr/app.c
 	@$(POSIX_TOOL_PATH)echo 'Building app.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ app.c
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/app.c
 CDEPS += $(OUTPUT_DIR)/project/app.d
 OBJS += $(OUTPUT_DIR)/project/app.o
 
@@ -503,17 +504,17 @@ $(OUTPUT_DIR)/project/autogen/sl_simple_led_instances.o: autogen/sl_simple_led_i
 CDEPS += $(OUTPUT_DIR)/project/autogen/sl_simple_led_instances.d
 OBJS += $(OUTPUT_DIR)/project/autogen/sl_simple_led_instances.o
 
-$(OUTPUT_DIR)/project/main.o: main.c
-	@$(POSIX_TOOL_PATH)echo 'Building main.c'
+$(OUTPUT_DIR)/project/main.o: scr/main.c
+	@$(POSIX_TOOL_PATH)echo 'Building scr/main.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ main.c
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/main.c
 CDEPS += $(OUTPUT_DIR)/project/main.d
 OBJS += $(OUTPUT_DIR)/project/main.o
 
-$(OUTPUT_DIR)/project/sleeptimer_app.o: sleeptimer_app.c
+$(OUTPUT_DIR)/project/sleeptimer_app.o: scr/sleeptimer_app.c
 	@$(POSIX_TOOL_PATH)echo 'Building sleeptimer_app.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ sleeptimer_app.c
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/sleeptimer_app.c
 CDEPS += $(OUTPUT_DIR)/project/sleeptimer_app.d
 OBJS += $(OUTPUT_DIR)/project/sleeptimer_app.o
 
