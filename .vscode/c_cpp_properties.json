@@ -4,7 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/gecko_sdk/**",
-                "${workspaceFolder}/autogen/**"
+                "${workspaceFolder}/autogen/**",
+                "${workspaceFolder}/inc"
             ],
             "defines": [],
             "macFrameworkPath": [
