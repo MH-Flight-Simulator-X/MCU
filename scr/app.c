@@ -16,7 +16,14 @@
  ******************************************************************************/
 // #include "sleeptimer_app.h"
 // #include "spi_slave.h"
-#include "spi.h"
+#include "spi_slave.h"
+#include <stdio.h>
+#include <string.h>
+#include "sl_simple_led_instances.h"
+
+#ifndef LED_INSTANCE_0
+#define LED_INSTANCE_0 sl_led_led0
+#endif
 
 /******************************************************************************
  * Initialize application.
@@ -24,7 +31,10 @@
 void app_init(void)
 {
   // Initialize SPI, on usart1
-  spi_init();
+  spi_slave_init();
+
+  
+  
 }
 
 /******************************************************************************
@@ -33,4 +43,10 @@ void app_init(void)
 void app_process_action(void)
 {
 
+  uint8_t buffer;
+  spi_slave_receive(&buffer, 1);
+  if (buffer == 1)
+    {
+      sl_led_toggle(&LED_INSTANCE_0);
+    }
 }

@@ -513,19 +513,26 @@ $(OUTPUT_DIR)/project/main.o: scr/main.c
 CDEPS += $(OUTPUT_DIR)/project/main.d
 OBJS += $(OUTPUT_DIR)/project/main.o
 
-$(OUTPUT_DIR)/project/spi_button.o: scr/spi_button.c
-	@$(POSIX_TOOL_PATH)echo 'Building spi_button.c'
-	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi_button.c
-CDEPS += $(OUTPUT_DIR)/project/spi_button.d
-OBJS += $(OUTPUT_DIR)/project/spi_button.o
+# $(OUTPUT_DIR)/project/spi_button.o: scr/spi_button.c
+# 	@$(POSIX_TOOL_PATH)echo 'Building spi_button.c'
+# 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+# 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi_button.c
+# CDEPS += $(OUTPUT_DIR)/project/spi_button.d
+# OBJS += $(OUTPUT_DIR)/project/spi_button.o
 
-$(OUTPUT_DIR)/project/spi.o: scr/spi.c
-	@$(POSIX_TOOL_PATH)echo 'Building spi.c'
+$(OUTPUT_DIR)/project/spi_slave.o: scr/spi_slave.c
+	@$(POSIX_TOOL_PATH)echo 'Building spi_slave.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi.c
-CDEPS += $(OUTPUT_DIR)/project/spi.d
-OBJS += $(OUTPUT_DIR)/project/spi.o
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi_slave.c
+CDEPS += $(OUTPUT_DIR)/project/spi_slave.d
+OBJS += $(OUTPUT_DIR)/project/spi_slave.o
+
+$(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.o: $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c
+	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c
+CDEPS += $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.d
+OBJS += $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.o
 
 # Automatically-generated Simplicity Studio Metadata
 # Please do not edit or delete these lines!

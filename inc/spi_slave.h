@@ -6,8 +6,8 @@
 extern SPIDRV_HandleData_t spi_slave_handle_data;
 extern SPIDRV_Handle_t spi_slave_handle;
 
-void spi_slave_init(void);
+Ecode_t spi_slave_init(void);
 
-void spi_slave_recieve(void *buffer, int byte_count);
+Ecode_t spi_slave_recieve(void *buffer, int byte_count);
 
 #endif // SPI_SLAVE_INTERFACE

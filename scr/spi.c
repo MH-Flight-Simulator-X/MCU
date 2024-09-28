@@ -8,7 +8,6 @@ SPIDRV_Handle_t spi_handle = &spi_handle_data;
 Ecode_t spi_init(void)
 {
   SPIDRV_Init_t initData = SPIDRV_MASTER_USART1;
-  // initData.frameLength = 16;
   return SPIDRV_Init(spi_handle, &initData);
 }
 

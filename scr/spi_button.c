@@ -23,7 +23,6 @@
 #define LED_INSTANCE_1 sl_led_led1
 #endif
 
-
 void sl_button_on_change(const sl_button_t *handle)
 {
   uint8_t buffer = 0x01;
