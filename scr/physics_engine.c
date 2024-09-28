@@ -37,5 +37,6 @@ void apply_force(object_t *object, force_t *force)
 
 void run(void)
 {
+    
     // Get data from thumbstick and slider I/O
 }

@@ -16,13 +16,14 @@
  ******************************************************************************/
 #include "sleeptimer_app.h"
 #include "physics_engine.h"
+#include "adc_reader.h"
 
 /***************************************************************************//**
  * Initialize application.
  ******************************************************************************/
 void app_init(void)
 {
-  sleeptimer_app_init();
+  initADC();
 }
 
 /***************************************************************************//**
@@ -31,5 +32,5 @@ void app_init(void)
 void app_process_action(void)
 {
   // sleeptimer_app_process_action();
-  run();
+  toggle_led();
 }

@@ -7,6 +7,8 @@
     "sl_simple_button_instances.h": "c",
     "em_chip.h": "c",
     "sl_iostream_init_instances.h": "c",
-    "physics_engine.h": "c"
-  }
+    "physics_engine.h": "c",
+    "adc_reader": "c"
+  },
+  "C_Cpp.default.intelliSenseMode": "gcc-arm"
 }
