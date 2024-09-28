@@ -1,20 +1,3 @@
-/***************************************************************************/ /**
-                                                                               * @file
-                                                                               * @brief Sleeptimer examples functions
-                                                                               *******************************************************************************
-                                                                               * # License
-                                                                               * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
-                                                                               *******************************************************************************
-                                                                               *
-                                                                               * The licensor of this software is Silicon Laboratories Inc. Your use of this
-                                                                               * software is governed by the terms of Silicon Labs Master Software License
-                                                                               * Agreement (MSLA) available at
-                                                                               * www.silabs.com/about-us/legal/master-software-license-agreement. This
-                                                                               * software is distributed to you in Source Code format and is governed by the
-                                                                               * sections of the MSLA applicable to Source Code.
-                                                                               *
-                                                                               ******************************************************************************/
-
 #include <stdio.h>
 #include <string.h>
 #include "sleeptimer_app.h"
@@ -194,27 +177,6 @@ void sl_button_on_change(const sl_button_t *handle)
     if (&BUTTON_INSTANCE_0 == handle)
     {
       sl_led_toggle(&LED_INSTANCE_0);
-
-      // // Button 0 controls the periodic timer
-      // if (sl_sleeptimer_is_timer_running(&periodic_timer, &is_running) == 0)
-      // {
-      //   if (is_running)
-      //   {
-      //     // If timer is running, stop it
-      //     printf("Periodic timer is stopped by Button 0\r\n");
-      //     sl_sleeptimer_stop_timer(&periodic_timer);
-      //   }
-      //   else
-      //   {
-      //     // If timer is stopped, restart it
-      //     printf("Periodic timer is restarted by Button 0\r\n");
-      //     sl_sleeptimer_restart_periodic_timer_ms(&periodic_timer,
-      //                                             TIMEOUT_MS,
-      //                                             on_periodic_timeout, NULL,
-      //                                             0,
-      //                                             SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-      //   }
-      // }
     }
   }
 }

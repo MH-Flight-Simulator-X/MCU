@@ -57,6 +57,8 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/emdrv/gpiointerrupt/inc \
  -I$(COPIED_SDK_PATH)/platform/service/iostream/inc \
  -I$(COPIED_SDK_PATH)/platform/driver/leddrv/inc \
+ -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/inc \
+ -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/config \
  -I$(COPIED_SDK_PATH)/platform/service/power_manager/inc \
  -I$(COPIED_SDK_PATH)/platform/common/toolchain/inc \
  -I$(COPIED_SDK_PATH)/platform/service/system/inc \
@@ -511,12 +513,19 @@ $(OUTPUT_DIR)/project/main.o: scr/main.c
 CDEPS += $(OUTPUT_DIR)/project/main.d
 OBJS += $(OUTPUT_DIR)/project/main.o
 
-$(OUTPUT_DIR)/project/sleeptimer_app.o: scr/sleeptimer_app.c
-	@$(POSIX_TOOL_PATH)echo 'Building sleeptimer_app.c'
+$(OUTPUT_DIR)/project/spi_button.o: scr/spi_button.c
+	@$(POSIX_TOOL_PATH)echo 'Building spi_button.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/sleeptimer_app.c
-CDEPS += $(OUTPUT_DIR)/project/sleeptimer_app.d
-OBJS += $(OUTPUT_DIR)/project/sleeptimer_app.o
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi_button.c
+CDEPS += $(OUTPUT_DIR)/project/spi_button.d
+OBJS += $(OUTPUT_DIR)/project/spi_button.o
+
+$(OUTPUT_DIR)/project/spi.o: scr/spi.c
+	@$(POSIX_TOOL_PATH)echo 'Building spi.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi.c
+CDEPS += $(OUTPUT_DIR)/project/spi.d
+OBJS += $(OUTPUT_DIR)/project/spi.o
 
 # Automatically-generated Simplicity Studio Metadata
 # Please do not edit or delete these lines!

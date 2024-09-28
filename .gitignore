@@ -5,3 +5,4 @@ build/
 gecko_sdk/
 .uceditor
 .projectlinkstore
+.vscode
