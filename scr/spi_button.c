@@ -28,14 +28,12 @@ void sl_button_on_change(const sl_button_t *handle)
   uint8_t buffer = 0x01;
   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
   {
-    if (&BUTTON_INSTANCE_1 == handle)
-    {
-      spi_transfer(&buffer, 1);
       sl_led_toggle(&LED_INSTANCE_0);
-    }
-    if (&BUTTON_INSTANCE_0 == handle)
-    {
-      sl_led_toggle(&LED_INSTANCE_1);
-    }
+      spi_transfer(&buffer, 1);
+
+    // if (&BUTTON_INSTANCE_0 == handle)
+    // {
+    //   sl_led_toggle(&LED_INSTANCE_1);
+    // }
   }
 }

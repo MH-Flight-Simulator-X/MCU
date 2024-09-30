@@ -527,6 +527,13 @@ $(OUTPUT_DIR)/project/spi_slave.o: scr/spi_slave.c
 CDEPS += $(OUTPUT_DIR)/project/spi_slave.d
 OBJS += $(OUTPUT_DIR)/project/spi_slave.o
 
+$(OUTPUT_DIR)/project/spi.o: scr/spi.c
+	@$(POSIX_TOOL_PATH)echo 'Building spi.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/spi.c
+CDEPS += $(OUTPUT_DIR)/project/spi.d
+OBJS += $(OUTPUT_DIR)/project/spi.o
+
 $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.o: $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c
 	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)

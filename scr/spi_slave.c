@@ -13,5 +13,5 @@ Ecode_t spi_slave_init(void)
 
 Ecode_t spi_slave_receive(void *buffer, int byte_count)
 {
-  return SPIDRV_SReceiveB(spi_slave_handle, buffer, byte_count, 5);
+  return SPIDRV_SReceiveB(spi_slave_handle, buffer, byte_count, 0);
 }
