@@ -5,7 +5,10 @@
 #include "sl_simple_led_instances.h"
 #include "sl_simple_button_instances.h"
 #include "sl_iostream_init_instances.h"
-#include "spi.h"
+
+/*******************************************************************************
+ *******************************   DEFINES   ***********************************
+ ******************************************************************************/
 
 #ifndef BUTTON_INSTANCE_0
 #define BUTTON_INSTANCE_0 sl_button_btn0
@@ -23,19 +26,25 @@
 #define LED_INSTANCE_1 sl_led_led1
 #endif
 
+#define APP_BUFFER_SIZE 16
+
 void sl_button_on_change(const sl_button_t *handle)
 {
-  uint8_t buffer = 0x01;
+  uint8_t buffer[16];
+  for (int i = 0; i < 16; i++) {
+    buffer[i] = i;
+  }
+  bool is_running = false;
   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
   {
     if (&BUTTON_INSTANCE_1 == handle)
     {
-      spi_transfer(&buffer, 1);
-      sl_led_toggle(&LED_INSTANCE_0);
+      spi_transfer(&(buffer[i]), 16);
+      sl_led_toggle(&LED_INSTANCE_1);
     }
     if (&BUTTON_INSTANCE_0 == handle)
     {
-      sl_led_toggle(&LED_INSTANCE_1);
+      sl_led_toggle(&LED_INSTANCE_0);
     }
   }
 }

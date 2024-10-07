@@ -1,13 +1,8 @@
-#ifndef SPI_INTERFACE
-#define SPI_INTERFACE
+#ifndef SPI_H
+#define SPI_H
 
-#include "spidrv.h"
+void spi_init(void);
 
-extern SPIDRV_HandleData_t spi_handle_data;
-extern SPIDRV_Handle_t spi_handle;
+void spidrv_app_process_action();
 
-Ecode_t spi_init(void);
-
-Ecode_t spi_transfer(void *buffer, int byte_count);
-
-#endif // SPI_INTERFACEß
+#endif // SPI_INTERFACE

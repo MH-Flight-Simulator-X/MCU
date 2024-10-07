@@ -1,17 +1,30 @@
+#include <string.h>
+#include <stdio.h>
 #include "spidrv.h"
 #include "spi.h"
-#include "app.h"
 
 SPIDRV_HandleData_t spi_handle_data;
 SPIDRV_Handle_t spi_handle = &spi_handle_data;
 
-Ecode_t spi_init(void)
+void spi_init(void)
 {
   SPIDRV_Init_t initData = SPIDRV_MASTER_USART1;
-  return SPIDRV_Init(spi_handle, &initData);
+  Ecode_t ecode = SPIDRV_Init(spi_handle, &initData);
+  if (ecode != ECODE_EMDRV_SPIDRV_OK)
+  {
+    printf("Something went wrong");
+  }
 }
 
-Ecode_t spi_transfer(void *buffer, int byte_count)
+void spi_transfer(void *buffer, int byte_count)
 {
-  return SPIDRV_MTransmitB(spi_handle, buffer, byte_count);
+  Ecode_t ecode;
+
+  printf("Sending %s to slave...\r\n", buffer);
+
+  Ecode_t ecode = SPIDRV_MTransferB(spi_handle, buffer, byte_count);
+  if (ecode != ECODE_EMDRV_SPIDRV_OK)
+  {
+    printf("Something went wrong");
+  }
 }

@@ -143,40 +143,20 @@ void sleeptimer_app_process_action(void)
 /***************************************************************************/ /**
                                                                                * Function called on button change
                                                                                ******************************************************************************/
-void sl_button_on_change(const sl_button_t *handle)
-{
-  bool is_running = false;
-  if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
-  {
-    // Button 1 controls the one-shot timer
-    if (&BUTTON_INSTANCE_1 == handle)
-    {
-      sl_led_toggle(&LED_INSTANCE_1);
+// void sl_button_on_change(const sl_button_t *handle)
+// {
+//   bool is_running = false;
+//   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
+//   {
+//     // Button 1 controls the one-shot timer
+//     if (&BUTTON_INSTANCE_1 == handle)
+//     {
+//       sl_led_toggle(&LED_INSTANCE_1);
 
-      // if (sl_sleeptimer_is_timer_running(&one_shot_timer, &is_running) == 0)
-      // {
-      //   if (is_running)
-      //   {
-      //     // sl_status_t display_status = sl_board_enable_display();
-      //     // If timer is running, stop it
-      //     printf("Oneshot timer is stopped by Button 1\r\n");
-      //     sl_sleeptimer_stop_timer(&one_shot_timer);
-      //   }
-      //   else
-      //   {
-      //     // If timer is stopped, restart it
-      //     printf("Oneshot timer is restarted by Button 1\r\n");
-      //     sl_sleeptimer_restart_timer_ms(&one_shot_timer,
-      //                                    TIMEOUT_MS,
-      //                                    on_one_shot_timeout, NULL,
-      //                                    0,
-      //                                    SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
-      //   }
-      // }
-    }
-    if (&BUTTON_INSTANCE_0 == handle)
-    {
-      sl_led_toggle(&LED_INSTANCE_0);
-    }
-  }
-}
+//     }
+//     if (&BUTTON_INSTANCE_0 == handle)
+//     {
+//       sl_led_toggle(&LED_INSTANCE_0);
+//     }
+//   }
+// }

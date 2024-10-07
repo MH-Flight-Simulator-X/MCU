@@ -31,7 +31,7 @@
 void app_init(void)
 {
   // Initialize SPI, on usart1
-  spi_slave_init();
+  spi_init();
 
   
   
@@ -43,10 +43,4 @@ void app_init(void)
 void app_process_action(void)
 {
 
-  uint8_t buffer;
-  spi_slave_receive(&buffer, 1);
-  if (buffer == 1)
-    {
-      sl_led_toggle(&LED_INSTANCE_0);
-    }
 }
