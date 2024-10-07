@@ -14,16 +14,8 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-// #include "sleeptimer_app.h"
-// #include "spi_slave.h"
-#include "spi_slave.h"
-#include <stdio.h>
-#include <string.h>
-#include "sl_simple_led_instances.h"
-
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
-#endif
+#include "physics_engine.h"
+#include "sleeptimer_app.h"
 
 /******************************************************************************
  * Initialize application.
@@ -32,9 +24,6 @@ void app_init(void)
 {
   // Initialize SPI, on usart1
   spi_init();
-
-  
-  
 }
 
 /******************************************************************************
@@ -42,5 +31,6 @@ void app_init(void)
  ******************************************************************************/
 void app_process_action(void)
 {
-
+  // sleeptimer_app_process_action();
+  run();
 }

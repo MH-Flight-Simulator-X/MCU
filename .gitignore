@@ -5,4 +5,6 @@ build/
 gecko_sdk/
 .uceditor
 .projectlinkstore
-.vscode
+.env
+.ccls-cache
+.idea

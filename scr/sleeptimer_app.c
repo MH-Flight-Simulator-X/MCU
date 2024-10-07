@@ -1,10 +1,10 @@
+#include "sleeptimer_app.h"
+#include "sl_iostream_init_instances.h"
+#include "sl_simple_button_instances.h"
+#include "sl_simple_led_instances.h"
+#include "sl_sleeptimer.h"
 #include <stdio.h>
 #include <string.h>
-#include "sleeptimer_app.h"
-#include "sl_sleeptimer.h"
-#include "sl_simple_led_instances.h"
-#include "sl_simple_button_instances.h"
-#include "sl_iostream_init_instances.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
@@ -34,17 +34,16 @@
 static sl_sleeptimer_timer_handle_t periodic_timer;
 static sl_sleeptimer_timer_handle_t one_shot_timer;
 static sl_sleeptimer_timer_handle_t status_timer;
-static bool print_status = false;
-static bool on_periodic_callback_print_status = false;
-static bool on_one_shot_expire_print_status = false;
+static bool                         print_status = false;
+static bool                         on_periodic_callback_print_status = false;
+static bool                         on_one_shot_expire_print_status = false;
 
 /*******************************************************************************
  ************************   LOCAL FUNCTIONS ************************************
  ******************************************************************************/
 
 // Periodic timer callback
-static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle,
-                                void *data)
+static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
@@ -53,8 +52,7 @@ static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle,
 }
 
 // One-shot timer callback
-static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle,
-                                void *data)
+static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
@@ -63,8 +61,7 @@ static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle,
 }
 
 // Status timer callback
-static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle,
-                              void *data)
+static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;

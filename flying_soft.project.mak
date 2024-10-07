@@ -62,7 +62,10 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/service/power_manager/inc \
  -I$(COPIED_SDK_PATH)/platform/common/toolchain/inc \
  -I$(COPIED_SDK_PATH)/platform/service/system/inc \
- -I$(COPIED_SDK_PATH)/platform/service/sleeptimer/inc
+ -I$(COPIED_SDK_PATH)/platform/service/sleeptimer/inc \
+ -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/inc \
+ -I$(COPIED_SDK_PATH)/hardware/kit/common/drivers
+
 
 GROUP_START =-Wl,--start-group
 GROUP_END =-Wl,--end-group
@@ -533,6 +536,13 @@ $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.o: $(COPIED_SDK_PATH)/platfor
 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/platform/emdrv/spidrv/src/spidrv.c
 CDEPS += $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.d
 OBJS += $(OUTPUT_DIR)/sdk/platform/emdrv/spidrv/src/spidrv.o
+
+$(OUTPUT_DIR)/project/physics_engine.o: scr/physics_engine.c
+	@$(POSIX_TOOL_PATH)echo 'Building physics_engine.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/physics_engine.c
+CDEPS += $(OUTPUT_DIR)/project/physics_engine.d
+OBJS += $(OUTPUT_DIR)/project/physics_engine.o
 
 # Automatically-generated Simplicity Studio Metadata
 # Please do not edit or delete these lines!
