@@ -1,10 +1,10 @@
+#include "physics_engine.h"
+#include "sl_iostream_init_instances.h"
+#include "sl_simple_button_instances.h"
+#include "sl_simple_led_instances.h"
+#include "spi.h"
 #include <stdio.h>
 #include <string.h>
-#include "sleeptimer_app.h"
-#include "sl_sleeptimer.h"
-#include "sl_simple_led_instances.h"
-#include "sl_simple_button_instances.h"
-#include "sl_iostream_init_instances.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
@@ -30,16 +30,26 @@
 
 void sl_button_on_change(const sl_button_t *handle)
 {
-  uint8_t buffer[16];
-  for (int i = 0; i < 16; i++) {
-    buffer[i] = i;
+  size_t  buffer_size = sizeof(object_t);
+  uint8_t buffer[buffer_size];
+
+  object_t object = {.x = 10, .y = 15, .z = 20, .dx = 1, .dy = 2, .dz = 3, .hp = 100};
+  force_t  force = {.amplitude = 5, .x = 2, .y = -1, .z = 3};
+
+  apply_force(&object, &force);
+
+  memcpy(buffer, &object, buffer_size);
+
+  for (size_t i = 0; i < buffer_size; i++)
+  {
+    printf("%02X ", buffer[i]);
   }
-  bool is_running = false;
+
   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
   {
     if (&BUTTON_INSTANCE_1 == handle)
     {
-      spi_transfer(&(buffer[i]), 16);
+      spi_transfer(&buffer, buffer_size);
       sl_led_toggle(&LED_INSTANCE_1);
     }
     if (&BUTTON_INSTANCE_0 == handle)

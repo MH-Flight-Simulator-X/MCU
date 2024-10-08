@@ -32,7 +32,7 @@ erase
 Load the file we just built:
 
 ```
-LoadFile {path to project}/build/debug/flying_soft.hex
+loadfile {path to project}/build/debug/flying_soft.hex
 ```
 
 Start the CPU:
