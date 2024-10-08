@@ -1,27 +1,10 @@
-/***************************************************************************//**
- * @file
- * @brief Sleeptimer examples functions
- *******************************************************************************
- * # License
- * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
- ******************************************************************************/
-
+#include "sleeptimer_app.h"
+#include "sl_iostream_init_instances.h"
+#include "sl_simple_button_instances.h"
+#include "sl_simple_led_instances.h"
+#include "sl_sleeptimer.h"
 #include <stdio.h>
 #include <string.h>
-#include "sleeptimer_app.h"
-#include "sl_sleeptimer.h"
-#include "sl_simple_led_instances.h"
-#include "sl_simple_button_instances.h"
-#include "sl_iostream_init_instances.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
@@ -51,17 +34,16 @@
 static sl_sleeptimer_timer_handle_t periodic_timer;
 static sl_sleeptimer_timer_handle_t one_shot_timer;
 static sl_sleeptimer_timer_handle_t status_timer;
-static bool print_status = false;
-static bool on_periodic_callback_print_status = false;
-static bool on_one_shot_expire_print_status = false;
+static bool                         print_status = false;
+static bool                         on_periodic_callback_print_status = false;
+static bool                         on_one_shot_expire_print_status = false;
 
 /*******************************************************************************
  ************************   LOCAL FUNCTIONS ************************************
  ******************************************************************************/
 
 // Periodic timer callback
-static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle,
-                                void *data)
+static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
@@ -70,8 +52,7 @@ static void on_periodic_timeout(sl_sleeptimer_timer_handle_t *handle,
 }
 
 // One-shot timer callback
-static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle,
-                                void *data)
+static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
@@ -80,8 +61,7 @@ static void on_one_shot_timeout(sl_sleeptimer_timer_handle_t *handle,
 }
 
 // Status timer callback
-static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle,
-                              void *data)
+static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
@@ -92,9 +72,9 @@ static void on_status_timeout(sl_sleeptimer_timer_handle_t *handle,
  **************************   GLOBAL FUNCTIONS   *******************************
  ******************************************************************************/
 
-/***************************************************************************//**
- * Initialize example.
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * Initialize example.
+                                                                               ******************************************************************************/
 void sleeptimer_app_init(void)
 {
   /* Output on vcom usart instance */
@@ -125,9 +105,9 @@ void sleeptimer_app_init(void)
   //                                       SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
-/***************************************************************************//**
- * Ticking function.
- ******************************************************************************/
+/***************************************************************************/ /**
+                                                                               * Ticking function.
+                                                                               ******************************************************************************/
 void sleeptimer_app_process_action(void)
 {
   uint32_t remaining;
@@ -157,25 +137,23 @@ void sleeptimer_app_process_action(void)
   }
 }
 
-/***************************************************************************//**
- * Function called on button change
- ******************************************************************************/
-void sl_button_on_change(const sl_button_t *handle)
-{
-  bool is_running = false;
-  if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
-  {
-    // Button 1 controls the one-shot timer
-    if (&BUTTON_INSTANCE_1 == handle)
-    {
-      sl_led_toggle(&LED_INSTANCE_1);
+/***************************************************************************/ /**
+                                                                               * Function called on button change
+                                                                               ******************************************************************************/
+// void sl_button_on_change(const sl_button_t *handle)
+// {
+//   bool is_running = false;
+//   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
+//   {
+//     // Button 1 controls the one-shot timer
+//     if (&BUTTON_INSTANCE_1 == handle)
+//     {
+//       sl_led_toggle(&LED_INSTANCE_1);
 
-    }
-    if (&BUTTON_INSTANCE_0 == handle)
-    {
-      sl_led_toggle(&LED_INSTANCE_0);
-
-
-    }
-  }
-}
+//     }
+//     if (&BUTTON_INSTANCE_0 == handle)
+//     {
+//       sl_led_toggle(&LED_INSTANCE_0);
+//     }
+//   }
+// }
