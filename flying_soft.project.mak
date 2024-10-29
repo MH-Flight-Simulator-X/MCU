@@ -67,6 +67,8 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/inc \
  -I$(COPIED_SDK_PATH)/app/common/util/app_log/ \
  -I$(COPIED_SDK_PATH)/app/common/util/app_log/config/ \
+ -I$(COPIED_SDK_PATH)/app/common/util/app_assert/ \
+ -I$(COPIED_SDK_PATH)/app/common/util/app_assert/config/ \
  -I$(COPIED_SDK_PATH)/hardware/kit/common/drivers
 
 
@@ -554,12 +556,61 @@ $(OUTPUT_DIR)/project/physics_engine.o: scr/physics_engine.c
 CDEPS += $(OUTPUT_DIR)/project/physics_engine.d
 OBJS += $(OUTPUT_DIR)/project/physics_engine.o
 
-$(OUTPUT_DIR)/sdk/hardware/driver/kit/common/driver/i2cspm.o: $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c
-	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c'
+$(OUTPUT_DIR)/project/micro_sd/micro_sd.o: scr/micro_sd/micro_sd.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/micro_sd.c'
 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
-	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c
-CDEPS += $(OUTPUT_DIR)/sdk/hardware/kit/common/driver/i2cspm.d
-OBJS += $(OUTPUT_DIR)/sdk/hardware/kit/common/driver/i2cspm.o
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/micro_sd.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/micro_sd.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/micro_sd.o
+
+$(OUTPUT_DIR)/project/micro_sd/ff.o: scr/micro_sd/ff.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/ff.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/ff.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/ff.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/ff.o
+
+$(OUTPUT_DIR)/project/micro_sd/ffsystem.o: scr/micro_sd/ffsystem.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/ffsystem.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/ffsystem.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/ffsystem.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/ffsystem.o
+
+$(OUTPUT_DIR)/project/micro_sd/sl_sdc_media.o: scr/micro_sd/sl_sdc_media.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/sl_sdc_media.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/sl_sdc_media.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_media.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_media.o
+
+$(OUTPUT_DIR)/project/micro_sd/sl_sdc_platform_spi.o: scr/micro_sd/sl_sdc_platform_spi.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/sl_sdc_platform_spi.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/sl_sdc_platform_spi.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_platform_spi.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_platform_spi.o
+
+$(OUTPUT_DIR)/project/micro_sd/sl_sdc_sd_card.o: scr/micro_sd/sl_sdc_sd_card.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/sl_sdc_sd_card.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/sl_sdc_sd_card.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_sd_card.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/sl_sdc_sd_card.o
+
+$(OUTPUT_DIR)/project/micro_sd/ffunicode.o: scr/micro_sd/ffunicode.c
+	@$(POSIX_TOOL_PATH)echo 'Building micro_sd/ffunicode.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/micro_sd/ffunicode.c
+CDEPS += $(OUTPUT_DIR)/project/micro_sd/ffunicode.d
+OBJS += $(OUTPUT_DIR)/project/micro_sd/ffunicode.o
+
+# $(OUTPUT_DIR)/sdk/hardware/driver/kit/common/driver/i2cspm.o: $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c
+# 	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c'
+# 	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+# 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/hardware/kit/common/driver/i2cspm.c
+# CDEPS += $(OUTPUT_DIR)/sdk/hardware/kit/common/driver/i2cspm.d
+# OBJS += $(OUTPUT_DIR)/sdk/hardware/kit/common/driver/i2cspm.o
 
 
 # Automatically-generated Simplicity Studio Metadata

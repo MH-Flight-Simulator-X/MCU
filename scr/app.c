@@ -14,6 +14,7 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
+#include "micro_sd.h"
 #include "physics_engine.h"
 #include "spi.h"
 
@@ -24,6 +25,7 @@ void app_init(void)
 {
   // Initialize SPI, on usart1
   spi_init();
+  micro_sd_init();
 }
 
 /******************************************************************************
@@ -31,6 +33,6 @@ void app_init(void)
  ******************************************************************************/
 void app_process_action(void)
 {
-  // sleeptimer_app_process_action();
   run();
+  micro_sd_process_action();
 }
