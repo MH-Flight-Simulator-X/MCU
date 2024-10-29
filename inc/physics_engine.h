@@ -1,4 +1,7 @@
+#ifndef physics_engine_H
+#define physics_engine_H
 
+#include <stdint.h>
 typedef struct
 {
   int16_t x;
@@ -23,3 +26,5 @@ typedef struct
 
 void physics_engine_init(void);
 void run(void);
+
+#endif // physics_engine_H

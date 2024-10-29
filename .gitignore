@@ -8,3 +8,4 @@ gecko_sdk/
 .env
 .ccls-cache
 .idea
+.vscode/

@@ -42,6 +42,7 @@ INCLUDES += \
  -Iconfig \
  -Iautogen \
  -Iinc \
+ -Iinc/micro_sd \
  -I. \
  -I$(COPIED_SDK_PATH)/platform/Device/SiliconLabs/EFM32GG/Include \
  -I$(COPIED_SDK_PATH)/platform/common/inc \
@@ -64,6 +65,8 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/service/system/inc \
  -I$(COPIED_SDK_PATH)/platform/service/sleeptimer/inc \
  -I$(COPIED_SDK_PATH)/platform/emdrv/spidrv/inc \
+ -I$(COPIED_SDK_PATH)/app/common/util/app_log/ \
+ -I$(COPIED_SDK_PATH)/app/common/util/app_log/config/ \
  -I$(COPIED_SDK_PATH)/hardware/kit/common/drivers
 
 
@@ -445,6 +448,13 @@ $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.o: $(COPI
 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/platform/service/system/src/sl_system_process_action.c
 CDEPS += $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.d
 OBJS += $(OUTPUT_DIR)/sdk/platform/service/system/src/sl_system_process_action.o
+
+$(OUTPUT_DIR)/sdk/app/common/util/app_log/app_log.o: $(COPIED_SDK_PATH)/app/common/util/app_log/app_log.c
+	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/app/common/util/app_log/app_log.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/app/common/util/app_log/app_log.c
+CDEPS += $(OUTPUT_DIR)/sdk/app/common/util/app_log/app_log.d
+OBJS += $(OUTPUT_DIR)/sdk/app/common/util/app_log/app_log.o
 
 $(OUTPUT_DIR)/project/app.o: scr/app.c
 	@$(POSIX_TOOL_PATH)echo 'Building app.c'

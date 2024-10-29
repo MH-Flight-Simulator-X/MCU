@@ -40,6 +40,10 @@ void sl_button_on_change(const sl_button_t *handle)
 
   memcpy(buffer, &object, buffer_size);
 
+  uint8_t test_buffer[2];
+  test_buffer[0] = 16;
+  test_buffer[1] = 5;
+
   for (size_t i = 0; i < buffer_size; i++)
   {
     printf("%02X ", buffer[i]);
@@ -49,12 +53,13 @@ void sl_button_on_change(const sl_button_t *handle)
   {
     if (&BUTTON_INSTANCE_1 == handle)
     {
-      spi_transfer(&buffer, buffer_size);
+      spi_transfer(&test_buffer[0], 1);
       sl_led_toggle(&LED_INSTANCE_1);
     }
     if (&BUTTON_INSTANCE_0 == handle)
     {
       sl_led_toggle(&LED_INSTANCE_0);
+      spi_transfer(&test_buffer, 2);
     }
   }
 }

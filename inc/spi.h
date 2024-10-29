@@ -1,5 +1,5 @@
-#ifndef SPI_SLAVE_INTERFACE
-#define SPI_SLAVE_INTERFACE
+#ifndef spi_h
+#define spi_h
 
 #include "spidrv.h"
 
@@ -10,7 +10,7 @@ void spi_init(void);
 
 void spi_transfer(void *buffer, int byte_count);
 
-#endif // SPI_SLAVE_INTERFACE
+#endif // spi_h
 
 // #include <spidrv.h>
 // #include <unistd.h>
