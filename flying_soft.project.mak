@@ -46,6 +46,8 @@ INCLUDES += \
  -I$(COPIED_SDK_PATH)/platform/Device/SiliconLabs/EFM32GG/Include \
  -I$(COPIED_SDK_PATH)/platform/common/inc \
  -I$(COPIED_SDK_PATH)/hardware/board/inc \
+ -I$(COPIED_SDK_PATH)/hardware/kit/EFM32GG_STK3700/config \
+ -I$(COPIED_SDK_PATH)/hardware/kit/common/drivers \
  -I$(COPIED_SDK_PATH)/platform/driver/button/inc \
  -I$(COPIED_SDK_PATH)/platform/CMSIS/Core/Include \
  -I$(COPIED_SDK_PATH)/hardware/driver/configuration_over_swo/inc \
@@ -538,6 +540,27 @@ $(OUTPUT_DIR)/sdk/platform/emlib/src/em_adc.o: $(COPIED_SDK_PATH)/platform/emlib
 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/platform/emlib/src/em_adc.c
 CDEPS += $(OUTPUT_DIR)/sdk/platform/emlib/src/em_adc.d
 OBJS += $(OUTPUT_DIR)/sdk/platform/emlib/src/em_adc.o
+
+$(OUTPUT_DIR)/project/timer.o: scr/timer.c
+	@$(POSIX_TOOL_PATH)echo 'Building timer.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ scr/timer.c
+CDEPS += $(OUTPUT_DIR)/project/timer.d
+OBJS += $(OUTPUT_DIR)/project/timer.o
+
+$(OUTPUT_DIR)/sdk/hardware/kit/common/drivers/segmentlcd.o: $(COPIED_SDK_PATH)/hardware/kit/common/drivers/segmentlcd.c
+	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/hardware/kit/common/drivers/segmentlcd.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/hardware/kit/common/drivers/segmentlcd.c
+CDEPS += $(OUTPUT_DIR)/sdk/hardware/kit/common/drivers/segmentlcd.d
+OBJS += $(OUTPUT_DIR)/sdk/hardware/kit/common/drivers/segmentlcd.o
+
+$(OUTPUT_DIR)/sdk/platform/emlib/src/em_lcd.o: $(COPIED_SDK_PATH)/platform/emlib/src/em_lcd.c
+	@$(POSIX_TOOL_PATH)echo 'Building $(COPIED_SDK_PATH)/platform/emlib/src/em_lcd.c'
+	@$(POSIX_TOOL_PATH)mkdir -p $(@D)
+	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $(COPIED_SDK_PATH)/platform/emlib/src/em_lcd.c
+CDEPS += $(OUTPUT_DIR)/sdk/platform/emlib/src/em_lcd.d
+OBJS += $(OUTPUT_DIR)/sdk/platform/emlib/src/em_lcd.o
 
 
 # Automatically-generated Simplicity Studio Metadata

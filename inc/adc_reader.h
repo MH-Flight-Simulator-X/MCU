@@ -1,2 +1,2 @@
-void initADC(void);
-void toggle_led(void);
+void init_adc(void);
+void read_adc(void);

@@ -14,7 +14,7 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-#include "sleeptimer_app.h"
+
 #include "physics_engine.h"
 #include "adc_reader.h"
 
@@ -23,7 +23,7 @@
  ******************************************************************************/
 void app_init(void)
 {
-  initADC();
+  init_adc();
 }
 
 /***************************************************************************//**
@@ -32,5 +32,5 @@ void app_init(void)
 void app_process_action(void)
 {
   // sleeptimer_app_process_action();
-  toggle_led();
+  read_adc();
 }
