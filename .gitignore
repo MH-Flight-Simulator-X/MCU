@@ -4,7 +4,6 @@ GNU\ ARM\ v12.2.1\ -\ Default
 .DS_Store
 build/
 gecko_sdk/
-.uceditor
 .projectlinkstore
 .env
 .ccls-cache
