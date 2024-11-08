@@ -1,59 +1,42 @@
-#include "sl_simple_led.h"
-#include "sl_simple_led_instances.h"
 #include "sl_sleeptimer.h"
+#include "game.h"
 
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
+#ifndef FPS
+#define FPS 60
 #endif
 
-#ifndef LED_INSTANCE_1
-#define LED_INSTANCE_1 sl_led_led1
-#endif
+sl_sleeptimer_timer_handle_t frame_timer;
+bool frame_ready = false;
+uint32_t frame_counter = 0;
 
-sl_sleeptimer_timer_handle_t timer;
-bool toggle_timeout = false;
+static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
 
-// Function prototype for the timer callback
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
-
-// Function to calculate ticks for one frame (60 FPS)
-static uint32_t calculate_ticks_per_frame(void)
+void frame_timer_init()
 {
-    // Get the timer frequency in ticks per second
     uint32_t timer_frequency = sl_sleeptimer_get_timer_frequency();
-    // Calculate ticks for 1/60th of a second (16.6667 ms)
-    uint32_t ticks_per_frame = timer_frequency / 10;
-    return ticks_per_frame;
+    uint32_t ticks_per_frame = timer_frequency / FPS;
+    sl_sleeptimer_start_periodic_timer(&frame_timer, ticks_per_frame, on_frame_timeout, NULL, 0, SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
-void app_init(void)
+void app_init()
 {
-    // Calculate the number of ticks needed for 60 FPS
-    uint32_t toggle_delay_ticks = calculate_ticks_per_frame();
-    sl_led_toggle(&LED_INSTANCE_0);
-    sl_led_toggle(&LED_INSTANCE_1);
-
-    // Start a periodic timer using ticks to achieve precise 60 FPS
-    sl_sleeptimer_start_periodic_timer(&timer,
-                                       toggle_delay_ticks,
-                                       on_timeout,
-                                       NULL,
-                                       0,
-                                       SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+    frame_timer_init();
+    game_init();
 }
 
 void app_process_action(void)
 {
-    if (toggle_timeout)
+    if (frame_ready)
     {
-        sl_led_toggle(&LED_INSTANCE_0);
-        toggle_timeout = false;
+        frame_counter++;
+        game_process_action(frame_counter);
+        frame_ready = false;
     }
 }
 
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
+static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
     (void)handle;
     (void)data;
-    toggle_timeout = true;
+    frame_ready = true;
 }
