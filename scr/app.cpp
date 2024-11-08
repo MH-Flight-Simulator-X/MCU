@@ -16,19 +16,24 @@
  ******************************************************************************/
 
 #include "blink.h"
+#include "adc_reader.h"
+
 
 /***************************************************************************//**
  * Initialize application.
  ******************************************************************************/
-void app_init(void)
+void app_init()
 {
-  blink_init();
+//  blink_init();
+  init_adc();
 }
 
 /***************************************************************************//**
  * App ticking function.
  ******************************************************************************/
-void app_process_action(void)
+void app_process_action()
 {
-  blink_process_action();
+//  blink_process_action();
+//  Start_ADC_Conversion_PD0();
+  read_adc();
 }

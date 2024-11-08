@@ -1,6 +1,6 @@
 /***************************************************************************//**
  * @file
- * @brief LED Driver Instances
+ * @brief Simple Led Driver Configuration
  *******************************************************************************
  * # License
  * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
@@ -28,19 +28,33 @@
  *
  ******************************************************************************/
 
-#ifndef SL_SIMPLE_LED_INSTANCES_H
-#define SL_SIMPLE_LED_INSTANCES_H
+#ifndef SL_SIMPLE_LED_LED1_CONFIG_H
+#define SL_SIMPLE_LED_LED1_CONFIG_H
 
-#include "sl_simple_led.h"
+// <<< Use Configuration Wizard in Context Menu >>>
 
-extern const sl_led_t sl_led_led0;
-extern const sl_led_t sl_led_led1;
+// <h> Simple LED configuration
+// <o SL_SIMPLE_LED_LED1_POLARITY>
+// <SL_SIMPLE_LED_POLARITY_ACTIVE_LOW=> Active low
+// <SL_SIMPLE_LED_POLARITY_ACTIVE_HIGH=> Active high
+// <i> Default: SL_SIMPLE_LED_POLARITY_ACTIVE_HIGH
+#define SL_SIMPLE_LED_LED1_POLARITY SL_SIMPLE_LED_POLARITY_ACTIVE_HIGH
+// </h> end led configuration
 
-extern const sl_led_t *sl_simple_led_array[];
+// <<< end of configuration section >>>
 
-#define SL_SIMPLE_LED_COUNT 2
-#define SL_SIMPLE_LED_INSTANCE(n) (sl_simple_led_array[n])
+// <<< sl:start pin_tool >>>
 
-void sl_simple_led_init_instances(void);
+// <gpio> SL_SIMPLE_LED_LED1
+// $[GPIO_SL_SIMPLE_LED_LED1]
+#ifndef SL_SIMPLE_LED_LED1_PORT                 
+#define SL_SIMPLE_LED_LED1_PORT                  gpioPortA
+#endif
+#ifndef SL_SIMPLE_LED_LED1_PIN                  
+#define SL_SIMPLE_LED_LED1_PIN                   3
+#endif
+// [GPIO_SL_SIMPLE_LED_LED1]$
 
-#endif // SL_SIMPLE_LED_INIT_H
+// <<< sl:end pin_tool >>>
+
+#endif // SL_SIMPLE_LED_LED1_CONFIG_H
