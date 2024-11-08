@@ -1,8 +1,17 @@
 #CRC Codes for initially generated config files -- do not modify!
+SEGGER_RTT_Conf.h=784924437
+dmadrv_config.h=-1852289125
 emlib_core_debug_config.h=1524820012
 sl_i2cspm_display_config.h=500431146
 sl_i2cspm_i2c_config.h=660643674
 sl_memory_config.h=-995392215
+sl_simple_button_btn0_config.h=-1240424636
+sl_simple_button_btn1_config.h=-430585168
+sl_simple_button_config.h=-1269689451
 sl_simple_led_led0_config.h=261672838
 sl_simple_led_led1_config.h=809145489
 sl_sleeptimer_config.h=847044378
+sl_spidrv_usart0_config.h=769809874
+sl_spidrv_usart1_config.h=-1480471795
+spidrv_config.h=1282557349
+ustimer_config.h=487428516

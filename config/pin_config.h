@@ -8,22 +8,6 @@
 // [ACMP1]$
 
 // $[ADC0]
-// ADC0 CH0 on PD0
-#ifndef ADC0_CH0_PORT                           
-#define ADC0_CH0_PORT                            gpioPortD
-#endif
-#ifndef ADC0_CH0_PIN                            
-#define ADC0_CH0_PIN                             0
-#endif
-
-// ADC0 CH1 on PD1
-#ifndef ADC0_CH1_PORT                           
-#define ADC0_CH1_PORT                            gpioPortD
-#endif
-#ifndef ADC0_CH1_PIN                            
-#define ADC0_CH1_PIN                             1
-#endif
-
 // [ADC0]$
 
 // $[BU]
@@ -36,6 +20,17 @@
 // [DAC0]$
 
 // $[DBG]
+// DBG SWO on PF2
+#ifndef DBG_SWO_PORT                            
+#define DBG_SWO_PORT                             gpioPortF
+#endif
+#ifndef DBG_SWO_PIN                             
+#define DBG_SWO_PIN                              2
+#endif
+#ifndef DBG_ROUTE_LOC                           
+#define DBG_ROUTE_LOC                            0
+#endif
+
 // [DBG]$
 
 // $[ETM]
@@ -124,6 +119,41 @@
 // [TIMER3]$
 
 // $[USART0]
+// USART0 CLK on PE12
+#ifndef USART0_CLK_PORT                         
+#define USART0_CLK_PORT                          gpioPortE
+#endif
+#ifndef USART0_CLK_PIN                          
+#define USART0_CLK_PIN                           12
+#endif
+#ifndef USART0_ROUTE_LOC                        
+#define USART0_ROUTE_LOC                         0
+#endif
+
+// USART0 CS on PE13
+#ifndef USART0_CS_PORT                          
+#define USART0_CS_PORT                           gpioPortE
+#endif
+#ifndef USART0_CS_PIN                           
+#define USART0_CS_PIN                            13
+#endif
+
+// USART0 RX on PE11
+#ifndef USART0_RX_PORT                          
+#define USART0_RX_PORT                           gpioPortE
+#endif
+#ifndef USART0_RX_PIN                           
+#define USART0_RX_PIN                            11
+#endif
+
+// USART0 TX on PE10
+#ifndef USART0_TX_PORT                          
+#define USART0_TX_PORT                           gpioPortE
+#endif
+#ifndef USART0_TX_PIN                           
+#define USART0_TX_PIN                            10
+#endif
+
 // [USART0]$
 
 // $[USART1]
@@ -140,32 +170,32 @@
 #define _PIN                                     0
 #endif
 
-#ifndef LED0_PORT                               
-#define LED0_PORT                                gpioPortA
+#ifndef led0_PORT                               
+#define led0_PORT                                gpioPortA
 #endif
-#ifndef LED0_PIN                                
-#define LED0_PIN                                 2
-#endif
-
-#ifndef LED1_PORT                               
-#define LED1_PORT                                gpioPortA
-#endif
-#ifndef LED1_PIN                                
-#define LED1_PIN                                 3
+#ifndef led0_PIN                                
+#define led0_PIN                                 2
 #endif
 
-#ifndef THUMB_X_PORT                            
-#define THUMB_X_PORT                             gpioPortD
+#ifndef led1_PORT                               
+#define led1_PORT                                gpioPortA
 #endif
-#ifndef THUMB_X_PIN                             
-#define THUMB_X_PIN                              0
+#ifndef led1_PIN                                
+#define led1_PIN                                 3
 #endif
 
-#ifndef THUMB_Y_PORT                            
-#define THUMB_Y_PORT                             gpioPortD
+#ifndef btn0_PORT                               
+#define btn0_PORT                                gpioPortA
 #endif
-#ifndef THUMB_Y_PIN                             
-#define THUMB_Y_PIN                              1
+#ifndef btn0_PIN                                
+#define btn0_PIN                                 4
+#endif
+
+#ifndef btn1_PORT                               
+#define btn1_PORT                                gpioPortA
+#endif
+#ifndef btn1_PIN                                
+#define btn1_PIN                                 5
 #endif
 
 // [CUSTOM_PIN_NAME]$

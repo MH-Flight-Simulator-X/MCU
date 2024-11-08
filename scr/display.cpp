@@ -22,7 +22,7 @@ void display_write_data(uint8_t reg, uint8_t command)
   seq.buf[1].data = NULL;
   seq.buf[1].len = 0;
 
-  I2C_TransferReturn_TypeDef res = I2CSPM_Transfer(sl_i2cspm_max6955, &seq);
+  I2C_TransferReturn_TypeDef res = I2CSPM_Transfer(sl_i2cspm_display, &seq);
   /*
   if (res < 0)
   {

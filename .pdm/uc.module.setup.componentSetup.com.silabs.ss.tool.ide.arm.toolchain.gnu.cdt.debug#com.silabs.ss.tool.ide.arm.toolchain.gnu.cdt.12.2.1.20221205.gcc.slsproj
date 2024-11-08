@@ -70,11 +70,13 @@
           <file name="sl_enum.h" uri="studio:/sdk/platform/common/inc/sl_enum.h"/>
           <file name="sl_assert.h" uri="studio:/sdk/platform/common/inc/sl_assert.h"/>
           <file name="sl_common.h" uri="studio:/sdk/platform/common/inc/sl_common.h"/>
+          <file name="sl_slist.h" uri="studio:/sdk/platform/common/inc/sl_slist.h"/>
           <file name="sl_status.h" uri="studio:/sdk/platform/common/inc/sl_status.h"/>
         </folder>
         <folder name="src">
           <file name="sl_assert.c" uri="studio:/sdk/platform/common/src/sl_assert.c"/>
           <file name="sl_syscalls.c" uri="studio:/sdk/platform/common/src/sl_syscalls.c"/>
+          <file name="sl_slist.c" uri="studio:/sdk/platform/common/src/sl_slist.c"/>
         </folder>
         <folder name="toolchain">
           <folder name="src">
@@ -84,6 +86,44 @@
             <file name="sl_memory_region.h" uri="studio:/sdk/platform/common/toolchain/inc/sl_memory_region.h"/>
             <file name="sl_memory.h" uri="studio:/sdk/platform/common/toolchain/inc/sl_memory.h"/>
             <file name="sl_gcc_preinclude.h" uri="studio:/sdk/platform/common/toolchain/inc/sl_gcc_preinclude.h"/>
+          </folder>
+        </folder>
+      </folder>
+      <folder name="driver">
+        <folder name="button">
+          <folder name="src">
+            <file name="sl_button.c" uri="studio:/sdk/platform/driver/button/src/sl_button.c"/>
+            <file name="sl_simple_button.c" uri="studio:/sdk/platform/driver/button/src/sl_simple_button.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_button.h" uri="studio:/sdk/platform/driver/button/inc/sl_button.h"/>
+            <file name="sl_simple_button.h" uri="studio:/sdk/platform/driver/button/inc/sl_simple_button.h"/>
+          </folder>
+        </folder>
+        <folder name="debug">
+          <folder name="src">
+            <file name="sl_debug_swo.c" uri="studio:/sdk/platform/driver/debug/src/sl_debug_swo.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_debug_swo.h" uri="studio:/sdk/platform/driver/debug/inc/sl_debug_swo.h"/>
+          </folder>
+        </folder>
+        <folder name="i2cspm">
+          <folder name="src">
+            <file name="sl_i2cspm.c" uri="studio:/sdk/platform/driver/i2cspm/src/sl_i2cspm.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_i2cspm.h" uri="studio:/sdk/platform/driver/i2cspm/inc/sl_i2cspm.h"/>
+          </folder>
+        </folder>
+        <folder name="leddrv">
+          <folder name="src">
+            <file name="sl_led.c" uri="studio:/sdk/platform/driver/leddrv/src/sl_led.c"/>
+            <file name="sl_simple_led.c" uri="studio:/sdk/platform/driver/leddrv/src/sl_simple_led.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_led.h" uri="studio:/sdk/platform/driver/leddrv/inc/sl_led.h"/>
+            <file name="sl_simple_led.h" uri="studio:/sdk/platform/driver/leddrv/inc/sl_simple_led.h"/>
           </folder>
         </folder>
       </folder>
@@ -111,6 +151,23 @@
             <file name="sl_device_init_nvic.c" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_nvic.c"/>
           </folder>
         </folder>
+        <folder name="iostream">
+          <folder name="src">
+            <file name="sl_iostream.c" uri="studio:/sdk/platform/service/iostream/src/sl_iostream.c"/>
+            <file name="sl_iostream_retarget_stdio.c" uri="studio:/sdk/platform/service/iostream/src/sl_iostream_retarget_stdio.c"/>
+            <file name="sl_iostream_stdlib_config.c" uri="studio:/sdk/platform/service/iostream/src/sl_iostream_stdlib_config.c"/>
+            <file name="sl_iostream_vuart.c" uri="studio:/sdk/platform/service/iostream/src/sl_iostream_vuart.c"/>
+            <file name="sl_iostream_swo_itm_8.c" uri="studio:/sdk/platform/service/iostream/src/sl_iostream_swo_itm_8.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_iostream.h" uri="studio:/sdk/platform/service/iostream/inc/sl_iostream.h"/>
+            <file name="sl_iostream_stdlib_config.h" uri="studio:/sdk/platform/service/iostream/inc/sl_iostream_stdlib_config.h"/>
+            <file name="sl_iostream_vuart.h" uri="studio:/sdk/platform/service/iostream/inc/sl_iostream_vuart.h"/>
+            <file name="sl_iostream_swo_itm_8.h" uri="studio:/sdk/platform/service/iostream/inc/sl_iostream_swo_itm_8.h"/>
+            <file name="sli_iostream_swo_itm_8.h" uri="studio:/sdk/platform/service/iostream/inc/sli_iostream_swo_itm_8.h"/>
+            <file name="sl_iostream_swo.h" uri="studio:/sdk/platform/service/iostream/inc/sl_iostream_swo.h"/>
+          </folder>
+        </folder>
         <folder name="system">
           <folder name="src">
             <file name="sl_system_init.c" uri="studio:/sdk/platform/service/system/src/sl_system_init.c"/>
@@ -132,21 +189,51 @@
             <file name="sli_sleeptimer.h" uri="studio:/sdk/platform/service/sleeptimer/inc/sli_sleeptimer.h"/>
           </folder>
         </folder>
+        <folder name="udelay">
+          <folder name="src">
+            <file name="sl_udelay.c" uri="studio:/sdk/platform/service/udelay/src/sl_udelay.c"/>
+            <file name="sl_udelay_armv6m_gcc.S" uri="studio:/sdk/platform/service/udelay/src/sl_udelay_armv6m_gcc.S"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_udelay.h" uri="studio:/sdk/platform/service/udelay/inc/sl_udelay.h"/>
+          </folder>
+        </folder>
+      </folder>
+      <folder name="emdrv">
+        <folder name="dmadrv">
+          <folder name="src">
+            <file name="dmadrv.c" uri="studio:/sdk/platform/emdrv/dmadrv/src/dmadrv.c"/>
+            <file name="dmactrl.c" uri="studio:/sdk/platform/emdrv/dmadrv/src/dmactrl.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="dmadrv.h" uri="studio:/sdk/platform/emdrv/dmadrv/inc/dmadrv.h"/>
+            <file name="dmactrl.h" uri="studio:/sdk/platform/emdrv/dmadrv/inc/dmactrl.h"/>
+          </folder>
+        </folder>
+        <folder name="common">
+          <folder name="inc">
+            <file name="ecode.h" uri="studio:/sdk/platform/emdrv/common/inc/ecode.h"/>
+          </folder>
+        </folder>
+        <folder name="gpiointerrupt">
+          <folder name="src">
+            <file name="gpiointerrupt.c" uri="studio:/sdk/platform/emdrv/gpiointerrupt/src/gpiointerrupt.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="gpiointerrupt.h" uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc/gpiointerrupt.h"/>
+          </folder>
+        </folder>
+        <folder name="spidrv">
+          <folder name="src">
+            <file name="spidrv.c" uri="studio:/sdk/platform/emdrv/spidrv/src/spidrv.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="spidrv.h" uri="studio:/sdk/platform/emdrv/spidrv/inc/spidrv.h"/>
+          </folder>
+        </folder>
       </folder>
       <folder name="emlib">
-        <folder name="src">
-          <file name="em_adc.c" uri="studio:/sdk/platform/emlib/src/em_adc.c"/>
-          <file name="em_cmu.c" uri="studio:/sdk/platform/emlib/src/em_cmu.c"/>
-          <file name="em_core.c" uri="studio:/sdk/platform/emlib/src/em_core.c"/>
-          <file name="em_emu.c" uri="studio:/sdk/platform/emlib/src/em_emu.c"/>
-          <file name="em_gpio.c" uri="studio:/sdk/platform/emlib/src/em_gpio.c"/>
-          <file name="em_msc.c" uri="studio:/sdk/platform/emlib/src/em_msc.c"/>
-          <file name="em_rtc.c" uri="studio:/sdk/platform/emlib/src/em_rtc.c"/>
-          <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
-          <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
-        </folder>
         <folder name="inc">
-          <file name="em_adc.h" uri="studio:/sdk/platform/emlib/inc/em_adc.h"/>
           <file name="em_chip.h" uri="studio:/sdk/platform/emlib/inc/em_chip.h"/>
           <file name="em_cmu.h" uri="studio:/sdk/platform/emlib/inc/em_cmu.h"/>
           <file name="em_cmu_compat.h" uri="studio:/sdk/platform/emlib/inc/em_cmu_compat.h"/>
@@ -158,25 +245,42 @@
           <file name="em_version.h" uri="studio:/sdk/platform/emlib/inc/em_version.h"/>
           <file name="em_core.h" uri="studio:/sdk/platform/emlib/inc/em_core.h"/>
           <file name="em_core_generic.h" uri="studio:/sdk/platform/emlib/inc/em_core_generic.h"/>
+          <file name="em_dma.h" uri="studio:/sdk/platform/emlib/inc/em_dma.h"/>
           <file name="em_emu.h" uri="studio:/sdk/platform/emlib/inc/em_emu.h"/>
           <file name="em_gpio.h" uri="studio:/sdk/platform/emlib/inc/em_gpio.h"/>
+          <file name="em_i2c.h" uri="studio:/sdk/platform/emlib/inc/em_i2c.h"/>
           <file name="em_msc.h" uri="studio:/sdk/platform/emlib/inc/em_msc.h"/>
           <file name="em_msc_compat.h" uri="studio:/sdk/platform/emlib/inc/em_msc_compat.h"/>
           <file name="em_rtc.h" uri="studio:/sdk/platform/emlib/inc/em_rtc.h"/>
           <file name="em_system.h" uri="studio:/sdk/platform/emlib/inc/em_system.h"/>
           <file name="em_system_generic.h" uri="studio:/sdk/platform/emlib/inc/em_system_generic.h"/>
           <file name="em_timer.h" uri="studio:/sdk/platform/emlib/inc/em_timer.h"/>
+          <file name="em_usart.h" uri="studio:/sdk/platform/emlib/inc/em_usart.h"/>
+        </folder>
+        <folder name="src">
+          <file name="em_cmu.c" uri="studio:/sdk/platform/emlib/src/em_cmu.c"/>
+          <file name="em_core.c" uri="studio:/sdk/platform/emlib/src/em_core.c"/>
+          <file name="em_dma.c" uri="studio:/sdk/platform/emlib/src/em_dma.c"/>
+          <file name="em_emu.c" uri="studio:/sdk/platform/emlib/src/em_emu.c"/>
+          <file name="em_gpio.c" uri="studio:/sdk/platform/emlib/src/em_gpio.c"/>
+          <file name="em_i2c.c" uri="studio:/sdk/platform/emlib/src/em_i2c.c"/>
+          <file name="em_msc.c" uri="studio:/sdk/platform/emlib/src/em_msc.c"/>
+          <file name="em_rtc.c" uri="studio:/sdk/platform/emlib/src/em_rtc.c"/>
+          <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
+          <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
+          <file name="em_usart.c" uri="studio:/sdk/platform/emlib/src/em_usart.c"/>
         </folder>
       </folder>
-      <folder name="driver">
-        <folder name="leddrv">
-          <folder name="src">
-            <file name="sl_led.c" uri="studio:/sdk/platform/driver/leddrv/src/sl_led.c"/>
-            <file name="sl_simple_led.c" uri="studio:/sdk/platform/driver/leddrv/src/sl_simple_led.c"/>
-          </folder>
-          <folder name="inc">
-            <file name="sl_led.h" uri="studio:/sdk/platform/driver/leddrv/inc/sl_led.h"/>
-            <file name="sl_simple_led.h" uri="studio:/sdk/platform/driver/leddrv/inc/sl_simple_led.h"/>
+    </folder>
+    <folder name="util">
+      <folder name="third_party">
+        <folder name="segger">
+          <folder name="systemview">
+            <folder name="SEGGER">
+              <file name="SEGGER_RTT.c" uri="studio:/sdk/util/third_party/segger/systemview/SEGGER/SEGGER_RTT.c"/>
+              <file name="SEGGER.h" uri="studio:/sdk/util/third_party/segger/systemview/SEGGER/SEGGER.h"/>
+              <file name="SEGGER_RTT.h" uri="studio:/sdk/util/third_party/segger/systemview/SEGGER/SEGGER_RTT.h"/>
+            </folder>
           </folder>
         </folder>
       </folder>
@@ -187,16 +291,29 @@
   <includePath uri="studio:/project/"/>
   <includePath uri="studio:/sdk/platform/Device/SiliconLabs/EFM32GG/Include"/>
   <includePath uri="studio:/sdk/platform/common/inc"/>
+  <includePath uri="studio:/sdk/platform/driver/button/inc"/>
   <includePath uri="studio:/sdk/platform/CMSIS/Core/Include"/>
+  <includePath uri="studio:/sdk/platform/driver/debug/inc"/>
   <includePath uri="studio:/sdk/platform/service/device_init/inc"/>
+  <includePath uri="studio:/sdk/platform/emdrv/dmadrv/inc"/>
+  <includePath uri="studio:/sdk/platform/emdrv/common/inc"/>
   <includePath uri="studio:/sdk/platform/emlib/inc"/>
+  <includePath uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc"/>
+  <includePath uri="studio:/sdk/platform/driver/i2cspm/inc"/>
+  <includePath uri="studio:/sdk/platform/service/iostream/inc"/>
   <includePath uri="studio:/sdk/platform/driver/leddrv/inc"/>
+  <includePath uri="studio:/sdk/util/third_party/segger/systemview/SEGGER"/>
   <includePath uri="studio:/sdk/platform/common/toolchain/inc"/>
   <includePath uri="studio:/sdk/platform/service/system/inc"/>
   <includePath uri="studio:/sdk/platform/service/sleeptimer/inc"/>
+  <includePath uri="studio:/sdk/platform/emdrv/spidrv/inc"/>
+  <includePath uri="studio:/sdk/platform/service/udelay/inc"/>
   <macroDefinition name="DEBUG_EFM"/>
   <macroDefinition name="EFM32GG842F1024"/>
   <macroDefinition name="SL_COMPONENT_CATALOG_PRESENT"/>
+  <macroDefinition name="SEGGER_RTT_ALIGNMENT" value="1024"/>
+  <macroDefinition name="RTT_USE_ASM" value="0"/>
+  <macroDefinition name="SEGGER_RTT_SECTION" value="&quot;SEGGER_RTT&quot;"/>
   <libraryFile name="stdc++"/>
   <libraryFile name="gcc"/>
   <libraryFile name="c"/>

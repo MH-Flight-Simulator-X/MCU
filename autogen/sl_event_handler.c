@@ -5,7 +5,15 @@
 #include "sl_device_init_clocks.h"
 #include "sl_device_init_emu.h"
 #include "sl_sleeptimer.h"
+#include "sl_debug_swo.h"
+#include "gpiointerrupt.h"
+#include "sl_i2cspm_instances.h"
+#include "sl_iostream_stdlib_config.h"
+#include "sl_iostream_vuart.h"
+#include "sl_simple_button_instances.h"
 #include "sl_simple_led_instances.h"
+#include "sl_spidrv_instances.h"
+#include "sl_iostream_init_instances.h"
 
 void sl_platform_init(void)
 {
@@ -17,12 +25,19 @@ void sl_platform_init(void)
 
 void sl_driver_init(void)
 {
+  sl_debug_swo_init();
+  GPIOINT_Init();
+  sl_i2cspm_init_instances();
+  sl_simple_button_init_instances();
   sl_simple_led_init_instances();
+  sl_spidrv_init_instances();
 }
 
 void sl_service_init(void)
 {
   sl_sleeptimer_init();
+  sl_iostream_stdlib_disable_buffering();
+  sl_iostream_init_instances();
 }
 
 void sl_stack_init(void)
@@ -47,5 +62,10 @@ void sl_stack_process_action(void)
 
 void sl_internal_app_process_action(void)
 {
+}
+
+void sl_iostream_init_instances(void)
+{
+  sl_iostream_vuart_init();
 }
 
