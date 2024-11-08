@@ -1,10 +1,10 @@
-#include "sl_simple_led.h"
-#include "sl_simple_led_instances.h"
 #include "sl_sleeptimer.h"
-#include "display.h"
 
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
+#include "display.h"
+#include "game.h"
+
+#ifndef FPS
+#define FPS 60
 #endif
 
 #ifndef LED_INSTANCE_1
@@ -12,27 +12,25 @@
 #endif
 
 sl_sleeptimer_timer_handle_t timer;
-sl_sleeptimer_timer_handle_t display_timer;
-bool toggle_timeout = false;
 int iteration = 0;
 uint8_t chars[6] = {0x46, 0x55, 0x43, 0x4B, 0x10, 0x10};
 
-// Function prototype for the timer callback
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
+sl_sleeptimer_timer_handle_t frame_timer;
+bool frame_ready = false;
+uint32_t frame_counter = 0;
 
-// Function to calculate ticks for one frame (60 FPS)
-static uint32_t calculate_ticks_per_frame(void)
+
+static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
+
+void frame_timer_init()
 {
-    // Get the timer frequency in ticks per second
     uint32_t timer_frequency = sl_sleeptimer_get_timer_frequency();
-    // Calculate ticks for 1/60th of a second (16.6667 ms)
-    uint32_t ticks_per_frame = timer_frequency / 10;
-    return ticks_per_frame;
+    uint32_t ticks_per_frame = timer_frequency / FPS;
+    sl_sleeptimer_start_periodic_timer(&frame_timer, ticks_per_frame, on_frame_timeout, NULL, 0, SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
-void app_init(void)
+void app_init()
 {
-
     display_init();
     // Calculate the number of ticks needed for 60 FPS
     uint32_t toggle_delay_ticks = calculate_ticks_per_frame();
@@ -46,22 +44,26 @@ void app_init(void)
                                        NULL,
                                        0,
                                        SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+
+    frame_timer_init();
+    game_init();
+
 }
 
 void app_process_action(void)
 {
-    if (toggle_timeout)
+    if (frame_ready)
     {
-        sl_led_toggle(&LED_INSTANCE_0);
-        toggle_timeout = false;
+        frame_counter++;
+        game_process_action(frame_counter);
+        frame_ready = false;
     }
 }
 
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
+static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
     (void)handle;
     (void)data;
-    toggle_timeout = true;
 
     display_write_data(0x60, chars[6 % iteration]);
     display_write_data(0x61, chars[6 % iteration + 1]);
@@ -69,6 +71,8 @@ static void on_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
     display_write_data(0x63, chars[6 % iteration + 3]);
     display_write_data(0x64, chars[6 % iteration + 4]);
     display_write_data(0x65, chars[6 % iteration + 5]);
-
     iteration = iteration + 1;
+
+    frame_ready = true;
+
 }
