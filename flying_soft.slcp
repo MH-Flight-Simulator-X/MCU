@@ -28,12 +28,20 @@ toolchain_settings: []
 component:
 - {id: EFM32GG842F1024}
 - {id: cpp_support}
+- {id: debug_swo}
 - {id: device_init}
 - {id: emlib_adc}
+- {id: iostream_retarget_stdio}
+- {id: iostream_stdlib_config}
+- {id: iostream_vuart}
+- instance: [btn0, btn1]
+  id: simple_button
 - instance: [led0, led1]
   id: simple_led
 - {id: sl_system}
 - {id: sleeptimer}
+- instance: [usart0]
+  id: spidrv
 define:
 - {name: DEBUG_EFM}
 ui_hints:

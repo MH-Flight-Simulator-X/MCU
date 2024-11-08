@@ -36,14 +36,14 @@
  ***************************  LOCAL VARIABLES   ********************************
  ******************************************************************************/
 
-sl_sleeptimer_timer_handle_t timer;
-bool toggle_timeout = false;
+sl_sleeptimer_timer_handle_t timer2;
+bool toggle_timeout2 = false;
 
 /*******************************************************************************
  *********************   LOCAL FUNCTION PROTOTYPES   ***************************
  ******************************************************************************/
 
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle,
+static void on_timeout2(sl_sleeptimer_timer_handle_t *handle,
                        void *data);
 
 /*******************************************************************************
@@ -56,9 +56,9 @@ static void on_timeout(sl_sleeptimer_timer_handle_t *handle,
 void blink_init(void)
 {
   // Create timer for waking up the system periodically.
-  sl_sleeptimer_start_periodic_timer_ms(&timer,
+  sl_sleeptimer_start_periodic_timer_ms(&timer2,
                                         TOOGLE_DELAY_MS,
-                                        on_timeout, NULL,
+                                        on_timeout2, NULL,
                                         0,
                                         SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
@@ -68,19 +68,18 @@ void blink_init(void)
  ******************************************************************************/
 void blink_process_action(void)
 {
-  if (toggle_timeout == true) {
+  if (toggle_timeout2 == true) {
     sl_led_toggle(&LED_INSTANCE);
-    toggle_timeout = false;
+    toggle_timeout2 = false;
   }
 }
 
 /***************************************************************************//**
  * Sleeptimer timeout callback.
  ******************************************************************************/
-static void on_timeout(sl_sleeptimer_timer_handle_t *handle,
-                       void *data)
+static void on_timeout2(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
   (void)&handle;
   (void)&data;
-  toggle_timeout = true;
+  toggle_timeout2 = true;
 }

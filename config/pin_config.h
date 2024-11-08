@@ -36,6 +36,17 @@
 // [DAC0]$
 
 // $[DBG]
+// DBG SWO on PF2
+#ifndef DBG_SWO_PORT                            
+#define DBG_SWO_PORT                             gpioPortF
+#endif
+#ifndef DBG_SWO_PIN                             
+#define DBG_SWO_PIN                              2
+#endif
+#ifndef DBG_ROUTE_LOC                           
+#define DBG_ROUTE_LOC                            0
+#endif
+
 // [DBG]$
 
 // $[ETM]
@@ -124,6 +135,41 @@
 // [TIMER3]$
 
 // $[USART0]
+// USART0 CLK on PE12
+#ifndef USART0_CLK_PORT                         
+#define USART0_CLK_PORT                          gpioPortE
+#endif
+#ifndef USART0_CLK_PIN                          
+#define USART0_CLK_PIN                           12
+#endif
+#ifndef USART0_ROUTE_LOC                        
+#define USART0_ROUTE_LOC                         0
+#endif
+
+// USART0 CS on PE13
+#ifndef USART0_CS_PORT                          
+#define USART0_CS_PORT                           gpioPortE
+#endif
+#ifndef USART0_CS_PIN                           
+#define USART0_CS_PIN                            13
+#endif
+
+// USART0 RX on PE11
+#ifndef USART0_RX_PORT                          
+#define USART0_RX_PORT                           gpioPortE
+#endif
+#ifndef USART0_RX_PIN                           
+#define USART0_RX_PIN                            11
+#endif
+
+// USART0 TX on PE10
+#ifndef USART0_TX_PORT                          
+#define USART0_TX_PORT                           gpioPortE
+#endif
+#ifndef USART0_TX_PIN                           
+#define USART0_TX_PIN                            10
+#endif
+
 // [USART0]$
 
 // $[USART1]
@@ -140,11 +186,32 @@
 #define _PIN                                     0
 #endif
 
-#ifndef LED0_PORT                               
-#define LED0_PORT                                gpioPortA
+#ifndef led0_PORT                               
+#define led0_PORT                                gpioPortA
 #endif
-#ifndef LED0_PIN                                
-#define LED0_PIN                                 2
+#ifndef led0_PIN                                
+#define led0_PIN                                 2
+#endif
+
+#ifndef led1_PORT                               
+#define led1_PORT                                gpioPortA
+#endif
+#ifndef led1_PIN                                
+#define led1_PIN                                 3
+#endif
+
+#ifndef btn0_PORT                               
+#define btn0_PORT                                gpioPortA
+#endif
+#ifndef btn0_PIN                                
+#define btn0_PIN                                 4
+#endif
+
+#ifndef btn1_PORT                               
+#define btn1_PORT                                gpioPortA
+#endif
+#ifndef btn1_PIN                                
+#define btn1_PIN                                 5
 #endif
 
 #ifndef LED1_PORT                               
