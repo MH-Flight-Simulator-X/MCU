@@ -7,6 +7,7 @@
 #include "sl_sleeptimer.h"
 #include "sl_debug_swo.h"
 #include "gpiointerrupt.h"
+#include "sl_i2cspm_instances.h"
 #include "sl_iostream_stdlib_config.h"
 #include "sl_iostream_vuart.h"
 #include "sl_simple_button_instances.h"
@@ -26,6 +27,7 @@ void sl_driver_init(void)
 {
   sl_debug_swo_init();
   GPIOINT_Init();
+  sl_i2cspm_init_instances();
   sl_simple_button_init_instances();
   sl_simple_led_init_instances();
   sl_spidrv_init_instances();

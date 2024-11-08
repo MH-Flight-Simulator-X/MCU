@@ -30,7 +30,8 @@ component:
 - {id: cpp_support}
 - {id: debug_swo}
 - {id: device_init}
-- {id: emlib_adc}
+- instance: [display]
+  id: i2cspm
 - {id: iostream_retarget_stdio}
 - {id: iostream_stdlib_config}
 - {id: iostream_vuart}

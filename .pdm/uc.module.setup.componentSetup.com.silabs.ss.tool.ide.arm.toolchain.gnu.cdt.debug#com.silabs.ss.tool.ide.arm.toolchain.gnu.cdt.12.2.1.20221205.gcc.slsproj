@@ -108,6 +108,14 @@
             <file name="sl_debug_swo.h" uri="studio:/sdk/platform/driver/debug/inc/sl_debug_swo.h"/>
           </folder>
         </folder>
+        <folder name="i2cspm">
+          <folder name="src">
+            <file name="sl_i2cspm.c" uri="studio:/sdk/platform/driver/i2cspm/src/sl_i2cspm.c"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_i2cspm.h" uri="studio:/sdk/platform/driver/i2cspm/inc/sl_i2cspm.h"/>
+          </folder>
+        </folder>
         <folder name="leddrv">
           <folder name="src">
             <file name="sl_led.c" uri="studio:/sdk/platform/driver/leddrv/src/sl_led.c"/>
@@ -181,6 +189,15 @@
             <file name="sli_sleeptimer.h" uri="studio:/sdk/platform/service/sleeptimer/inc/sli_sleeptimer.h"/>
           </folder>
         </folder>
+        <folder name="udelay">
+          <folder name="src">
+            <file name="sl_udelay.c" uri="studio:/sdk/platform/service/udelay/src/sl_udelay.c"/>
+            <file name="sl_udelay_armv6m_gcc.S" uri="studio:/sdk/platform/service/udelay/src/sl_udelay_armv6m_gcc.S"/>
+          </folder>
+          <folder name="inc">
+            <file name="sl_udelay.h" uri="studio:/sdk/platform/service/udelay/inc/sl_udelay.h"/>
+          </folder>
+        </folder>
       </folder>
       <folder name="emdrv">
         <folder name="dmadrv">
@@ -216,19 +233,7 @@
         </folder>
       </folder>
       <folder name="emlib">
-        <folder name="src">
-          <file name="em_adc.c" uri="studio:/sdk/platform/emlib/src/em_adc.c"/>
-          <file name="em_cmu.c" uri="studio:/sdk/platform/emlib/src/em_cmu.c"/>
-          <file name="em_core.c" uri="studio:/sdk/platform/emlib/src/em_core.c"/>
-          <file name="em_emu.c" uri="studio:/sdk/platform/emlib/src/em_emu.c"/>
-          <file name="em_gpio.c" uri="studio:/sdk/platform/emlib/src/em_gpio.c"/>
-          <file name="em_msc.c" uri="studio:/sdk/platform/emlib/src/em_msc.c"/>
-          <file name="em_rtc.c" uri="studio:/sdk/platform/emlib/src/em_rtc.c"/>
-          <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
-          <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
-        </folder>
         <folder name="inc">
-          <file name="em_adc.h" uri="studio:/sdk/platform/emlib/inc/em_adc.h"/>
           <file name="em_chip.h" uri="studio:/sdk/platform/emlib/inc/em_chip.h"/>
           <file name="em_cmu.h" uri="studio:/sdk/platform/emlib/inc/em_cmu.h"/>
           <file name="em_cmu_compat.h" uri="studio:/sdk/platform/emlib/inc/em_cmu_compat.h"/>
@@ -243,6 +248,7 @@
           <file name="em_dma.h" uri="studio:/sdk/platform/emlib/inc/em_dma.h"/>
           <file name="em_emu.h" uri="studio:/sdk/platform/emlib/inc/em_emu.h"/>
           <file name="em_gpio.h" uri="studio:/sdk/platform/emlib/inc/em_gpio.h"/>
+          <file name="em_i2c.h" uri="studio:/sdk/platform/emlib/inc/em_i2c.h"/>
           <file name="em_msc.h" uri="studio:/sdk/platform/emlib/inc/em_msc.h"/>
           <file name="em_msc_compat.h" uri="studio:/sdk/platform/emlib/inc/em_msc_compat.h"/>
           <file name="em_rtc.h" uri="studio:/sdk/platform/emlib/inc/em_rtc.h"/>
@@ -250,6 +256,19 @@
           <file name="em_system_generic.h" uri="studio:/sdk/platform/emlib/inc/em_system_generic.h"/>
           <file name="em_timer.h" uri="studio:/sdk/platform/emlib/inc/em_timer.h"/>
           <file name="em_usart.h" uri="studio:/sdk/platform/emlib/inc/em_usart.h"/>
+        </folder>
+        <folder name="src">
+          <file name="em_cmu.c" uri="studio:/sdk/platform/emlib/src/em_cmu.c"/>
+          <file name="em_core.c" uri="studio:/sdk/platform/emlib/src/em_core.c"/>
+          <file name="em_dma.c" uri="studio:/sdk/platform/emlib/src/em_dma.c"/>
+          <file name="em_emu.c" uri="studio:/sdk/platform/emlib/src/em_emu.c"/>
+          <file name="em_gpio.c" uri="studio:/sdk/platform/emlib/src/em_gpio.c"/>
+          <file name="em_i2c.c" uri="studio:/sdk/platform/emlib/src/em_i2c.c"/>
+          <file name="em_msc.c" uri="studio:/sdk/platform/emlib/src/em_msc.c"/>
+          <file name="em_rtc.c" uri="studio:/sdk/platform/emlib/src/em_rtc.c"/>
+          <file name="em_system.c" uri="studio:/sdk/platform/emlib/src/em_system.c"/>
+          <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
+          <file name="em_usart.c" uri="studio:/sdk/platform/emlib/src/em_usart.c"/>
         </folder>
       </folder>
     </folder>
@@ -280,6 +299,7 @@
   <includePath uri="studio:/sdk/platform/emdrv/common/inc"/>
   <includePath uri="studio:/sdk/platform/emlib/inc"/>
   <includePath uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc"/>
+  <includePath uri="studio:/sdk/platform/driver/i2cspm/inc"/>
   <includePath uri="studio:/sdk/platform/service/iostream/inc"/>
   <includePath uri="studio:/sdk/platform/driver/leddrv/inc"/>
   <includePath uri="studio:/sdk/util/third_party/segger/systemview/SEGGER"/>
@@ -287,6 +307,7 @@
   <includePath uri="studio:/sdk/platform/service/system/inc"/>
   <includePath uri="studio:/sdk/platform/service/sleeptimer/inc"/>
   <includePath uri="studio:/sdk/platform/emdrv/spidrv/inc"/>
+  <includePath uri="studio:/sdk/platform/service/udelay/inc"/>
   <macroDefinition name="DEBUG_EFM"/>
   <macroDefinition name="EFM32GG842F1024"/>
   <macroDefinition name="SL_COMPONENT_CATALOG_PRESENT"/>

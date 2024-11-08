@@ -22,7 +22,7 @@ static uint32_t calculate_ticks_per_frame(void)
     // Get the timer frequency in ticks per second
     uint32_t timer_frequency = sl_sleeptimer_get_timer_frequency();
     // Calculate ticks for 1/60th of a second (16.6667 ms)
-    uint32_t ticks_per_frame = timer_frequency / 60;
+    uint32_t ticks_per_frame = timer_frequency / 10;
     return ticks_per_frame;
 }
 
@@ -47,7 +47,6 @@ void app_process_action(void)
     if (toggle_timeout)
     {
         sl_led_toggle(&LED_INSTANCE_0);
-        sl_led_toggle(&LED_INSTANCE_1);
         toggle_timeout = false;
     }
 }

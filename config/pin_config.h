@@ -8,22 +8,6 @@
 // [ACMP1]$
 
 // $[ADC0]
-// ADC0 CH0 on PD0
-#ifndef ADC0_CH0_PORT                           
-#define ADC0_CH0_PORT                            gpioPortD
-#endif
-#ifndef ADC0_CH0_PIN                            
-#define ADC0_CH0_PIN                             0
-#endif
-
-// ADC0 CH1 on PD1
-#ifndef ADC0_CH1_PORT                           
-#define ADC0_CH1_PORT                            gpioPortD
-#endif
-#ifndef ADC0_CH1_PIN                            
-#define ADC0_CH1_PIN                             1
-#endif
-
 // [ADC0]$
 
 // $[BU]
@@ -212,27 +196,6 @@
 #endif
 #ifndef btn1_PIN                                
 #define btn1_PIN                                 5
-#endif
-
-#ifndef LED1_PORT                               
-#define LED1_PORT                                gpioPortA
-#endif
-#ifndef LED1_PIN                                
-#define LED1_PIN                                 3
-#endif
-
-#ifndef THUMB_X_PORT                            
-#define THUMB_X_PORT                             gpioPortD
-#endif
-#ifndef THUMB_X_PIN                             
-#define THUMB_X_PIN                              0
-#endif
-
-#ifndef THUMB_Y_PORT                            
-#define THUMB_Y_PORT                             gpioPortD
-#endif
-#ifndef THUMB_Y_PIN                             
-#define THUMB_Y_PIN                              1
 #endif
 
 // [CUSTOM_PIN_NAME]$
