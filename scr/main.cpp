@@ -14,7 +14,7 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-#include <inc/app.h>
+#include "app.h"
 #include "sl_component_catalog.h"
 #include "sl_system_init.h"
 #if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
