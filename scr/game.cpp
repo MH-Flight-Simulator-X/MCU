@@ -16,7 +16,6 @@ void game_init()
 void game_process_action(uint32_t frame_counter)
 {
     if (frame_counter % 30 == 0) {
-
       display_write_data(0x60, chars[6 % iteration]);
       display_write_data(0x61, chars[6 % iteration + 1]);
       display_write_data(0x62, chars[6 % iteration + 2]);
