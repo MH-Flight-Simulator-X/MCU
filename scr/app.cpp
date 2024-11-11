@@ -18,26 +18,6 @@
 #include "game.h"
 #include "sl_sleeptimer.h"
 #include "game.h"
-#include "adc_reader.h"
-#include "sl_simple_led_instances.h"
-
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
-#endif
-
-#ifndef LED_INSTANCE_1
-#define LED_INSTANCE_1 sl_led_led1
-#endif
-
-
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
-#endif
-
-#ifndef LED_INSTANCE_1
-#define LED_INSTANCE_1 sl_led_led1
-#endif
-
 
 #ifndef FPS
 #define FPS 60
@@ -62,38 +42,22 @@ void app_init()
 {
   frame_timer_init();
   game_init();
-
-  //game_init();
-  adc_init();
 }
 
 void app_process_action(void)
 {
-    if (frame_ready)
-    {
-        frame_counter++;
-        uint32_t controllerValues = read_adc();
-        if (controllerValues[0] > 0)
-        {
-          sl_led_turn_on(&LED_INSTANCE_0);
-        }
-        else
-        {
-          sl_led_turn_off(&LED_INSTANCE_0);
-        }
-        if (controllerValues[1] > 0)
-        {
-          sl_led_turn_on(&LED_INSTANCE_1);
-        }
-        else
-        {
-          sl_led_turn_off(&LED_INSTANCE_1);
-        }
-        //game_process_action(frame_counter);
 
-        frame_ready = false;
-        game_process_action(frame_counter);
-    }
+
+  if (frame_ready)
+  {
+
+
+
+
+    frame_counter++;
+    frame_ready = false;
+    game_process_action(frame_counter);
+  }
 }
 
 static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)

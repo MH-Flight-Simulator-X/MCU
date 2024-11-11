@@ -1,10 +1,5 @@
-#include "adc_reader.h"
 #include "em_adc.h"
 #include "em_cmu.h"
-#include "em_system.h"
-#include "em_timer.h"
-#include <stdint.h>
-#include <stdio.h>
 
 void adc_init()
 {
@@ -22,42 +17,60 @@ void adc_init()
   //initScan.input = adcSingleInputCh0; // | ADC_SCANCTRL_INPUTMASK_CH1 | ADC_SCANCTRL_INPUTMASK_CH2;
   //initScan.rep = true;
   initScan.acqTime = adcAcqTime16;
-  initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 | ADC_SCANCTRL_INPUTMASK_CH1;   // Enable PD1
-                     //| ADC_SCANCTRL_INPUTMASK_CH2; // Enable PD2
+  initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 | ADC_SCANCTRL_INPUTMASK_CH1 | ADC_SCANCTRL_INPUTMASK_CH2;
   ADC_InitScan(ADC0, &initScan);
 }
 
-long double * read_adc()
+volatile uint32_t * read_adc()
 {
-  volatile uint32_t adcSamples[3];
-  static long double controllerValues[3];
+  static volatile uint32_t adcSamples[3];
 
   ADC_Start(ADC0, adcStartScan);
 
   // Wait for the scan conversion to complete
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
   adcSamples[0] = ADC0->SCANDATA;
+
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
   adcSamples[1] = ADC0->SCANDATA;
+
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
   adcSamples[2] = ADC0->SCANDATA;
 
-  controllerValues[0] = adcSamples[0] / 4095 - 0.5;
-  controllerValues[1] = adcSamples[1] / 4095 - 0.5;
+  // Convert thumbstick voltages to values in range [-0.5, 0.5]
 
-  if (adcSamples[2]<3000)
-    controllerValues[2] = 0;
-  else if (3000 <= adcSamples[2] && adcSamples[2] < 3050)
-    controllerValues[2] = 1;
-  else if (3050 <= adcSamples[2] && adcSamples[2] < 3100)
-    controllerValues[2] = 1.25;
-  else if (3100 <= adcSamples[2] && adcSamples[2] < 3150)
-    controllerValues[2] = 1.5;
-  else if (3200 <= adcSamples[2] && adcSamples[2] < 3250)
-    controllerValues[2] = 1.75;
+  adcSamples[0] = (adcSamples[0]*3300)/4095; // Convert to voltage
+  adcSamples[1] = (adcSamples[1]*3300)/4095; // Convert to voltage
+  adcSamples[2] = (adcSamples[2]*3300)/4095; // Convert to voltage
+
+  return adcSamples;
+}
+
+
+long double * voltage_to_controllerValue(volatile uint32_t * adcValues)
+{
+  static long double controllerValues[3];
+
+  if (adcValues[0] < 1400 || 1600 < adcValues[0])
+      controllerValues[0] = adcValues[0] / 3300.0 - 0.5;
   else
-    controllerValues[2] = 2;
+      controllerValues[0] = 0.0;
+
+  if (adcValues[1] < 1400 || 1600 < adcValues[1])
+      controllerValues[1] = adcValues[1] / 3300.0 - 0.5;
+  else
+      controllerValues[1] = 0.0;
+
+  if (adcValues[2]<3100)
+    controllerValues[2] = 0.0;
+  else if (3100 <= adcValues[2] && adcValues[2] < 3150)
+    controllerValues[2] = 0.25;
+  else if (3150 <= adcValues[2] && adcValues[2] < 3170)
+    controllerValues[2] = 0.50;
+  else if (3170 <= adcValues[2] && adcValues[2] < 3180)
+    controllerValues[2] = 0.75;
+  else
+    controllerValues[2] = 1.0;
 
   return controllerValues;
-
 }

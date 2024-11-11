@@ -1,6 +1,6 @@
-#include <stdint.h>
 void adc_init(void);
-long double * read_adc(void);
+volatile uint32_t * read_adc(void);
+long double * voltage_to_controllerValue(volatile uint32_t*);
 
 
 
