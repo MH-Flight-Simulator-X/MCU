@@ -3,28 +3,13 @@
 #include "em_cmu.h"
 #include "em_system.h"
 #include "em_timer.h"
-#include "sl_simple_led_instances.h"
 #include <stdint.h>
 #include <stdio.h>
 
-
-#ifndef LED_INSTANCE_0
-#define LED_INSTANCE_0 sl_led_led0
-#endif
-
-#ifndef LED_INSTANCE_1
-#define LED_INSTANCE_1 sl_led_led1
-#endif
-
-volatile uint32_t adcSample = 0;
-volatile bool     adcSampleReady = false;
-uint32_t          temp;
-
-void init_adc()
+void adc_init()
 {
   CMU_ClockEnable(cmuClock_ADC0, true);
   CMU_ClockEnable(cmuClock_GPIO, true);
-
 
   ADC_Init_TypeDef init = ADC_INIT_DEFAULT;
   init.timebase = ADC_TimebaseCalc(0);
@@ -40,42 +25,39 @@ void init_adc()
   initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 | ADC_SCANCTRL_INPUTMASK_CH1;   // Enable PD1
                      //| ADC_SCANCTRL_INPUTMASK_CH2; // Enable PD2
   ADC_InitScan(ADC0, &initScan);
-
-
-
 }
 
-volatile uint32_t adcSample0;
-volatile uint32_t adcSample1;
-
-void read_adc()
+long double * read_adc()
 {
+  volatile uint32_t adcSamples[3];
+  static long double controllerValues[3];
 
   ADC_Start(ADC0, adcStartScan);
 
   // Wait for the scan conversion to complete
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
-  adcSample0 = ADC0->SCANDATA;
+  adcSamples[0] = ADC0->SCANDATA;
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
-  adcSample1 = ADC0->SCANDATA;
+  adcSamples[1] = ADC0->SCANDATA;
+  while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
+  adcSamples[2] = ADC0->SCANDATA;
 
-  adcSample0 = (adcSample0 * 3300) / 4095;
-  adcSample1 = (adcSample1 * 3300) / 4095;
+  controllerValues[0] = adcSamples[0] / 4095 - 0.5;
+  controllerValues[1] = adcSamples[1] / 4095 - 0.5;
 
-  if (adcSample0 > 1500)
-  {
-    sl_led_turn_on(&LED_INSTANCE_0);
-  }
+  if (adcSamples[2]<3000)
+    controllerValues[2] = 0;
+  else if (3000 <= adcSamples[2] && adcSamples[2] < 3050)
+    controllerValues[2] = 1;
+  else if (3050 <= adcSamples[2] && adcSamples[2] < 3100)
+    controllerValues[2] = 1.25;
+  else if (3100 <= adcSamples[2] && adcSamples[2] < 3150)
+    controllerValues[2] = 1.5;
+  else if (3200 <= adcSamples[2] && adcSamples[2] < 3250)
+    controllerValues[2] = 1.75;
   else
-  {
-    sl_led_turn_off(&LED_INSTANCE_0);
-  }
-  if (adcSample1 > 1500)
-  {
-    sl_led_turn_on(&LED_INSTANCE_1);
-  }
-  else
-  {
-    sl_led_turn_off(&LED_INSTANCE_1);
-  }
+    controllerValues[2] = 2;
+
+  return controllerValues;
+
 }
