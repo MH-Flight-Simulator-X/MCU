@@ -3,7 +3,7 @@
 #include "sl_simple_led.h"
 #include <stddef.h>
 
-
+uint8_t chars[6] = {0x46, 0x55, 0x43, 0x4B, 0x10, 0x10};
 
 void display_write_data(uint8_t reg, uint8_t command)
 {
@@ -54,4 +54,12 @@ void display_init(void)
   display_write_data(0x65, 0b10100000);
 }
 
-
+void display_print_testing(int iteration)
+{
+  display_write_data(0x60, chars[6 % iteration]);
+  display_write_data(0x61, chars[6 % iteration + 1]);
+  display_write_data(0x62, chars[6 % iteration + 2]);
+  display_write_data(0x63, chars[6 % iteration + 3]);
+  display_write_data(0x64, chars[6 % iteration + 4]);
+  display_write_data(0x65, chars[6 % iteration + 5]);
+}

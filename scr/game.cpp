@@ -22,7 +22,6 @@
 #endif
 
 int iteration = 0;
-uint8_t chars[6] = {0x46, 0x55, 0x43, 0x4B, 0x10, 0x10};
 Plane plane;
 
 void game_init()
@@ -57,15 +56,10 @@ void game_process_action(uint32_t frame_counter)
     sl_led_turn_off(&LED_INSTANCE_1);
   }
 
-  if (frame_counter % 30 == 0)
-  {
-    display_write_data(0x60, chars[6 % iteration]);
-    display_write_data(0x61, chars[6 % iteration + 1]);
-    display_write_data(0x62, chars[6 % iteration + 2]);
-    display_write_data(0x63, chars[6 % iteration + 3]);
-    display_write_data(0x64, chars[6 % iteration + 4]);
-    display_write_data(0x65, chars[6 % iteration + 5]);
+  update_plane(&plane);
+  
+  if (frame_counter % 30 == 0) {
+    display_print_testing(iteration);
     iteration = iteration + 1;
   }
-  update_plane(&plane);
 }
