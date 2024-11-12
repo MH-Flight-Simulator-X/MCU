@@ -1,7 +1,13 @@
+typedef struct
+{
+  long double pitch;
+  long double roll;
+  long double throttle;
+} Controller;
+
 void adc_init(void);
-volatile uint32_t * read_adc(void);
-long double * voltage_to_controllerValue(volatile uint32_t*);
-
-
+void read_adc(uint32_t *);
+void get_controller_inputs(Controller *);
+void voltage_to_controller(volatile uint32_t*, Controller *);
 
 

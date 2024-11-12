@@ -23,6 +23,7 @@
 
 int iteration = 0;
 Plane plane;
+Controller controller;
 
 void game_init()
 {
@@ -34,12 +35,9 @@ void game_init()
 void game_process_action(uint32_t frame_counter)
 {
 
-  volatile uint32_t *adcValues;
-  long double *controllerValues;
-  adcValues = read_adc();
-  controllerValues = voltage_to_controllerValue(adcValues);
+  get_controller_inputs(&controller);
 
-  if (controllerValues[0] > 0)
+  if (controller.pitch > 0)
   {
     sl_led_turn_on(&LED_INSTANCE_0);
   }
@@ -47,7 +45,7 @@ void game_process_action(uint32_t frame_counter)
   {
     sl_led_turn_off(&LED_INSTANCE_0);
   }
-  if (controllerValues[1] > 0)
+  if (controller.roll > 0)
   {
     sl_led_turn_on(&LED_INSTANCE_1);
   }
