@@ -6,11 +6,8 @@
     <property object="DefaultMode" propertyId="mode.diagramLocation" value="100, 100"/>
     <property object="I2C0" propertyId="ABModule.selectedRequirement" value="i2c%T%SL_I2CSPM_DISPLAY%T%sl_i2cspm_display_config.h"/>
     <property object="I2C0" propertyId="ABPeripheral.included" value="true"/>
-<<<<<<< HEAD
     <property object="PA0" propertyId="pin.name" value=""/>
     <property object="PA1" propertyId="pin.name" value=""/>
-=======
->>>>>>> e56bcea (Added I2C software component)
     <property object="PA2" propertyId="ABModule.selectedRequirement" value="gpio%T%SL_SIMPLE_LED_LED0%T%sl_simple_led_led0_config.h"/>
     <property object="PA2" propertyId="pin.name" value="led0"/>
     <property object="PA2" propertyId="pin.reserve" value="Reserved"/>
