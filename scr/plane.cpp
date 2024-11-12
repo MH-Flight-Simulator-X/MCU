@@ -1,4 +1,5 @@
 #include "plane.h"
+#include "adc_reader.h"
 
 void init_plane(Plane *plane)
 {
@@ -11,33 +12,32 @@ void init_plane(Plane *plane)
   plane->thrust = 0.5f;
 }
 
-void update_plane(Plane *plane)
+void update_plane(Plane *plane, Controller *controller)
 {
+  plane->roll += controller->roll * 1.5f;
+
   float lift = cos_deg(plane->roll);
   float gravity_effect = GRAVITY * (1 - lift);
 
-  float target_speed = BASE_SPEED * plane->thrust - 50.0f * sin_deg(plane->vert_rotation);
-  if (plane->speed < target_speed)
-    plane->speed += (target_speed - plane->speed) * 0.05f;
-  else
-    plane->speed -= (plane->speed - target_speed) * 0.05f;
 
   plane->roll = normalize_angle(plane->roll);
-  float pitch_vertical = plane->pitch * cos_deg(plane->roll) * 0.1f;
-  float pitch_horizontal = plane->pitch * sin_deg(plane->roll) * 0.1f;
+  float pitch_vertical = controller->pitch * cos_deg(plane->roll) * 0.3f;
+  float pitch_horizontal = controller->pitch * sin_deg(plane->roll) * 0.3f;
   plane->vert_rotation += pitch_vertical;
   plane->hori_rotation += pitch_horizontal;
 
   plane->vert_rotation = normalize_angle(plane->vert_rotation);
   plane->hori_rotation = normalize_angle(plane->hori_rotation);
 
-  if (plane->vert_rotation > 0 && plane->vert_rotation < 90)
-  {
-    float gravity_pitch_down = GRAVITY * (1.0f - plane->speed / BASE_SPEED) * sin_deg(plane->vert_rotation);
-    plane->vert_rotation -= gravity_pitch_down;
-  }
+  // Precompute the sin for faster computation of sin^3
+  float stall_decrease = (STALL_DECREASE * sin_deg(plane->vert_rotation));
+  float target_speed = BASE_SPEED * controller->throttle - stall_decrease*stall_decrease*stall_decrease*sqrt(plane->speed);
 
-  plane->vert_rotation = normalize_angle(plane->vert_rotation);
+
+  if (plane->speed < target_speed)
+    plane->speed += (target_speed - plane->speed) * 0.05f;
+  else
+    plane->speed -= (plane->speed - target_speed) * 0.05f;
 
   plane->dx = cos_deg(plane->hori_rotation);
   plane->dy = sin_deg(plane->vert_rotation);

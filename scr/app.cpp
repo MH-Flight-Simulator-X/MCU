@@ -46,14 +46,8 @@ void app_init()
 
 void app_process_action(void)
 {
-
-
   if (frame_ready)
   {
-
-
-
-
     frame_counter++;
     frame_ready = false;
     game_process_action(frame_counter);

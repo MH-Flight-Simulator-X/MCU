@@ -30,7 +30,7 @@ void adc_init()
 
 
 // Start ADC read, wait for conversions and convert to volts
-void read_adc(uint32_t * adcSamples)
+void read_adc(uint32_t *adcSamples)
 {
   ADC_Start(ADC0, adcStartScan);
 

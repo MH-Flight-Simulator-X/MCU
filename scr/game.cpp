@@ -54,7 +54,7 @@ void game_process_action(uint32_t frame_counter)
     sl_led_turn_off(&LED_INSTANCE_1);
   }
 
-  update_plane(&plane);
+  update_plane(&plane, &controller);
   
   if (frame_counter % 30 == 0) {
     display_print_testing(iteration);
