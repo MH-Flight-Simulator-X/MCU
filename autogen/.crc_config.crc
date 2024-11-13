@@ -2,6 +2,7 @@
 SEGGER_RTT_Conf.h=784924437
 dmadrv_config.h=-1852289125
 emlib_core_debug_config.h=1524820012
+sl_emlib_gpio_init_reset_config.h=445077240
 sl_i2cspm_display_config.h=500431146
 sl_i2cspm_i2c_config.h=660643674
 sl_memory_config.h=-995392215
