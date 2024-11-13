@@ -31,9 +31,18 @@ typedef struct
   float roll;
   float pitch_vertical, pitch_horizontal;
   float speed;
-} Plane;
 
-void init_plane(Plane *plane);
-void update_plane(Plane *plane, Controller *controller);
+  float pitch;
+  float yaw;
+} Aircraft;
+
+typedef struct
+{
+  float x, y, z;
+  float pitch, yaw, roll;
+} Sprite;
+
+void init_aircraft(Aircraft *plane);
+void update_aircraft(Aircraft *plane, Controller *controller);
 
 #endif // PLANE_H
