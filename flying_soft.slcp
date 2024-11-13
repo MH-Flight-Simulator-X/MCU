@@ -41,7 +41,7 @@ component:
   id: simple_led
 - {id: sl_system}
 - {id: sleeptimer}
-- instance: [usart0]
+- instance: [inst]
   id: spidrv
 define:
 - {name: DEBUG_EFM}

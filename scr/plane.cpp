@@ -6,7 +6,7 @@ void init_plane(Plane *plane)
   plane->x = plane->y = plane->z = 0.0f;
   plane->dx = 1.0f;
   plane->dy = plane->dz = 0.0f;
-  plane->pitch = plane->roll = 0.0f;
+  plane->roll = 0.0f;
   plane->vert_rotation = plane->hori_rotation = 0.0f;
   plane->speed = BASE_SPEED;
   plane->thrust = 0.5f;

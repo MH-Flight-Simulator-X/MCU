@@ -28,7 +28,7 @@ typedef struct
 {
   float x, y, z;
   float dx, dy, dz;
-  float pitch, roll;
+  float roll;
   float vert_rotation, hori_rotation;
   float speed;
   float thrust;

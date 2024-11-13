@@ -35,15 +35,15 @@ void sl_button_on_change(const sl_button_t *handle) {
 //      generate_mvp_matrix_entry(position2, 0.7f, 1.5f, 0xB, 0x2, &entries[1]);
 //
 //      fpga_frame_send(entries, 2);
-////      uint8_t data[] = {
-////          0x02, 0xA1
-////      };
-////
-////      // Calculate the size of the data buffer
-////      int byte_count = sizeof(data) / sizeof(data[0]);
-////
-////      // Call the spi_transfer function with the data and its size
-////      spi_transfer(data, byte_count);
+//      uint8_t data[] = {
+//          0x02, 0xA1
+//      };
+//
+//      // Calculate the size of the data buffer
+//      int byte_count = sizeof(data) / sizeof(data[0]);
+//
+//      // Call the spi_transfer function with the data and its size
+//      spi_transfer(data, byte_count);
 
       GPIO_PinOutSet(gpioPortE, 7);
     }

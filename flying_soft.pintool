@@ -30,7 +30,7 @@
     <property object="PORTIO" propertyId="portio.usart0.enable.tx" value="Enabled"/>
     <property object="TIMER0" propertyId="ABModule.selectedRequirement" value="timer%T%USTIMER%T%ustimer_config.h"/>
     <property object="TIMER0" propertyId="ABPeripheral.included" value="true"/>
-    <property object="USART0" propertyId="ABModule.selectedRequirement" value="usart%T%SL_SPIDRV_USART0%T%sl_spidrv_usart0_config.h"/>
+    <property object="USART0" propertyId="ABModule.selectedRequirement" value="usart%T%SL_SPIDRV_INST%T%sl_spidrv_inst_config.h"/>
     <property object="USART0" propertyId="ABPeripheral.included" value="true"/>
     <property object="USART1" propertyId="ABPeripheral.included" value="true"/>
   </mode>
