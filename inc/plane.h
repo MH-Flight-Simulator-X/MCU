@@ -29,9 +29,8 @@ typedef struct
   float x, y, z;
   float dx, dy, dz;
   float pitch, roll;
-  float vert_rotation, hori_rotation;
+  float pitch_vertical, pitch_horizontal;
   float speed;
-  float thrust;
 } Plane;
 
 void init_plane(Plane *plane);
