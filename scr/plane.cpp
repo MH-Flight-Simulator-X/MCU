@@ -1,6 +1,5 @@
-#include <controller.h>
+#include "controller.h"
 #include "plane.h"
-#include "adc_reader.h"
 #include <math.h>
 
 void init_aircraft(Aircraft *aircraft)

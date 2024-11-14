@@ -5,7 +5,6 @@
 #include "plane.h"
 #include "game.h"
 #include "display.h"
-#include "adc_reader.h"
 #include "transformation.h"
 
 #ifndef LED_INSTANCE_0
@@ -34,13 +33,11 @@ mat4 **mvp_matrices;
 void game_init()
 {
   display_init();
-  adc_init();
   aircraft = (Aircraft *)malloc(sizeof(Aircraft));
   init_aircraft(aircraft);
   sprites = (Sprite **)malloc((sprite_count - 1) * sizeof(Sprite *));
   mvp_matrices = (mat4 **)malloc(sprite_count * sizeof(mat4 *));
   controller_init(&controller);
-  init_plane(&plane);
 }
 
 void game_process_action(uint32_t frame_counter)
