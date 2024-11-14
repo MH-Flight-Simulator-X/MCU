@@ -184,18 +184,18 @@
 #define led1_PIN                                 3
 #endif
 
-#ifndef btn0_PORT                               
-#define btn0_PORT                                gpioPortA
+#ifndef BTN0_PORT                               
+#define BTN0_PORT                                gpioPortD
 #endif
-#ifndef btn0_PIN                                
-#define btn0_PIN                                 4
+#ifndef BTN0_PIN                                
+#define BTN0_PIN                                 3
 #endif
 
-#ifndef btn1_PORT                               
-#define btn1_PORT                                gpioPortA
+#ifndef BTN1_PORT                               
+#define BTN1_PORT                                gpioPortD
 #endif
-#ifndef btn1_PIN                                
-#define btn1_PIN                                 5
+#ifndef BTN1_PIN                                
+#define BTN1_PIN                                 4
 #endif
 
 // [CUSTOM_PIN_NAME]$

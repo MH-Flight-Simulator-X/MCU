@@ -2,7 +2,8 @@
 #define PLANE_H
 
 #include <math.h>
-#include "adc_reader.h"
+
+#include "controller.h"
 
 #define BASE_SPEED 100.0f
 #define PRECISION 100.0f

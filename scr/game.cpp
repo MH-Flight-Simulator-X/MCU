@@ -1,3 +1,4 @@
+#include "controller.h"
 #include "sl_simple_led.h"
 #include "sl_simple_led_instances.h"
 #include "../include/cglm/cglm.h"
@@ -38,12 +39,14 @@ void game_init()
   init_aircraft(aircraft);
   sprites = (Sprite **)malloc((sprite_count - 1) * sizeof(Sprite *));
   mvp_matrices = (mat4 **)malloc(sprite_count * sizeof(mat4 *));
+  controller_init(&controller);
+  init_plane(&plane);
 }
 
 void game_process_action(uint32_t frame_counter)
 {
 
-  get_controller_inputs(&controller);
+  controller_get_inputs(&controller);
 
   if (controller.pitch > 0)
   {

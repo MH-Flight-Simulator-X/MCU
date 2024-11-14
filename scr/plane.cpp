@@ -1,3 +1,4 @@
+#include <controller.h>
 #include "plane.h"
 #include "adc_reader.h"
 #include <math.h>
