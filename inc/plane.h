@@ -6,9 +6,9 @@
 #include "controller.h"
 
 #define BASE_SPEED 100.0f
-#define PRECISION 100.0f
-#define GRAVITY 10.0f
-#define STALL_DECREASE 9.0f
+#define PRECISION 500.0f
+#define GRAVITY 0.0f
+#define STALL_DECREASE 5.0f
 #define PI 3.1415926535f
 
 static inline float deg_to_rad(float degrees) { return degrees * PI / 180.0f; }
@@ -28,22 +28,17 @@ static inline float normalize_angle(float angle)
 typedef struct
 {
   float x, y, z;
-  float dx, dy, dz;
-  float roll;
-  float pitch_vertical, pitch_horizontal;
+  float roll, pitch, yaw;
   float speed;
-
-  float pitch;
-  float yaw;
 } Aircraft;
 
 typedef struct
 {
   float x, y, z;
-  float pitch, yaw, roll;
+  float roll, pitch, yaw;
 } Sprite;
 
 void init_aircraft(Aircraft *plane);
-void update_aircraft(Aircraft *plane, Controller *controller);
+void update_aircraft(Aircraft *plane, Controller *controller, uint32_t frame_counter);
 
 #endif // PLANE_H

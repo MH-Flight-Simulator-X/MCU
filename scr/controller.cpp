@@ -3,6 +3,7 @@
 #include "em_cmu.h"
 #include "sl_button.h"
 #include "sl_simple_button_instances.h"
+#include "debug.h"
 
 void controller_init(Controller * controller)
 {
@@ -16,10 +17,13 @@ void controller_init(Controller * controller)
 
 }
 
-void controller_get_inputs(Controller * controller)
+void controller_get_inputs(Controller * controller, uint32_t frame_counter)
 {
   uint32_t adcSamples[3];
   adc_read(adcSamples);
+//  if (frame_counter % 60 == 0){
+//    debug_printf("Pitch: %d | Roll: %d", adcSamples[0], adcSamples[1]);
+//  }
   controller_convert_voltage(adcSamples, controller);
   button_read(controller);
 
@@ -28,8 +32,8 @@ void controller_get_inputs(Controller * controller)
 void controller_convert_voltage(volatile uint32_t * adcValues, Controller * controller)
 {
   // CONVERT THUMBSTICK TO PITCH
-  if (adcValues[0] < 1300 || 1700 < adcValues[0])
-    controller->pitch = adcValues[0] / 3300.0 - 0.5;
+  if (adcValues[0] < 8 || 15 < adcValues[0])
+    controller->pitch = adcValues[0] / 80.0 - 0.5;
   else
     controller->pitch = 0.0;
 
