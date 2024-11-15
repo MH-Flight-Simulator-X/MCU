@@ -64,7 +64,7 @@ void print_buffer(uint8_t *buffer, int size)
   for (int i = 0; i < size; i++)
   {
     debug_printf("0x%02X ", buffer[i]);
-    if ((i + 1) % 16 == 0)
+    if ((i + 1) % 8 == 0)
     {
       debug_printf("\n");
     }
@@ -95,10 +95,8 @@ void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count)
         convert_float_to_fixedpoint_bytes(entries[n].mvp_matrix[i][j], &buffer[offset]);
         offset += 3;
       }
-      debug_printf("\n");
     }
-    debug_printf("\n");
   }
   spi_transfer(buffer, total_size);
-  print_buffer(buffer, total_size);
+//  print_buffer(buffer, total_size);
 }
