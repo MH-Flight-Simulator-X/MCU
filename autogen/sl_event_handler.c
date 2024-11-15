@@ -6,6 +6,7 @@
 #include "sl_device_init_emu.h"
 #include "sl_sleeptimer.h"
 #include "sl_debug_swo.h"
+#include "sl_emlib_gpio_simple_init.h"
 #include "gpiointerrupt.h"
 #include "sl_i2cspm_instances.h"
 #include "sl_iostream_stdlib_config.h"
@@ -26,6 +27,7 @@ void sl_platform_init(void)
 void sl_driver_init(void)
 {
   sl_debug_swo_init();
+  sl_emlib_gpio_simple_init();
   GPIOINT_Init();
   sl_i2cspm_init_instances();
   sl_simple_button_init_instances();

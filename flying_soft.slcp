@@ -30,6 +30,8 @@ component:
 - {id: cpp_support}
 - {id: debug_swo}
 - {id: device_init}
+- instance: [PE7]
+  id: emlib_gpio_simple_init
 - instance: [display]
   id: i2cspm
 - {id: iostream_retarget_stdio}
@@ -41,7 +43,7 @@ component:
   id: simple_led
 - {id: sl_system}
 - {id: sleeptimer}
-- instance: [usart0]
+- instance: [inst]
   id: spidrv
 define:
 - {name: DEBUG_EFM}

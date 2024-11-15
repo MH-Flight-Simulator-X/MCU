@@ -1,63 +1,59 @@
 #include "controller.h"
 #include "plane.h"
+#include "debug.h"
 #include <math.h>
 
 void init_aircraft(Aircraft *aircraft)
 {
-  aircraft->x = aircraft->y = aircraft->z = 0.0f;
-  aircraft->dx = 1.0f;
-  aircraft->dy = aircraft->dz = 0.0f;
-  aircraft->pitch_vertical = aircraft->pitch_horizontal = aircraft->roll = 0.0f;
+  aircraft->x = aircraft->y = aircraft->z = 145.0f;
+  aircraft->roll = aircraft->pitch = aircraft->yaw = 60.0f;
   aircraft->speed = BASE_SPEED;
-
-  //exprimental 
-  aircraft->pitch = 0;
-  aircraft->yaw = 0;
 }
 
-void update_aircraft(Aircraft *aircraft, Controller *controller)
+void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_counter)
 {
+  // Adding pitch and roll from joystick to aircraft
   aircraft->roll += controller->roll * 1.5f;
+  float pitch = controller->pitch * cos_deg(aircraft->roll) * 0.7f;
+  float yaw = controller->pitch * sin_deg(aircraft->roll) * 0.7f;
+  aircraft->pitch += pitch;
+  aircraft->yaw += yaw;
 
+  // Normalizes angles to be between 0° and 360°
+  aircraft->roll = normalize_angle(aircraft->roll);
+  aircraft->pitch = normalize_angle(aircraft->pitch);
+  aircraft->yaw = normalize_angle(aircraft->yaw);
+
+  // Computes gravitational effect based on planes orientation
   float lift = cos_deg(aircraft->roll);
   float gravity_effect = GRAVITY * (1 - lift);
 
 
-  aircraft->roll = normalize_angle(aircraft->roll);
-  float pitch_vertical = controller->pitch * cos_deg(aircraft->roll) * 0.3f;
-  float pitch_horizontal = controller->pitch * sin_deg(aircraft->roll) * 0.3f;
-  aircraft->pitch_vertical += pitch_vertical;
-  aircraft->pitch_horizontal += pitch_horizontal;
-
-  aircraft->pitch_vertical = normalize_angle(aircraft->pitch_vertical);
-  aircraft->pitch_horizontal = normalize_angle(aircraft->pitch_horizontal);
-
+  // Computes target speed based on aircrafts pitch and throttle
   // Precompute the sin for faster computation of sin^3
-  float stall_decrease = (STALL_DECREASE * sin_deg(aircraft->pitch_vertical));
-  float target_speed = BASE_SPEED * controller->throttle - stall_decrease*stall_decrease*stall_decrease*sqrt(aircraft->speed);
+  float stall_decrease = (STALL_DECREASE * sin_deg(aircraft->pitch));
+  float target_speed = BASE_SPEED * controller->throttle - stall_decrease*stall_decrease*stall_decrease;
 
 
+  // Ease towards target speed. Further away from target speed accelerates faster
   if (aircraft->speed < target_speed)
-    aircraft->speed += (target_speed - aircraft->speed) * 0.05f;
+    aircraft->speed += (target_speed - aircraft->speed) * 0.01f;
   else
-    aircraft->speed -= (aircraft->speed - target_speed) * 0.05f;
+    aircraft->speed -= (aircraft->speed - target_speed) * 0.01f;
 
-  aircraft->dx = cos_deg(aircraft->pitch_horizontal);
-  aircraft->dy = sin_deg(aircraft->pitch_vertical);
-  aircraft->dz = sin_deg(aircraft->pitch_horizontal);
+  // Compute a heading vector
+  float dx = cos_deg(aircraft->yaw);
+  float dy = sin_deg(aircraft->pitch);
+  float dz = sin_deg(aircraft->yaw);
 
   // Normalize the heading vector
-  float length = sqrt(aircraft->dx * aircraft->dx + aircraft->dy * aircraft->dy + aircraft->dz * aircraft->dz);
-  aircraft->dx /= length;
-  aircraft->dy /= length;
-  aircraft->dz /= length;
+  float length = sqrt(dx * dx + dy * dy + dz * dz);
+  dx /= length;
+  dy /= length;
+  dz /= length;
 
   // Update position based on heading and speed
-  aircraft->x += aircraft->dx * aircraft->speed / PRECISION;
-  aircraft->y += (aircraft->dy * aircraft->speed - gravity_effect) / PRECISION;
-  aircraft->z += aircraft->dz * aircraft->speed / PRECISION;
-
-  // Exprimental
-  aircraft->pitch = asin(-aircraft->dy);
-  aircraft->yaw = atan2(aircraft->dx, aircraft->dz);
+  aircraft->x += dx * aircraft->speed / PRECISION;
+  aircraft->y += (dy * aircraft->speed - gravity_effect) / PRECISION;
+  aircraft->z += dz * aircraft->speed / PRECISION;
 }

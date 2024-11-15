@@ -18,6 +18,7 @@
 #include "game.h"
 #include "sl_sleeptimer.h"
 #include "game.h"
+#include "spi.h"
 
 #ifndef FPS
 #define FPS 60
@@ -40,6 +41,7 @@ void frame_timer_init()
 
 void app_init()
 {
+  spi_init();
   frame_timer_init();
   game_init();
 }
