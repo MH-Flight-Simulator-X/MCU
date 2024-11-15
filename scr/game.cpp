@@ -36,7 +36,7 @@ Sprite **sprites;
 MvpMatrixEntry *matrix_entries;
 mat4 **mvp_matrices;
 // Can be made into one number where each bit represents an object
-uint32_t hits[sprite_count-1];
+//uint32_t hits[sprite_count-1];
 
 void game_init()
 {
