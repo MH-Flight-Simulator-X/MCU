@@ -88,8 +88,8 @@ void game_process_action(uint32_t frame_counter)
       sprite.pitch = 20.0f;
       sprite.yaw = 30.0f;
 
-      matrix_entries[0].flag_id = 0x42;
-      generate_mvp_matrix(&sprite, &aircraft2, matrix_entries[0].mvp_matrix);
+//      matrix_entries[0].flag_id = 0x42;
+//      generate_mvp_matrix(&sprite, &aircraft2, matrix_entries[0].mvp_matrix);
 
       //          mat4 matrix = {
       //              {-0.1134f,  2.3458f,  0.2284f,  0.2279f},
@@ -103,7 +103,7 @@ void game_process_action(uint32_t frame_counter)
 
       //          memcpy(matrix_entries[0].mvp_matrix, matrix, sizeof(mat4));
 
-      fpga_frame_send(matrix_entries, 1);
+//      fpga_frame_send(matrix_entries, 1);
     }
     //    char x[20];
     //    char y[20];

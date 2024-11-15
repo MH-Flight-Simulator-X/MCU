@@ -270,6 +270,11 @@
           <file name="em_timer.c" uri="studio:/sdk/platform/emlib/src/em_timer.c"/>
           <file name="em_usart.c" uri="studio:/sdk/platform/emlib/src/em_usart.c"/>
         </folder>
+        <folder name="init">
+          <folder name="gpio_simple">
+            <file name="sl_emlib_gpio_simple_init.h" uri="studio:/sdk/platform/emlib/init/gpio_simple/sl_emlib_gpio_simple_init.h"/>
+          </folder>
+        </folder>
       </folder>
     </folder>
     <folder name="util">
@@ -298,6 +303,7 @@
   <includePath uri="studio:/sdk/platform/emdrv/dmadrv/inc"/>
   <includePath uri="studio:/sdk/platform/emdrv/common/inc"/>
   <includePath uri="studio:/sdk/platform/emlib/inc"/>
+  <includePath uri="studio:/sdk/platform/emlib/init/gpio_simple"/>
   <includePath uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc"/>
   <includePath uri="studio:/sdk/platform/driver/i2cspm/inc"/>
   <includePath uri="studio:/sdk/platform/service/iostream/inc"/>
