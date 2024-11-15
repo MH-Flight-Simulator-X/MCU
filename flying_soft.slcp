@@ -30,7 +30,7 @@ component:
 - {id: cpp_support}
 - {id: debug_swo}
 - {id: device_init}
-- instance: [PE7]
+- instance: [FPGA_Reset]
   id: emlib_gpio_simple_init
 - instance: [display]
   id: i2cspm

@@ -8,6 +8,7 @@
 #include "display.h"
 #include "transformation.h"
 #include "fpga_spi.h"
+#include "fpga.h"
 #include "spi.h"
 #include <string.h>
 #include <stdio.h>
