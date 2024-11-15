@@ -64,7 +64,7 @@
 // <o SL_SPIDRV_INST_CS_CONTROL> SPI master chip select (CS) control scheme.
 // <spidrvCsControlAuto=> CS controlled by the SPI driver
 // <spidrvCsControlApplication=> CS controlled by the application
-#define SL_SPIDRV_INST_CS_CONTROL        spidrvCsControlAuto
+#define SL_SPIDRV_INST_CS_CONTROL        spidrvCsControlApplication
 
 // <o SL_SPIDRV_INST_SLAVE_START_MODE> SPI slave transfer start scheme
 // <spidrvSlaveStartImmediate=> Transfer starts immediately
@@ -77,23 +77,47 @@
 // <<< sl:start pin_tool >>>
 // <usart signal=TX,RX,CLK,(CS)> SL_SPIDRV_INST
 // $[USART_SL_SPIDRV_INST]
-#warning "SPIDRV USART peripheral not configured"
-// #define SL_SPIDRV_INST_PERIPHERAL        USART0
-// #define SL_SPIDRV_INST_PERIPHERAL_NO     0
+#ifndef SL_SPIDRV_INST_PERIPHERAL               
+#define SL_SPIDRV_INST_PERIPHERAL                USART0
+#endif
+#ifndef SL_SPIDRV_INST_PERIPHERAL_NO            
+#define SL_SPIDRV_INST_PERIPHERAL_NO             0
+#endif
 
-// #define SL_SPIDRV_INST_ROUTE_LOC         0
+// USART0 TX on PE10
+#ifndef SL_SPIDRV_INST_TX_PORT                  
+#define SL_SPIDRV_INST_TX_PORT                   gpioPortE
+#endif
+#ifndef SL_SPIDRV_INST_TX_PIN                   
+#define SL_SPIDRV_INST_TX_PIN                    10
+#endif
+#ifndef SL_SPIDRV_INST_ROUTE_LOC                
+#define SL_SPIDRV_INST_ROUTE_LOC                 0
+#endif
 
-// #define SL_SPIDRV_INST_TX_PORT           gpioPortA
-// #define SL_SPIDRV_INST_TX_PIN            0
+// USART0 RX on PE11
+#ifndef SL_SPIDRV_INST_RX_PORT                  
+#define SL_SPIDRV_INST_RX_PORT                   gpioPortE
+#endif
+#ifndef SL_SPIDRV_INST_RX_PIN                   
+#define SL_SPIDRV_INST_RX_PIN                    11
+#endif
 
-// #define SL_SPIDRV_INST_RX_PORT           gpioPortA
-// #define SL_SPIDRV_INST_RX_PIN            1
+// USART0 CLK on PE12
+#ifndef SL_SPIDRV_INST_CLK_PORT                 
+#define SL_SPIDRV_INST_CLK_PORT                  gpioPortE
+#endif
+#ifndef SL_SPIDRV_INST_CLK_PIN                  
+#define SL_SPIDRV_INST_CLK_PIN                   12
+#endif
 
-// #define SL_SPIDRV_INST_CLK_PORT          gpioPortA
-// #define SL_SPIDRV_INST_CLK_PIN           2
-
-// #define SL_SPIDRV_INST_CS_PORT           gpioPortA
-// #define SL_SPIDRV_INST_CS_PIN            3
+// USART0 CS on PE13
+#ifndef SL_SPIDRV_INST_CS_PORT                  
+#define SL_SPIDRV_INST_CS_PORT                   gpioPortE
+#endif
+#ifndef SL_SPIDRV_INST_CS_PIN                   
+#define SL_SPIDRV_INST_CS_PIN                    13
+#endif
 // [USART_SL_SPIDRV_INST]$
 // <<< sl:end pin_tool >>>
 
