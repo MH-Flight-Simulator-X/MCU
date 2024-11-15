@@ -27,15 +27,15 @@ static inline float normalize_angle(float angle)
 
 typedef struct
 {
-  float x, y, z;
-  float roll, pitch, yaw;
-  float speed;
+  double x, y, z;
+  double roll, pitch, yaw;
+  double speed;
 } Aircraft;
 
 typedef struct
 {
-  float x, y, z;
-  float roll, pitch, yaw;
+  double x, y, z;
+  double roll, pitch, yaw;
 } Sprite;
 
 void init_aircraft(Aircraft *plane);

@@ -1,4 +1,3 @@
-
 #include "../include/cglm/cglm.h"
 #include "transformation.h"
 #include <stdio.h>
@@ -12,9 +11,8 @@ void print_matrix(mat4 matrix)
   {
     for (int j = 0; j < 4; j++)
     {
-      char value[50];
-      float_to_string(value, sizeof(value), matrix[i][j]);
-      debug_printf("%s ", value);
+      debug_print_float(matrix[i][j]);
+      debug_printf("  ");
     }
     debug_printf("\n");
   }
@@ -72,5 +70,6 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
   glm_mat4_mul(projection_matrix, view_matrix, view_projection);
 
   glm_mat4_mul(view_projection, model_matrix, result);
-
+  // debug_printf("Final MVP Matrix:\n");
+  // print_matrix(result);
 }

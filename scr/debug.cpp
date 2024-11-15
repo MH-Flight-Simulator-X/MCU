@@ -8,26 +8,19 @@
 
 static char debug_buffer[DEBUG_BUFFER_SIZE];
 
-void debug_flush() {
-  memset(debug_buffer, 0, DEBUG_BUFFER_SIZE);
-}
-
 void debug_print(const char* str) {
-  int len = strlen(str) + 2;
+  int len = strlen(str);
 
   if (len >= DEBUG_BUFFER_SIZE) {
-    len = DEBUG_BUFFER_SIZE;
+    len = DEBUG_BUFFER_SIZE - 1;
     debug_buffer[len - 1] = '\n';
-    debug_buffer[len] = '\0';
   }
-
   memcpy(debug_buffer, str, len);
+  debug_buffer[len] = '\0';
 
   for (int i = 0; i < len + 1; i++) {
       sl_debug_swo_write_u8(0, debug_buffer[i]);
   }
-
-  debug_flush();
 }
 
 
@@ -57,4 +50,10 @@ void debug_printf(const char *format, ...) {
   va_end(args);
 
   debug_print(buffer);
+}
+
+void debug_print_float(double num){
+  char value[50];
+  float_to_string(value, sizeof(value), num);
+  debug_printf("%s", value);
 }

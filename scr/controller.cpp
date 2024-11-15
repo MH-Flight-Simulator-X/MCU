@@ -17,13 +17,10 @@ void controller_init(Controller * controller)
 
 }
 
-void controller_get_inputs(Controller * controller, uint32_t frame_counter)
+void controller_get_inputs(Controller * controller)
 {
   uint32_t adcSamples[3];
   adc_read(adcSamples);
-//  if (frame_counter % 60 == 0){
-//    debug_printf("Pitch: %d | Roll: %d", adcSamples[0], adcSamples[1]);
-//  }
   controller_convert_voltage(adcSamples, controller);
   button_read(controller);
 
