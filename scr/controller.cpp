@@ -57,7 +57,7 @@ void controller_convert_voltage(volatile uint32_t * adcValues, Controller * cont
 
 }
 
-
+// Initialize ADC
 void adc_init()
 {
   CMU_ClockEnable(cmuClock_ADC0, true);
@@ -65,16 +65,18 @@ void adc_init()
 
   ADC_Init_TypeDef init = ADC_INIT_DEFAULT;
   init.timebase = ADC_TimebaseCalc(0);
-  init.prescale = ADC_PrescaleCalc(4000000, 0);  // 4 MHz ADC clock
+  init.prescale = ADC_PrescaleCalc(6000, 0);  // 6 kHz ADC clock
   ADC_Init(ADC0, &init);
 
   ADC_InitScan_TypeDef initScan = ADC_INITSCAN_DEFAULT;
+  // Set reference voltage to VDD
   initScan.reference = adcRefVDD;
-  initScan.acqTime = adcAcqTime16;
+  // Set acquisition time to 64 ADC clock cycles
+  initScan.acqTime = adcAcqTime64;
+  // Use channels 0, 1 and 2 for thumb_x, thumb_y and slider inputs
   initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 | ADC_SCANCTRL_INPUTMASK_CH1 | ADC_SCANCTRL_INPUTMASK_CH2;
   ADC_InitScan(ADC0, &initScan);
 }
-
 
 // Start ADC read, wait for conversions and convert to volts
 void adc_read(uint32_t *adcSamples)

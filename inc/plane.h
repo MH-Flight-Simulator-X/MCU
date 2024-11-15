@@ -32,6 +32,10 @@ typedef struct
   double speed;
 } Aircraft;
 
+typedef struct {
+    float x, y, z;
+} Vec3;
+
 typedef struct
 {
   double x, y, z;
@@ -40,5 +44,7 @@ typedef struct
 
 void init_aircraft(Aircraft *plane);
 void update_aircraft(Aircraft *plane, Controller *controller, uint32_t frame_counter);
+void aircraft_check_hit(Aircraft * aircraft, Sprite * sprite);
+
 
 #endif // PLANE_H
