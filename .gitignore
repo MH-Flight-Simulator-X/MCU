@@ -11,3 +11,5 @@ GNU ARM v12.2.1 - Release
 .projectlinkstore
 .uceditor
 .vscode/
+.settings/
+.pdm/

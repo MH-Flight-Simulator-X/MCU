@@ -24,7 +24,7 @@ void controller_get_inputs(Controller * controller, uint32_t frame_counter)
   controller_convert_voltage(adcSamples, controller);
   button_read(controller);
   if (frame_counter % 30 == 0){
-      debug_printf("Pitch: %d, Roll: %d\n", adcSamples[0], adcSamples[1]);
+//      debug_printf("Pitch: %d, Roll: %d\n", adcSamples[0], adcSamples[1]);
   }
 
 }
