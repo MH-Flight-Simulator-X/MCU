@@ -2,8 +2,9 @@
 project_name: flying_soft
 label: flying_soft
 description: |
-  This example project shows an empty configuration that can be used as a starting point to add components and functionality.
-category: Example|Platform
+  MicroHard Flight Simulator X
+  A basic flight simulator.
+category: Embedded game system
 filter:
 - name: Device Type
   value: [SoC]
@@ -17,8 +18,8 @@ readme:
 - {path: readme.md}
 - {path: readme.md}
 source:
-- {path: app.cpp}
-- {path: main.cpp}
+- {path: app.c}
+- {path: main.c}
 include:
 - path: .
   file_list:
