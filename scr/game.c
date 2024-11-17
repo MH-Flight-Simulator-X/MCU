@@ -40,10 +40,10 @@ void game_init()
 {
   spi_init();
   display_init();
-  init_aircraft(&aircraft);
+  aircraft_init(&aircraft);
+  controller_init(&controller);
   sprites = (Sprite **)malloc((sprite_count - 1) * sizeof(Sprite *));
   matrix_entries = (MvpMatrixEntry *)malloc(sprite_count * sizeof(MvpMatrixEntry));
-  controller_init(&controller);
 }
 
 void game_process_action(uint32_t frame_counter)
@@ -75,12 +75,8 @@ void game_process_action(uint32_t frame_counter)
   generate_mvp_matrix(&sprite, &aircraft2, matrix_entries[0].mvp_matrix);
 
   fpga_frame_send(matrix_entries, 1);
-  if (frame_counter % 60 == 0)
+  if (frame_counter % 30 == 0)
   {
-    // TODO move to happen very frame, this is for debugging
-    if (controller.roll > 0)
-    {
-    }
     display_print_and_rotate_string();
   }
 }
