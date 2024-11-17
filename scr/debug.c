@@ -6,26 +6,24 @@
 #include <math.h>
 
 
-static char debug_buffer[DEBUG_BUFFER_SIZE];
-
 void debug_print(const char* str) {
-  int len = strlen(str);
-
-  if (len >= DEBUG_BUFFER_SIZE) {
-    len = DEBUG_BUFFER_SIZE - 1;
-    debug_buffer[len - 1] = '\n';
-  }
-  memcpy(debug_buffer, str, len);
-  debug_buffer[len] = '\0';
-
-  for (int i = 0; i < len + 1; i++) {
-      sl_debug_swo_write_u8(0, debug_buffer[i]);
+  for (size_t i = 0; i < strlen(str); i++) {
+      sl_debug_swo_write_u8(0, str[i]);
   }
 }
 
 
-void debug_println(const char* str) {
-  debug_print(str);
+void debug_println(const char *format, ...) {
+  char buffer[512];
+
+  va_list args;
+  va_start(args, format);
+
+  vsnprintf(buffer, sizeof(buffer), format, args);
+
+  va_end(args);
+
+  debug_print(buffer);
   debug_print("\n");
 }
 

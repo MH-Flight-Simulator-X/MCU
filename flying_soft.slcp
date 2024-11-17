@@ -17,8 +17,8 @@ readme:
 - {path: readme.md}
 - {path: readme.md}
 source:
-- {path: app.cpp}
-- {path: main.cpp}
+- {path: app.c}
+- {path: main.c}
 include:
 - path: .
   file_list:

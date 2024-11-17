@@ -98,5 +98,5 @@ void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count)
     }
   }
   spi_transfer(buffer, total_size);
-//  print_buffer(buffer, total_size);
+  print_buffer(buffer, total_size);
 }

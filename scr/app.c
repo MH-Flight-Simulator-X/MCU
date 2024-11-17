@@ -19,6 +19,7 @@
 #include "sl_sleeptimer.h"
 #include "game.h"
 #include "em_gpio.h"
+#include "debug.h"
 
 #ifndef FPS
 #define FPS 60
@@ -45,15 +46,11 @@ void app_init()
 //  GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 0);
   frame_timer_init();
   game_init();
+  debug_println("Hei!");
 }
 
 void app_process_action(void)
 {
-
-//  if (frame_counter % 120 == 0)
-//    GPIO_PinOutSet(gpioPortE, 13);
-//  else
-//    GPIO_PinOutClear(gpioPortE, 13);
 
   if (frame_ready)
   {

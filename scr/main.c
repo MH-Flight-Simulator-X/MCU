@@ -15,6 +15,7 @@
  *
  ******************************************************************************/
 #include "app.h"
+#include "debug.h"
 #include "sl_component_catalog.h"
 #include "sl_system_init.h"
 #if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
@@ -45,6 +46,7 @@ int main(void)
     // Do not remove this call: Silicon Labs components process action routine
     // must be called from the super loop.
     sl_system_process_action();
+    debug_println("HAllA!");
 
     // Application process.
     app_process_action();
