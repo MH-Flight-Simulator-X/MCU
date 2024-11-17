@@ -3,7 +3,7 @@
 #include "debug.h"
 #include <math.h>
 
-void init_aircraft(Aircraft *aircraft)
+void aircraft_init(Aircraft *aircraft)
 {
   aircraft->x = aircraft->y = aircraft->z = 145.0f;
   aircraft->roll = aircraft->pitch = aircraft->yaw = 60.0f;
