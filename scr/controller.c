@@ -5,6 +5,8 @@
 #include "sl_simple_button_instances.h"
 #include "sl_simple_led_instances.h"
 
+#include "sl_simple_led_instances.h"
+
 #include "debug.h"
 #include "sl_led.h"
 
@@ -35,7 +37,7 @@ void controller_get_inputs(Controller *controller, uint32_t frame_counter)
 void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller)
 {
   // CONVERT THUMBSTICK TO PITCH
-  if (adcValues[0] < 8 || 15 < adcValues[0])
+  if (adcValues[0] < 1300 || 1700 < adcValues[0])
     controller->pitch = adcValues[0] / 3300.0 - 0.5;
   else
     controller->pitch = 0.0;
