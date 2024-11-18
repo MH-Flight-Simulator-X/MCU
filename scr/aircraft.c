@@ -28,12 +28,10 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   float lift = cos_deg(aircraft->roll);
   float gravity_effect = GRAVITY * (1 - lift);
 
-
   // Computes target speed based on aircrafts pitch and throttle
   // Precompute the sin for faster computation of sin^3
   float stall_decrease = (STALL_DECREASE * sin_deg(aircraft->pitch));
-  float target_speed = BASE_SPEED * controller->throttle - stall_decrease*stall_decrease*stall_decrease;
-
+  float target_speed = BASE_SPEED * controller->throttle - stall_decrease * stall_decrease * stall_decrease;
 
   // Ease towards target speed. Further away from target speed accelerates faster
   if (aircraft->speed < target_speed)
@@ -58,33 +56,79 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   aircraft->z += dz * aircraft->speed / PRECISION;
 }
 
-//uint32_t aircraft_check_hit(Aircraft * aircraft, Sprite * sprite)
-//{
-//      // Vector from plane to object center
-//      Vec3 oc = { aircraft->x - sprite->x,
-//                  aircraft->y - sprite->y,
-//                  aircraft->z - sprite->z };
-//
-//      float dx = aircraft->dx, dy = aircraft->y, dz = aircraft->z;
-//      float ox = oc.x, oy = oc.y, oz = oc.z;
-//      float r = 5.0;
-//
-//      // Calculate A, B, C for the quadratic equation
-//      float A = dx * dx + dy * dy + dz * dz;
-//      float B = 2.0f * (dx * ox + dy * oy + dz * oz);
-//      float C = ox * ox + oy * oy + oz * oz - r * r;
-//
-//      // Calculate discriminant
-//      float discriminant = B * B - 4 * A * C;
-//      if (discriminant < 0) {
-//          return -1;  // No intersection
-//      }
-//
-//      // Calculate both potential solutions for t
-//      float sqrt_disc = sqrtf(discriminant);
-//      float t1 = (-B - sqrt_disc) / (2 * A);
-//      float t2 = (-B + sqrt_disc) / (2 * A);
-//
-//      // Check for positive t solutions (in the direction of the ray)
-//      return (t1 > 0 || t2 > 0);
-//}
+void aircraft_check_hit(Aircraft *a, Sprite **sprites)
+{
+  // TODO: Implement checks to limit number of sprite comparisons, i.e if position of sprite is behind aircraft
+  for (int i = 0; i < sprite_count; i++)
+  {
+    Sprite s = sprites[i];
+
+    if (s->status == 1 || s->status == 2) // Sprite already hit or dead
+    {
+      continue;
+    }
+
+    float dx = a->dx,
+          dy = a->dy,
+          dz = a->dz; // Decomposed Aircraft heading unit vector
+
+    float ox = a->x - s->x,
+          oy = a->y - s->y,
+          oz = a->z - s->z; // Decomposed Aircraft-to-Sprite vector
+
+    float r = 5.0; // Radius of Sprite hitbox
+
+    float dot_product = dx * ox + dy * oy + dz * oz;
+    if (dot_product <= 0) // Sprite is behind aircraft
+    {
+      continue;
+    }
+
+    // Check if sprite is within rendering distance
+    float max_distance_squared = (float)(1 << 20);
+    float distance_squared = ox * ox + oy * oy + oz * oz;
+    if (distance_squared > max_distance_squared)
+    {
+      continue;
+    }
+
+    // Calculate A, B, C for the quadratic equation
+    float A = 1; // Length of heading vector
+    float B = 2.0f * dot_product;
+    float C = distance_squared - r * r;
+
+    // Calculate discriminant, return if there are no intersections between aircraft heading vector and sprite hitbox
+    float discriminant = B * B - 4 * A * C;
+    if (discriminant < 0)
+    {
+      return;
+    }
+
+    // Calculate both potential solutions for t
+    float sqrt_disc = sqrtf(discriminant);
+    float t1 = (-B - sqrt_disc);
+    float t2 = (-B + sqrt_disc);
+
+    // Check for positive t solutions (in the direction of the ray)
+    if (t1 > 0 || t2 > 0)
+    {
+      s->status = 1;
+    }
+  }
+}
+
+sprite_update_status(Sprite **sprites, int sprite_count)
+{
+  for (int i = 0; i < sprite_count; i++)
+  {
+    Sprite s = sprites[i];
+    if (s->counter == 30)
+    {
+      s->status = 2;
+    }
+    if (s->status == 1)
+    {
+      s->counter++;
+    }
+  }
+}

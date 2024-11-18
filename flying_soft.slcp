@@ -18,18 +18,8 @@ readme:
 - {path: readme.md}
 - {path: readme.md}
 source:
-- {path: app.c}
-- {path: main.c}
-- {path: controller.c} 
-- {path: debug.c} 
-- {path: display.c} 
-- {path: fpga_spi.c} 
-- {path: fpga.c} 
-- {path: game.c}
-- {path: plane.c} 
-- {path: spi.c} 
-- {path: test.c} 
-- {path: transformation.c}
+- {path: app.cpp}
+- {path: main.cpp}
 include:
 - path: .
   file_list:

@@ -40,6 +40,13 @@ void game_init()
 
 void game_process_action(uint32_t frame_counter)
 {
+  if (controller->fire)
+  {
+    controller->fire = 0;
+    aircraft_check_hit(&aircraft, &sprites);
+  }
+  // aircraft_check_collision();
+  sprite_update_alive_counter(sprites);
 
   controller_get_inputs(&controller, frame_counter);
 
@@ -55,6 +62,10 @@ void game_process_action(uint32_t frame_counter)
     matrix_entries[i + 1].flag_id = 0x01;
     generate_mvp_matrix((Sprite *)&ai_aircrafts[i], &aircraft, matrix_entries[i + 1].mvp_matrix);
   }
+
+  // calculate if any collisions (set aircraft live bit to 0 --> FPGA can check it and display game over text)
+  // calculate any hits (set sprite live bit to 0 --> FPGA may render effects)
+  // if all Sprite live bits are 0 FPGA can display win effect
 
   fpga_frame_send(matrix_entries, 1);
   if (frame_counter % 30 == 0)

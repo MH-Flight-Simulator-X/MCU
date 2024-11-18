@@ -40,9 +40,6 @@ void frame_timer_init()
 
 void app_init()
 {
-  //  GPIO_PinModeSet(gpioPortE, 13, gpioModePushPull, 0);
-//  GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 1);
-//  GPIO_PinOutSet(gpioPortA, 2);
   frame_timer_init();
   game_init();
 }

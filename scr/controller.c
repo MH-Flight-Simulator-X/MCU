@@ -3,37 +3,40 @@
 #include "em_cmu.h"
 #include "sl_button.h"
 #include "sl_simple_button_instances.h"
-#include "debug.h"
+#include "sl_simple_led_instances.h"
 
-void controller_init(Controller * controller)
+#include "debug.h"
+#include "sl_led.h"
+
+void controller_init(Controller *controller)
 {
   controller->pitch = 0;
   controller->roll = 0;
   controller->throttle = 0.5;
   controller->fire = 0;
 
-//  adc_init();
-//  button_init();
+  adc_init();
 
+  button_init();
 }
 
-void controller_get_inputs(Controller * controller, uint32_t frame_counter)
+void controller_get_inputs(Controller *controller, uint32_t frame_counter)
 {
   uint32_t adcSamples[3];
   adc_read(adcSamples);
   controller_convert_voltage(adcSamples, controller);
   button_read(controller);
-  if (frame_counter % 30 == 0){
-//      debug_printf("Pitch: %d, Roll: %d\n", adcSamples[0], adcSamples[1]);
+  if (frame_counter % 30 == 0)
+  {
+    //      debug_printf("Pitch: %d, Roll: %d\n", adcSamples[0], adcSamples[1]);
   }
-
 }
 
-void controller_convert_voltage(volatile uint32_t * adcValues, Controller * controller)
+void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller)
 {
   // CONVERT THUMBSTICK TO PITCH
   if (adcValues[0] < 8 || 15 < adcValues[0])
-    controller->pitch = adcValues[0] / 80.0 - 0.5;
+    controller->pitch = adcValues[0] / 3300.0 - 0.5;
   else
     controller->pitch = 0.0;
 
@@ -44,17 +47,16 @@ void controller_convert_voltage(volatile uint32_t * adcValues, Controller * cont
     controller->roll = 0.0;
 
   // CONVERT SLIDER TO THROTTLE
-  if (adcValues[2]<3100)
+  if (adcValues[2] < 3100)
     controller->throttle = 0.0;
   else if (3100 <= adcValues[2] && adcValues[2] < 3150)
     controller->throttle = 0.25;
   else if (3150 <= adcValues[2] && adcValues[2] < 3170)
-    controller->throttle  = 0.50;
+    controller->throttle = 0.50;
   else if (3170 <= adcValues[2] && adcValues[2] < 3180)
     controller->throttle = 0.75;
   else
     controller->throttle = 1.0;
-
 }
 
 // Initialize ADC
@@ -65,7 +67,7 @@ void adc_init()
 
   ADC_Init_TypeDef init = ADC_INIT_DEFAULT;
   init.timebase = ADC_TimebaseCalc(0);
-  init.prescale = ADC_PrescaleCalc(6000, 0);  // 6 kHz ADC clock
+  init.prescale = ADC_PrescaleCalc(4000000, 0); // 6 kHz ADC clock
   ADC_Init(ADC0, &init);
 
   ADC_InitScan_TypeDef initScan = ADC_INITSCAN_DEFAULT;
@@ -83,24 +85,25 @@ void adc_read(uint32_t *adcSamples)
 {
   ADC_Start(ADC0, adcStartScan);
 
-  while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
+  while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
+    ;
   adcSamples[0] = (ADC0->SCANDATA * 3300) / 4095;
 
-  while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
+  while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
+    ;
   adcSamples[1] = (ADC0->SCANDATA * 3300) / 4095;
 
-  while (!(ADC0->STATUS & ADC_STATUS_SCANDV));
+  while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
+    ;
   adcSamples[2] = (ADC0->SCANDATA * 3300) / 4095;
 }
 
 void button_init()
 {
   GPIO_PinModeSet(gpioPortD, 3, gpioModeInput, 0);
-
 }
 
-void button_read(Controller * controller)
+void button_read(Controller *controller)
 {
   controller->fire = !(GPIO->P[3].DIN & (1 << 3));
 }
-
