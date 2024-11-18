@@ -21,7 +21,7 @@ AiAircraft *ai_aircrafts;
 MvpMatrixEntry *matrix_entries;
 mat4 **mvp_matrices;
 // Can be made into one number where each bit represents an object
-//uint32_t hits[sprite_count-1];
+// uint32_t hits[sprite_count-1];
 
 void game_init()
 {
@@ -52,8 +52,8 @@ void game_process_action(uint32_t frame_counter)
 
   for (int i = 0; i < num_aircrafts; i++)
   {
-    matrix_entries[i+1].flag_id = 0x01;
-    generate_mvp_matrix((Sprite *)&ai_aircrafts[i], &aircraft, matrix_entries[i+1].mvp_matrix);
+    matrix_entries[i + 1].flag_id = 0x01;
+    generate_mvp_matrix((Sprite *)&ai_aircrafts[i], &aircraft, matrix_entries[i + 1].mvp_matrix);
   }
 
   fpga_frame_send(matrix_entries, 1);
