@@ -26,7 +26,7 @@ mat4 **mvp_matrices;
 void game_init()
 {
   spi_init();
-  display_init();
+  display_init(&aircraft);
   aircraft_init(&aircraft);
   controller_init(&controller);
 
