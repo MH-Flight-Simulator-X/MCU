@@ -34,7 +34,7 @@ void float_to_string(char *buffer, size_t size, double number) {
   double fractionalPart = fabs(number - integerPart);
   int fractionalInt = (int)(fractionalPart * 10000 + 0.5);
 
-  snprintf(buffer, size, "%s%d.%04d", number < 0 ? "-" : "", integerPart, fractionalInt);
+  snprintf(buffer, size, "%s%d.%04d ", number < 0 ? "-" : "", integerPart, fractionalInt);
 
 }
 
