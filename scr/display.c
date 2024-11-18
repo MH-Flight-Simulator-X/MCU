@@ -1,7 +1,7 @@
 #include "sl_i2cspm_instances.h"
 #include "sl_simple_led_instances.h"
 #include "sl_simple_led.h"
-#include "plane.h"
+#include "aircraft.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

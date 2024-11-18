@@ -31,12 +31,10 @@ void sl_button_on_change(const sl_button_t *handle)
     if (&BUTTON_INSTANCE_1 == handle)
     {
       sl_led_toggle(&LED_INSTANCE_1);
-<<<<<<< Updated upstream
       debug_print("Dette funker hvertfall:)");
-=======
       debug_print("Knapp 1 trykket");
       display_toggle_display();
->>>>>>> Stashed changes
+
     }
     if (&BUTTON_INSTANCE_0 == handle)
     {

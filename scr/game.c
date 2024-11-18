@@ -70,6 +70,10 @@ void game_process_action(uint32_t frame_counter)
   fpga_frame_send(matrix_entries, 1);
   if (frame_counter % 30 == 0)
   {
-    display_print_and_rotate_string();
+      display_set_number();
+      display_print_string();
+
+    //display_print_and_rotate_string();
+
   }
 }
