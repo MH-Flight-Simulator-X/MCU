@@ -1,4 +1,5 @@
 #include <aircraft.h>
+#include <ai_aircraft.h>
 #include "controller.h"
 #include "debug.h"
 #include <math.h>
@@ -56,14 +57,14 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   aircraft->z += dz * aircraft->speed / PRECISION;
 }
 
-void aircraft_check_hit(Aircraft *a, Sprite **sprites)
+void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircrafts)
 {
   // TODO: Implement checks to limit number of sprite comparisons, i.e if position of sprite is behind aircraft
-  for (int i = 0; i < sprite_count; i++)
+  for (int i = 0; i < num_aircrafts; i++)
   {
-    Sprite s = sprites[i];
+    AiAircraft ai = opp[i];
 
-    if (s->status == 1 || s->status == 2) // Sprite already hit or dead
+    if (ai.status == 1 || ai.status == 2) // Sprite already hit or dead
     {
       continue;
     }
@@ -72,9 +73,9 @@ void aircraft_check_hit(Aircraft *a, Sprite **sprites)
           dy = a->dy,
           dz = a->dz; // Decomposed Aircraft heading unit vector
 
-    float ox = a->x - s->x,
-          oy = a->y - s->y,
-          oz = a->z - s->z; // Decomposed Aircraft-to-Sprite vector
+    float ox = a->x - ai.x,
+          oy = a->y - ai.y,
+          oz = a->z - ai.z; // Decomposed Aircraft-to-Sprite vector
 
     float r = 5.0; // Radius of Sprite hitbox
 
@@ -112,23 +113,7 @@ void aircraft_check_hit(Aircraft *a, Sprite **sprites)
     // Check for positive t solutions (in the direction of the ray)
     if (t1 > 0 || t2 > 0)
     {
-      s->status = 1;
-    }
-  }
-}
-
-sprite_update_status(Sprite **sprites, int sprite_count)
-{
-  for (int i = 0; i < sprite_count; i++)
-  {
-    Sprite s = sprites[i];
-    if (s->counter == 30)
-    {
-      s->status = 2;
-    }
-    if (s->status == 1)
-    {
-      s->counter++;
+      ai.status = 1;
     }
   }
 }

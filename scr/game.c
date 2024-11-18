@@ -40,13 +40,13 @@ void game_init()
 
 void game_process_action(uint32_t frame_counter)
 {
-  if (controller->fire)
+  if (controller.fire)
   {
-    controller->fire = 0;
-    aircraft_check_hit(&aircraft, &sprites);
+    controller.fire = 0;
+    aircraft_check_hit(&aircraft, ai_aircrafts, num_aircrafts);
   }
   // aircraft_check_collision();
-  sprite_update_alive_counter(sprites);
+  ai_aircraft_update_status(ai_aircrafts, num_aircrafts);
 
   controller_get_inputs(&controller, frame_counter);
 

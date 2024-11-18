@@ -88,3 +88,20 @@ void ai_aircraft_move(AiAircraft *aircraft, Heading heading)
   aircraft->y += dy * AI_SPEED / PRECISION;
   aircraft->z += dz * AI_SPEED / PRECISION;
 }
+
+void ai_aircraft_update_status(AiAircraft * crafts, int num_aircrafts)
+{
+  for (int i = 0; i < num_aircrafts; i++)
+  {
+    AiAircraft a = crafts[i];
+    if (a.counter == 30)
+    {
+      a.status = 2;
+    }
+    if (a.status == 1)
+    {
+      a.counter++;
+    }
+  }
+}
+
