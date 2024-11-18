@@ -43,6 +43,7 @@ void app_init()
 {
 //  GPIO_PinModeSet(gpioPortE, 13, gpioModePushPull, 0);
 //  GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 0);
+  //spi_init();
   frame_timer_init();
   game_init();
 }

@@ -58,33 +58,33 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   aircraft->z += dz * aircraft->speed / PRECISION;
 }
 
-//uint32_t aircraft_check_hit(Aircraft * aircraft, Sprite * sprite)
-//{
-//      // Vector from plane to object center
-//      Vec3 oc = { aircraft->x - sprite->x,
-//                  aircraft->y - sprite->y,
-//                  aircraft->z - sprite->z };
-//
-//      float dx = aircraft->dx, dy = aircraft->y, dz = aircraft->z;
-//      float ox = oc.x, oy = oc.y, oz = oc.z;
-//      float r = 5.0;
-//
-//      // Calculate A, B, C for the quadratic equation
-//      float A = dx * dx + dy * dy + dz * dz;
-//      float B = 2.0f * (dx * ox + dy * oy + dz * oz);
-//      float C = ox * ox + oy * oy + oz * oz - r * r;
-//
-//      // Calculate discriminant
-//      float discriminant = B * B - 4 * A * C;
-//      if (discriminant < 0) {
-//          return -1;  // No intersection
-//      }
-//
-//      // Calculate both potential solutions for t
-//      float sqrt_disc = sqrtf(discriminant);
-//      float t1 = (-B - sqrt_disc) / (2 * A);
-//      float t2 = (-B + sqrt_disc) / (2 * A);
-//
-//      // Check for positive t solutions (in the direction of the ray)
-//      return (t1 > 0 || t2 > 0);
-//}
+void aircraft_check_hit(Aircraft * aircraft, Sprite * sprite)
+{
+      // Vector from plane to object center
+      Vec3 oc = { aircraft->x - sprite->x,
+                  aircraft->y - sprite->y,
+                  aircraft->z - sprite->z };
+
+      float dx = aircraft->dx, dy = aircraft->dy, dz = aircraft->dz;
+      float ox = oc.x, oy = oc.y, oz = oc.z;
+      float r = 5.0;
+
+      // Calculate A, B, C for the quadratic equation
+      float A = dx * dx + dy * dy + dz * dz;
+      float B = 2.0f * (dx * ox + dy * oy + dz * oz);
+      float C = ox * ox + oy * oy + oz * oz - r * r;
+
+      // Calculate discriminant
+      float discriminant = B * B - 4 * A * C;
+      if (discriminant < 0) {
+          sprite->live = 1;  // No intersection
+      }
+
+      // Calculate both potential solutions for t
+      float sqrt_disc = sqrtf(discriminant);
+      float t1 = (-B - sqrt_disc) / (2 * A);
+      float t2 = (-B + sqrt_disc) / (2 * A);
+
+      // Check for positive t solutions (in the direction of the ray)
+      sprite->live = (t1 > 0 || t2 > 0);
+}

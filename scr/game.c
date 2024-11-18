@@ -74,6 +74,11 @@ void game_process_action(uint32_t frame_counter)
   matrix_entries[0].flag_id = 0x42;
   generate_mvp_matrix(&sprite, &aircraft2, matrix_entries[0].mvp_matrix);
 
+  // calculate if any collisions (set aircraft live bit to 0 --> FPGA can check it and display game over text)
+  // calculate any hits (set sprite live bit to 0 --> FPGA may render effects)
+  // if all Sprite live bits are 0 FPGA can display win effect
+
+
   fpga_frame_send(matrix_entries, 1);
   if (frame_counter % 30 == 0)
   {

@@ -94,6 +94,7 @@ void display_print_and_rotate_string(void)
     string[i] = string[i + 1];
   }
   string[len - 1] = first_char;
+
 }
 
 void display_set_string(char str[])

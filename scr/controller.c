@@ -3,7 +3,11 @@
 #include "em_cmu.h"
 #include "sl_button.h"
 #include "sl_simple_button_instances.h"
+#include "sl_simple_led_instances.h"
+
 #include "debug.h"
+#include "sl_led.h"
+
 
 void controller_init(Controller * controller)
 {
@@ -13,6 +17,8 @@ void controller_init(Controller * controller)
   controller->fire = 0;
 
   adc_init();
+
+
   button_init();
 
 }
@@ -65,7 +71,7 @@ void adc_init()
 
   ADC_Init_TypeDef init = ADC_INIT_DEFAULT;
   init.timebase = ADC_TimebaseCalc(0);
-  init.prescale = ADC_PrescaleCalc(6000, 0);  // 6 kHz ADC clock
+  init.prescale = ADC_PrescaleCalc(4000000, 0);  // 6 kHz ADC clock
   ADC_Init(ADC0, &init);
 
   ADC_InitScan_TypeDef initScan = ADC_INITSCAN_DEFAULT;
