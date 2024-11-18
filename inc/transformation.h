@@ -3,7 +3,7 @@
 #define TRANSFORMATION_H
 
 #include "../include/cglm/cglm.h"
-#include "plane.h"
+#include "aircraft.h"
 
 
 void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result);

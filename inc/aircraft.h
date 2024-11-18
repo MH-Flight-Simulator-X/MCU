@@ -29,6 +29,7 @@ typedef struct
 {
   double x, y, z;
   double roll, pitch, yaw;
+  double dy, dx, dz;
   double speed;
 } Aircraft;
 

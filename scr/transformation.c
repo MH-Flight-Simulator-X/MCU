@@ -1,7 +1,7 @@
+#include <aircraft.h>
 #include "../include/cglm/cglm.h"
 #include "transformation.h"
 #include <stdio.h>
-#include "plane.h"
 #include "debug.h"
 
 // Helper function to print a matrix for debugging

@@ -320,7 +320,6 @@
   <macroDefinition name="SEGGER_RTT_ALIGNMENT" value="1024"/>
   <macroDefinition name="RTT_USE_ASM" value="0"/>
   <macroDefinition name="SEGGER_RTT_SECTION" value="&quot;SEGGER_RTT&quot;"/>
-  <libraryFile name="stdc++"/>
   <libraryFile name="gcc"/>
   <libraryFile name="c"/>
   <libraryFile name="m"/>

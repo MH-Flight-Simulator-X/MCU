@@ -1,4 +1,4 @@
-/***************************************************************************//**
+/***************************************************************************
  * @file
  * @brief Top level application functions
  *******************************************************************************
@@ -25,28 +25,26 @@
 #define FPS 60
 #endif
 
-
 sl_sleeptimer_timer_handle_t frame_timer;
 bool frame_ready = false;
 uint32_t frame_counter = 0;
-
 
 static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
 
 void frame_timer_init()
 {
-    uint32_t timer_frequency = sl_sleeptimer_get_timer_frequency();
-    uint32_t ticks_per_frame = timer_frequency / FPS;
-    sl_sleeptimer_start_periodic_timer(&frame_timer, ticks_per_frame, on_frame_timeout, NULL, 0, SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
+  uint32_t timer_frequency = sl_sleeptimer_get_timer_frequency();
+  uint32_t ticks_per_frame = timer_frequency / FPS;
+  sl_sleeptimer_start_periodic_timer(&frame_timer, ticks_per_frame, on_frame_timeout, NULL, 0, SL_SLEEPTIMER_NO_HIGH_PRECISION_HF_CLOCKS_REQUIRED_FLAG);
 }
 
 void app_init()
 {
-//  GPIO_PinModeSet(gpioPortE, 13, gpioModePushPull, 0);
-//  GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 0);
+  //  GPIO_PinModeSet(gpioPortE, 13, gpioModePushPull, 0);
+//  GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 1);
+//  GPIO_PinOutSet(gpioPortA, 2);
   frame_timer_init();
   game_init();
-  debug_println("Hei!");
 }
 
 void app_process_action(void)
@@ -62,7 +60,7 @@ void app_process_action(void)
 
 static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
-    (void)handle;
-    (void)data;
-    frame_ready = true;
+  (void)handle;
+  (void)data;
+  frame_ready = true;
 }

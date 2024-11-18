@@ -12,8 +12,8 @@ void controller_init(Controller * controller)
   controller->throttle = 0.5;
   controller->fire = 0;
 
-  adc_init();
-  button_init();
+//  adc_init();
+//  button_init();
 
 }
 

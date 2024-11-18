@@ -1,5 +1,5 @@
+#include <aircraft.h>
 #include "controller.h"
-#include "plane.h"
 #include "debug.h"
 #include <math.h>
 

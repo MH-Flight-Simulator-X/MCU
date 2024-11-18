@@ -2,7 +2,7 @@
 project_name: flying_soft
 label: flying_soft
 description: |
-  MicroHard Flight Simulator X
+  MicroHard Flight Simulator X | 
   A basic flight simulator.
 category: Embedded game system
 filter:
@@ -20,6 +20,16 @@ readme:
 source:
 - {path: app.c}
 - {path: main.c}
+- {path: controller.c} 
+- {path: debug.c} 
+- {path: display.c} 
+- {path: fpga_spi.c} 
+- {path: fpga.c} 
+- {path: game.c}
+- {path: plane.c} 
+- {path: spi.c} 
+- {path: test.c} 
+- {path: transformation.c}
 include:
 - path: .
   file_list:
@@ -28,7 +38,6 @@ sdk: {id: gecko_sdk, version: 4.4.5}
 toolchain_settings: []
 component:
 - {id: EFM32GG842F1024}
-- {id: cpp_support}
 - {id: debug_swo}
 - {id: device_init}
 - instance: [FPGA_Reset]

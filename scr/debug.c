@@ -14,16 +14,8 @@ void debug_print(const char* str) {
 
 
 void debug_println(const char *format, ...) {
-  char buffer[512];
-
   va_list args;
-  va_start(args, format);
-
-  vsnprintf(buffer, sizeof(buffer), format, args);
-
-  va_end(args);
-
-  debug_print(buffer);
+  printf(format, args);
   debug_print("\n");
 }
 

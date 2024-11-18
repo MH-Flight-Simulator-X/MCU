@@ -1,36 +1,23 @@
-#include "controller.h"
-#include "sl_simple_led.h"
-#include "sl_simple_led_instances.h"
 #include "../include/cglm/cglm.h"
-#include "plane.h"
+#include <string.h>
+#include <stdio.h>
+#include "aircraft.h"
+#include "ai_aircraft.h"
+#include "ai_aircraft_init.h"
+#include "controller.h"
 #include "game.h"
 #include "debug.h"
 #include "display.h"
 #include "transformation.h"
+#include "spi.h"
 #include "fpga_spi.h"
 #include "fpga.h"
-#include "spi.h"
-#include <string.h>
-#include <stdio.h>
-#include "../include/cglm/cglm.h"
-
-
-#include "sl_simple_button_instances.h"
-#include "sl_simple_led_instances.h"
-
-#ifndef BUTTON_INSTANCE_0
-#define BUTTON_INSTANCE_0 sl_button_btn0
-#endif
-
-#ifndef BUTTON_INSTANCE_1
-#define BUTTON_INSTANCE_1 sl_button_btn1
-#endif
 
 int iteration = 0;
 int sprite_count = 10;
 Aircraft aircraft;
 Controller controller;
-Sprite **sprites;
+AiAircraft *ai_aircrafts;
 MvpMatrixEntry *matrix_entries;
 mat4 **mvp_matrices;
 // Can be made into one number where each bit represents an object
@@ -42,7 +29,11 @@ void game_init()
   display_init();
   aircraft_init(&aircraft);
   controller_init(&controller);
-  sprites = (Sprite **)malloc((sprite_count - 1) * sizeof(Sprite *));
+
+  ai_aircrafts = (AiAircraft *)malloc(num_aircrafts * sizeof(AiAircraft));
+  ai_aircrafts_create(ai_aircrafts, original_aircrafts, num_aircrafts);
+  ai_aircrafts_init(ai_aircrafts, num_aircrafts);
+
   matrix_entries = (MvpMatrixEntry *)malloc(sprite_count * sizeof(MvpMatrixEntry));
   debug_printf("Game initialized");
 }
@@ -54,28 +45,17 @@ void game_process_action(uint32_t frame_counter)
 
   update_aircraft(&aircraft, &controller, frame_counter);
 
-  Aircraft aircraft2;
-  aircraft2.x = 10.0f;
-  aircraft2.y = 20.0f;
-  aircraft2.z = 30.0f;
-  aircraft2.roll = 15.0f;
-  aircraft2.pitch = 30.0f;
-  aircraft2.yaw = 45.0f;
-  aircraft2.speed = 100.0f;
-
-  // Initialize Sprite
-  Sprite sprite;
-  sprite.x = 80.0f;
-  sprite.y = 100.123f;
-  sprite.z = 15.0f;
-  sprite.roll = 70.0f;
-  sprite.pitch = 20.0f;
-  sprite.yaw = 30.0f;
+  ai_aircrafts_update(ai_aircrafts, num_aircrafts, frame_counter);
 
   matrix_entries[0].flag_id = 0x42;
-  generate_mvp_matrix(&sprite, &aircraft2, matrix_entries[0].mvp_matrix);
+  generate_mvp_matrix((Sprite *)&aircraft, &aircraft, matrix_entries[0].mvp_matrix);
 
-  debug_printf("Whaaat\n");
+  for (int i = 0; i < num_aircrafts; i++)
+  {
+    matrix_entries[i+1].flag_id = 0x01;
+    generate_mvp_matrix((Sprite *)&ai_aircrafts[i], &aircraft, matrix_entries[i+1].mvp_matrix);
+  }
+
   fpga_frame_send(matrix_entries, 1);
   if (frame_counter % 30 == 0)
   {
