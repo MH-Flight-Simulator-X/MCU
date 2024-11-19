@@ -18,8 +18,6 @@ void controller_init(Controller *controller)
   controller->fire = 0;
 
   adc_init();
-
-  button_init();
 }
 
 void controller_get_inputs(Controller *controller, uint32_t frame_counter)
@@ -61,10 +59,6 @@ void controller_convert_voltage(volatile uint32_t *adcValues, Controller *contro
     controller->throttle = 1.0;
 }
 
-void controller_flash_button()
-{
-
-}
 
 // Initialize ADC
 void adc_init()
@@ -105,16 +99,9 @@ void adc_read(uint32_t *adcSamples)
   adcSamples[2] = (ADC0->SCANDATA * 3300) / 4095;
 }
 
-void button_init()
-{
-//  GPIO_PinModeSet(gpioPortD, 3, gpioModeInput, 0);
-//  GPIO_PinModeSet(gpioPortD, 4, gpioModeWiredAnd, 0);
-}
-
 void button_read(Controller *controller)
 {
-  controller->fire = !(GPIO->P[3].DIN & (1 << 3));
-
+  controller->fire = (GPIO->P[3].DIN & (1 << 3));
 }
 
 void controller_led_turn_on()
