@@ -132,16 +132,18 @@ void float_to(char *buffer, size_t size, double number)
 void display_set_number()
 {
 
-  double num = display_counter == 0 ? aircraft_pointer->pitch : display_counter == 1 ? aircraft_pointer->roll
-                                                            : display_counter == 2   ? aircraft_pointer->speed
-                                                                                     : 0;
+  double num = display_counter == 0   ? aircraft_pointer->pitch
+               : display_counter == 1 ? aircraft_pointer->roll
+               : display_counter == 2 ? aircraft_pointer->speed
+                                      : 0;
 
   char value[50];
   float_to(value, sizeof(value), num);
   value[4] = 0b00010000;
-  value[5] = display_counter == 0 ? 0b01110000 : display_counter == 1 ? 0b01110010
-      : display_counter == 2   ? 0b01110100
-                               : 0;
+  value[5] = display_counter == 0   ? 0b01110000
+             : display_counter == 1 ? 0b01110010
+             : display_counter == 2 ? 0b01110100
+                                    : 0;
 
   display_set_string(value);
 }
@@ -158,7 +160,6 @@ void display_init(Aircraft *aircraft)
   display_write_single_data(0x0C, 0x00); // Set all digits to be 16 segment displays (Can be removed)
   display_write_single_data(0x01, 0xFF); // Ensure decode mode is on (Can be removed)
 }
-
 
 void display_toggle_display(void)
 {

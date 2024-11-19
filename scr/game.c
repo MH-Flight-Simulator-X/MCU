@@ -37,21 +37,6 @@ void game_init()
   // ALLOCATE MATRIX ENTRIES
   matrix_entries = (MvpMatrixEntry *)malloc((num_aircraft + 1) * sizeof(MvpMatrixEntry));
 
-  //  // *************** SEND FIRST FRAME TO FPGA *************** //
-  //  matrix_entries[0].flag_id = 0x0; // 66 // 00000000
-  //  generate_mvp_matrix((Sprite *)&aircraft, &aircraft, matrix_entries[0].mvp_matrix);
-  //  for (int i = 0; i < num_aircraft; i++)
-  //  {
-  //    uint8_t flag = ai_aircraft[i].status;
-  //    uint8_t id = ai_aircraft[i].id;
-  //    matrix_entries[i + 1].flag_id = flag | id;
-  //    generate_mvp_matrix((Sprite *)&ai_aircraft[i], &aircraft, matrix_entries[i + 1].mvp_matrix);
-  //  }
-  //
-  //  fpga_frame_send(matrix_entries, num_aircraft + 1);
-  //  // ******************************************************** //
-  //
-  //  debug_printf("Game initialized, waiting to start... ");
   display_set_string("WAITING TO START MICROHARD FLIGHT SIMULATOR ");
 }
 
@@ -87,12 +72,6 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
     num_alive++;
   }
 
-  /// CHECK IF GAME IS OVER ///
-  if (num_alive == 0)
-  {
-    game_active = 0;
-    display_set_string("ALL AIRCRAFT GONE. BOO-YAH ");
-  }
   /// SEND NEW MATRICES TO FPGA ///
   fpga_frame_send(matrix_entries, num_alive);
 
@@ -102,32 +81,34 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
     display_set_number();
     display_print_string();
   }
-
   /// TOGGLE DISPLAY NUMBER ///
-  if (frame_counter % 167 == 0)
+  if (frame_counter % 120 == 0)
   {
     display_toggle_display();
+    /// CHECK IF GAME IS OVER ///
+    if (num_alive == 0)
+    {
+      *game_active = 0;
+      display_set_string("ALL AIRCRAFT GONE. BOO-YAH ");
+    }
   }
-}
 
-void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
-{
-  //  debug_printf( "In wait state");
-  //  debug_print_float( (float) controller.fire);
-  //  debug_printf( "\n");
+  void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
+  {
 
-  if (frame_counter % 30 == 0)
-  {
-    display_print_and_rotate_string();
-    controller_led_turn_on();
+    if (frame_counter % 20 == 0)
+    {
+      display_print_and_rotate_string();
+      controller_led_turn_on();
+    }
+    if ((frame_counter + 5) % 60 == 0)
+    {
+      controller_led_turn_off();
+    }
+    button_read(&controller);
+    if (controller.fire)
+    {
+      controller_led_turn_on();
+      *game_active = 1;
+    }
   }
-  if ((frame_counter + 10) % 30 == 0)
-  {
-    controller_led_turn_off();
-  }
-  button_read(&controller);
-  if (controller.fire)
-  {
-    *game_active = 1;
-  }
-}

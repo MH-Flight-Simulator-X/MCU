@@ -25,26 +25,31 @@ void controller_get_inputs(Controller *controller, uint32_t frame_counter)
   uint32_t adcSamples[3];
   adc_read(adcSamples);
   controller_convert_voltage(adcSamples, controller);
+
   button_read(controller);
-  if (frame_counter % 30 == 0)
-  {
-    //      debug_printf("Pitch: %d, Roll: %d\n", adcSamples[0], adcSamples[1]);
-  }
+
+  //  if (frame_counter % 30 == 0)
+  //  {
+  //      debug_print_float((float)adcSamples[1]);
+  //      debug_print_float((float)adcSamples[0]);
+  //      debug_print_float((float)adcSamples[2]);
+  //      debug_printf("\n");
+  //  }
 }
 
 void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller)
 {
   // CONVERT THUMBSTICK TO PITCH
   if (adcValues[0] < 1300 || 1700 < adcValues[0])
-    controller->pitch = adcValues[0] / 3300.0 - 0.5;
+    controller->roll = adcValues[0] / 3300.0 - 0.5;
   else
-    controller->pitch = 0.0;
+    controller->roll = 0.0;
 
   // CONVERT THUMBSTICK TO ROLL
   if (adcValues[1] < 1300 || 1700 < adcValues[1])
-    controller->roll = adcValues[1] / 3300.0 - 0.5;
+    controller->pitch = adcValues[1] / 3300.0 - 0.5;
   else
-    controller->roll = 0.0;
+    controller->pitch = 0.0;
 
   // CONVERT SLIDER TO THROTTLE
   if (adcValues[2] < 3100)
@@ -58,7 +63,6 @@ void controller_convert_voltage(volatile uint32_t *adcValues, Controller *contro
   else
     controller->throttle = 1.0;
 }
-
 
 // Initialize ADC
 void adc_init()
@@ -88,7 +92,7 @@ void adc_read(uint32_t *adcSamples)
 
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
     ;
-  adcSamples[0] = (ADC0->SCANDATA * 3300) / 4095;
+  adcSamples[0] = 3300 - ((ADC0->SCANDATA - 40) * 3300) / 4095;
 
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
     ;
@@ -96,20 +100,20 @@ void adc_read(uint32_t *adcSamples)
 
   while (!(ADC0->STATUS & ADC_STATUS_SCANDV))
     ;
-  adcSamples[2] = (ADC0->SCANDATA * 3300) / 4095;
+  adcSamples[2] = 3300 - (ADC0->SCANDATA * 3300) / 4095;
 }
 
 void button_read(Controller *controller)
 {
-  controller->fire = (GPIO->P[3].DIN & (1 << 3));
+  controller->fire = GPIO_PinInGet(3, 3);
 }
 
 void controller_led_turn_on()
 {
-  GPIO->P[4].DOUTSET = 1 << 4;
+  GPIO_PinOutClear(3, 4);
 }
 
 void controller_led_turn_off()
 {
-  GPIO->P[4].DOUTSET = 0 << 4;
+  GPIO_PinOutSet(3, 4);
 }
