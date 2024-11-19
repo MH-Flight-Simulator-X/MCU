@@ -48,5 +48,6 @@ typedef struct
 void aircraft_init(Aircraft *plane);
 void update_aircraft(Aircraft *plane, Controller *controller, uint32_t frame_counter);
 void aircraft_check_hit(Aircraft * a, AiAircraft * opp, int num_aircrafts);
+void check_collision(Aircraft *aircraft, AiAircraft *ai);
 
 #endif // PLANE_H
