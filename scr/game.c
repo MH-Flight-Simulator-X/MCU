@@ -52,12 +52,12 @@ void game_init()
   //  // ******************************************************** //
   //
   //  debug_printf("Game initialized, waiting to start... ");
+  display_set_string("WAITING TO START MICROHARD FLIGHT SIMULATOR ");
+
 }
 
 void game_process_action(uint32_t frame_counter, uint32_t *game_active)
 {
-  debug_printf("Go \n");
-
   controller_get_inputs(&controller, frame_counter);
 
   if (controller.fire)
@@ -92,6 +92,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   if (num_alive == 0)
   {
     game_active = 0;
+    display_set_string("ALL AIRCRAFT GONE. BOO-YAH ");
   }
   /// SEND NEW MATRICES TO FPGA ///
   fpga_frame_send(matrix_entries, num_alive);
@@ -110,15 +111,13 @@ void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
 //  debug_print_float( (float) controller.fire);
 //  debug_printf( "\n");
 
-      debug_printf("Wait \n");
 
-  display_set_string("WAITING TO START MICROHARD FLIGHT SIMULATOR ");
   if (frame_counter % 30 == 0)
   {
     display_print_and_rotate_string();
     controller_led_turn_on();
   }
-  if (frame_counter % 10 == 0)
+  if ((frame_counter + 10) % 30 == 0)
   {
     controller_led_turn_off();
   }
