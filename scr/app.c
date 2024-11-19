@@ -44,6 +44,7 @@ void app_init()
   frame_timer_init();
   game_init();
   game_active = 0;
+  game_process_action(frame_counter, &game_active);
 }
 
 void app_process_action(void)
@@ -55,6 +56,7 @@ void app_process_action(void)
     frame_ready = false;
 //    debug_print_float((float) game_active);
 //    debug_printf("\n");
+
     if (game_active)
       {
         game_process_action(frame_counter, &game_active);
