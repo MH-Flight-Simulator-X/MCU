@@ -33,7 +33,7 @@ static Heading heading_list3[] = {
     {0.0, 1.0, -1.0, 140}};
 static const int heading_list3_size = ARRAY_LENGTH(heading_list3);
 
-static AiAircraft original_aircrafts[] = {
+static AiAircraft original_aircraft[] = {
     // Aircraft 1
     {.x = 0.0, .y = 0.0, .z = 0.0, .roll = 0.0, .pitch = 0.0, .yaw = 0.0, .headings = heading_list1, .num_headings = heading_list1_size},
     // Aircraft 2
@@ -41,6 +41,6 @@ static AiAircraft original_aircrafts[] = {
     // Aircraft 3
     {.x = -30.0, .y = 40.0, .z = -15.0, .roll = 0.0, .pitch = 0.0, .yaw = 0.0, .headings = heading_list3, .num_headings = heading_list3_size}};
 
-static const int num_aircrafts = ARRAY_LENGTH(original_aircrafts);
+static const int num_aircraft = ARRAY_LENGTH(original_aircraft);
 
 #endif // HEADING_H

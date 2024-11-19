@@ -42,6 +42,10 @@ static void generate_view_matrix(Sprite *sprite, mat4 result)
 // Generate the Model-View-Projection (MVP) matrix for the sprite and aircraft
 void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 {
+  if (sprite->status == 2)
+  {
+    return;
+  }
   mat4 identity_matrix;
   glm_mat4_identity(identity_matrix);
 
