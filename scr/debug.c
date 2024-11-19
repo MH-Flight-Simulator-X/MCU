@@ -15,7 +15,7 @@ void debug_print(const char* str) {
 
 void debug_println(const char *format, ...) {
   va_list args;
-  printf(format, args);
+  debug_printf(format, args);
   debug_print("\n");
 }
 
