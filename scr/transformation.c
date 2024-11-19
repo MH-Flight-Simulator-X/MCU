@@ -20,7 +20,7 @@ void print_matrix(mat4 matrix)
 }
 
 // Generate a combined rotation matrix from pitch and roll
-static void generate_rotation_matrix(float pitch, float roll, mat4 result)
+static void generate_rotation_matrix(double pitch, double roll, mat4 result)
 {
   mat4 pitch_matrix, roll_matrix;
 
@@ -28,9 +28,10 @@ static void generate_rotation_matrix(float pitch, float roll, mat4 result)
   vec3 roll_axis = {0, 0, 1};  // Roll rotates around Z-axis
 
   glm_rotate_make(pitch_matrix, glm_rad(pitch), pitch_axis);
+
   glm_rotate_make(roll_matrix, glm_rad(roll), roll_axis);
 
-  // Combine roll and pitch: Roll -> Pitch
+  // Combine roll and pitch
   glm_mat4_mul(roll_matrix, pitch_matrix, result);
 }
 
@@ -39,14 +40,11 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 {
   if (sprite->status == 2)
   {
+    debug_println("Sprite status is 2, skipping MVP generation.");
     return;
   }
-  // mat4 rotation_matrix, model_matrix;
-  // mat4 fixed_tilt_matrix, camera_view_matrix, camera_view_matrix;
-  // mat4 view_matrix, projection_matrix;
 
   mat4 identity_matrix;
-  glm_mat4_identity(identity_matrix);
   glm_mat4_identity(identity_matrix);
 
   // Translation matrix for the sprite position
@@ -67,16 +65,16 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
   glm_rotate_make(camera_tilt_matrix, glm_rad(-20.0f), tilt_axis);
 
   // Generate the camera's local transformation
-  mat4 camera_view_matrix;
-  generate_rotation_matrix(aircraft->pitch, aircraft->roll, camera_view_matrix);
+  mat4 camera_rotation_matrix;
+  generate_rotation_matrix(aircraft->pitch, aircraft->roll, camera_rotation_matrix);
 
   // Combine the fixed tilt with the camera's rotation
-  glm_mat4_mul(camera_view_matrix, camera_tilt_matrix, camera_view_matrix);
+  glm_mat4_mul(camera_rotation_matrix, camera_tilt_matrix, camera_rotation_matrix);
 
   // Translate the camera backwards 20 units along its -Z axis
-  vec4 camera_offset = {0, 2, 20, 1};
+  vec4 camera_offset = {0, 0, 20, 1};
   vec4 translated_offset;
-  glm_mat4_mulv(camera_view_matrix, camera_offset, translated_offset);
+  glm_mat4_mulv(camera_rotation_matrix, camera_offset, translated_offset);
 
   // Update camera position in world space
   vec3 adjusted_camera_position = {
@@ -92,15 +90,19 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
       -adjusted_camera_position[2]};
   glm_translate_make(camera_translation_matrix, neg_adjusted_camera_position);
 
-  // Apply rotation first, then translation
-  glm_mat4_mul_adj(camera_view_matrix, camera_translation_matrix, camera_view_matrix);
 
-  mat4 projection_matrix;
+  mat4 transposed_camera_rotation_matrix;
+  glm_mat4_transpose_to(camera_rotation_matrix, transposed_camera_rotation_matrix);
+
+  glm_mat4_mul(transposed_camera_rotation_matrix, camera_translation_matrix, camera_rotation_matrix);
+
   // Generate the projection matrix
+  mat4 projection_matrix;
   glm_perspective(glm_rad(45.0f), 4.0f / 3.0f, 1.0f, 1000.0f, projection_matrix);
 
   // Compute the MVP matrix: projection * view * model
   mat4 view_projection;
-  glm_mat4_mul(projection_matrix, camera_view_matrix, view_projection);
+  glm_mat4_mul(projection_matrix, camera_rotation_matrix, view_projection);
+
   glm_mat4_mul(view_projection, model_matrix, result);
 }
