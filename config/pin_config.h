@@ -222,6 +222,20 @@
 #define btn1_PIN                                 5
 #endif
 
+#ifndef button_fire_PORT                        
+#define button_fire_PORT                         gpioPortD
+#endif
+#ifndef button_fire_PIN                         
+#define button_fire_PIN                          3
+#endif
+
+#ifndef button_led_PORT                         
+#define button_led_PORT                          gpioPortD
+#endif
+#ifndef button_led_PIN                          
+#define button_led_PIN                           4
+#endif
+
 // [CUSTOM_PIN_NAME]$
 
 #endif // PIN_CONFIG_H

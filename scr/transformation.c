@@ -37,6 +37,10 @@ static void generate_rotation_matrix(float pitch, float roll, mat4 result)
 // Generate the Model-View-Projection (MVP) matrix
 void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 {
+  if (sprite->status == 2)
+  {
+    return;
+  }
   // mat4 rotation_matrix, model_matrix;
   // mat4 fixed_tilt_matrix, camera_view_matrix, camera_view_matrix;
   // mat4 view_matrix, projection_matrix;

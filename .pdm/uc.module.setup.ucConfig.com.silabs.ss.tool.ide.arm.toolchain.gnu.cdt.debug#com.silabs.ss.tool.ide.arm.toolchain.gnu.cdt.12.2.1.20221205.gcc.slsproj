@@ -4,6 +4,8 @@
     <file name="sl_memory_config.h" generated="true" linked="false"/>
     <file name="sl_debug_swo_config.h" generated="true" linked="false"/>
     <file name="sl_emlib_gpio_init_FPGA_Reset_config.h" generated="true" linked="false"/>
+    <file name="sl_emlib_gpio_init_button_fire_config.h" generated="true" linked="false"/>
+    <file name="sl_emlib_gpio_init_button_led_config.h" generated="true" linked="false"/>
     <file name="sl_i2cspm_display_config.h" generated="true" linked="false"/>
     <file name="sl_iostream_vuart_config.h" generated="true" linked="false"/>
     <file name="sl_simple_button_btn0_config.h" generated="true" linked="false"/>

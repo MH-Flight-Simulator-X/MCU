@@ -4,7 +4,7 @@
 #include "sl_button.h"
 #include "sl_simple_button_instances.h"
 #include "sl_simple_led_instances.h"
-
+#include "em_gpio.h"
 #include "sl_simple_led_instances.h"
 
 #include "debug.h"
@@ -61,6 +61,11 @@ void controller_convert_voltage(volatile uint32_t *adcValues, Controller *contro
     controller->throttle = 1.0;
 }
 
+void controller_flash_button()
+{
+
+}
+
 // Initialize ADC
 void adc_init()
 {
@@ -102,10 +107,22 @@ void adc_read(uint32_t *adcSamples)
 
 void button_init()
 {
-  GPIO_PinModeSet(gpioPortD, 3, gpioModeInput, 0);
+//  GPIO_PinModeSet(gpioPortD, 3, gpioModeInput, 0);
+//  GPIO_PinModeSet(gpioPortD, 4, gpioModeWiredAnd, 0);
 }
 
 void button_read(Controller *controller)
 {
   controller->fire = !(GPIO->P[3].DIN & (1 << 3));
+
+}
+
+void controller_led_turn_on()
+{
+  GPIO->P[4].DOUTSET = 1 << 4;
+}
+
+void controller_led_turn_off()
+{
+  GPIO->P[4].DOUTSET = 0 << 4;
 }

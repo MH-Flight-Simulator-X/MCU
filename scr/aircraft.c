@@ -1,4 +1,5 @@
 #include <aircraft.h>
+#include <ai_aircraft.h>
 #include "controller.h"
 #include "debug.h"
 #include <math.h>
@@ -10,7 +11,7 @@ void aircraft_init(Aircraft *aircraft)
   aircraft->speed = BASE_SPEED;
 }
 
-void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_counter)
+void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
 {
   // Adding pitch and roll from joystick to aircraft
   aircraft->roll += controller->roll * 1.5f;
@@ -28,7 +29,7 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   float lift = cos_deg(aircraft->roll);
   float gravity_effect = GRAVITY * (1 - lift);
 
-  // Computes target speed based on aircrafts pitch and throttle
+  // Computes target speed based on aircraft's pitch and throttle
   // Precompute the sin for faster computation of sin^3
   float stall_decrease = (STALL_DECREASE * sin_deg(aircraft->pitch));
   float target_speed = BASE_SPEED * controller->throttle - stall_decrease * stall_decrease * stall_decrease;
@@ -56,14 +57,14 @@ void update_aircraft(Aircraft *aircraft, Controller *controller, uint32_t frame_
   aircraft->z += dz * aircraft->speed / PRECISION;
 }
 
-void aircraft_check_hit(Aircraft *a, Sprite **sprites)
+void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
 {
   // TODO: Implement checks to limit number of sprite comparisons, i.e if position of sprite is behind aircraft
-  for (int i = 0; i < sprite_count; i++)
+  for (int i = 0; i < num_aircraft; i++)
   {
-    Sprite s = sprites[i];
+    AiAircraft ai = opp[i];
 
-    if (s->status == 1 || s->status == 2) // Sprite already hit or dead
+    if (ai.status == 1 || ai.status == 2) // Sprite already hit or dead
     {
       continue;
     }
@@ -72,9 +73,9 @@ void aircraft_check_hit(Aircraft *a, Sprite **sprites)
           dy = a->dy,
           dz = a->dz; // Decomposed Aircraft heading unit vector
 
-    float ox = a->x - s->x,
-          oy = a->y - s->y,
-          oz = a->z - s->z; // Decomposed Aircraft-to-Sprite vector
+    float ox = a->x - ai.x,
+          oy = a->y - ai.y,
+          oz = a->z - ai.z; // Decomposed Aircraft-to-Sprite vector
 
     float r = 5.0; // Radius of Sprite hitbox
 
@@ -112,23 +113,19 @@ void aircraft_check_hit(Aircraft *a, Sprite **sprites)
     // Check for positive t solutions (in the direction of the ray)
     if (t1 > 0 || t2 > 0)
     {
-      s->status = 1;
+      ai.status = 1;
     }
   }
 }
 
-sprite_update_status(Sprite **sprites, int sprite_count)
-{
-  for (int i = 0; i < sprite_count; i++)
-  {
-    Sprite s = sprites[i];
-    if (s->counter == 30)
-    {
-      s->status = 2;
-    }
-    if (s->status == 1)
-    {
-      s->counter++;
-    }
-  }
+void check_collision(Aircraft *aircraft, AiAircraft *ai) {
+    float dx = aircraft->x - ai->x;
+    float dy = aircraft->y - ai->y;
+    float dz = aircraft->z - ai->z;
+    
+    // Calculate distance squared (avoiding square root for performance)
+    float distance_squared = dx*dx + dy*dy + dz*dz;
+    
+    // Compare with radius squared (5*5 = 25)
+    distance_squared <= 25.0f;
 }

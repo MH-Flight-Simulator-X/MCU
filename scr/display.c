@@ -1,13 +1,15 @@
 #include "sl_i2cspm_instances.h"
 #include "sl_simple_led_instances.h"
 #include "sl_simple_led.h"
+#include "aircraft.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-uint8_t display_clear = 0b00100000;
 char *string;
+int display_counter;
+Aircraft *aircraft_pointer;
 
 void display_write_single_data(uint8_t reg, uint8_t command)
 {
@@ -26,17 +28,7 @@ void display_write_single_data(uint8_t reg, uint8_t command)
   seq.buf[1].data = NULL;
   seq.buf[1].len = 0;
 
-  I2C_TransferReturn_TypeDef res = I2CSPM_Transfer(sl_i2cspm_display, &seq);
-  /*
-  if (res < 0)
-  {
-    sl_led_turn_on(&sl_led_led1);
-  }
-  else
-  {
-    sl_led_turn_on(&sl_led_led0);
-  }
-  */
+  I2CSPM_Transfer(sl_i2cspm_display, &seq);
 }
 
 void display_write_data(uint8_t *command)
@@ -59,25 +51,29 @@ void display_write_data(uint8_t *command)
   seq.buf[1].data = NULL;
   seq.buf[1].len = 0;
 
-  I2C_TransferReturn_TypeDef res = I2CSPM_Transfer(sl_i2cspm_display, &seq);
+  I2CSPM_Transfer(sl_i2cspm_display, &seq);
 }
 
-void display_print_string(char str[])
+void display_clear(void)
 {
+  display_write_single_data(0x60, 0b00100000);
+  display_write_single_data(0x61, 0b00100000);
+  display_write_single_data(0x62, 0b00100000);
+  display_write_single_data(0x63, 0b00100000);
+  display_write_single_data(0x64, 0b00100000);
+  display_write_single_data(0x65, 0b00100000);
+}
 
-  display_write_single_data(0x60, display_clear);
-  display_write_single_data(0x61, display_clear);
-  display_write_single_data(0x62, display_clear);
-  display_write_single_data(0x63, display_clear);
-  display_write_single_data(0x64, display_clear);
-  display_write_single_data(0x65, display_clear);
+void display_print_string()
+{
+  display_clear();
 
-  int len = strlen(str);
+  int len = strlen(string);
   uint8_t ascii_values[len];
   int i = 0;
-  while (str[i] != '\0')
+  while (string[i] != '\0')
   {
-    ascii_values[i] = (int)str[i];
+    ascii_values[i] = (int)string[i];
     i++;
   }
   display_write_data(ascii_values);
@@ -94,7 +90,6 @@ void display_print_and_rotate_string(void)
     string[i] = string[i + 1];
   }
   string[len - 1] = first_char;
-
 }
 
 void display_set_string(char str[])
@@ -103,15 +98,59 @@ void display_set_string(char str[])
   strcpy(string, str);
 }
 
-void display_init(void)
+void float_to(char *buffer, size_t size, double number)
 {
-  string = (char *)malloc(36 * sizeof(char));
-  strcpy(string, "WELCOME TO FLYING FUCKING SIMULATOR. FASTEN YOUR SEATBELTS ");
 
-  display_set_string("FUCK YOU 1234 ");
+  char tempBuffer[50];
+  float_to_string(tempBuffer);
 
+  char *dot = strchr(tempBuffer, '.');
+  if (dot)
+  {
+    int intPartLen = dot - tempBuffer;               // Length of the integer part
+    char lastDigitChar = tempBuffer[intPartLen - 1]; // Get the last digit
+
+    uint8_t lastDigit = (uint8_t)lastDigitChar; // Convert to numeric
+
+    uint8_t modifiedDigit = lastDigit | 0b10000000; // Set MSB
+
+    tempBuffer[intPartLen - 1] = (char)modifiedDigit;
+
+    memmove(&tempBuffer[intPartLen], &tempBuffer[intPartLen + 1], strlen(tempBuffer) - intPartLen);
+  }
+
+  if (number < 0)
+  {
+    snprintf(buffer, size, "%s", tempBuffer);
+  }
+  else
+  {
+    snprintf(buffer, size, "%s", tempBuffer);
+  }
+}
+
+void display_set_number()
+{
+
+  double num = display_counter == 0 ? aircraft_pointer->pitch : display_counter == 1 ? aircraft_pointer->roll
+                                                            : display_counter == 2   ? aircraft_pointer->speed
+                                                                                     : 0;
+
+  char value[50];
+  float_to(value, sizeof(value), num);
+  value[4] = 0b00010000;
+  value[5] = display_counter == 0 ? 0b01110000 : display_counter == 1 ? 0b01110010
+      : display_counter == 2   ? 0b01110100
+                               : 0;
+
+  display_set_string(value);
+}
+
+void display_init(Aircraft *aircraft)
+{
+  aircraft_pointer = aircraft;
   sl_i2cspm_init_instances();
-
+  display_counter = 0;
   display_write_single_data(0x07, 0x00); // Ensure test mode is turned off
   display_write_single_data(0x04, 0x01); // Turn off standby modus
   display_write_single_data(0x02, 0x0F); // Set max brightness
@@ -120,12 +159,9 @@ void display_init(void)
   display_write_single_data(0x01, 0xFF); // Ensure decode mode is on (Can be removed)
 }
 
-// long double num = 123.4567890123456789L;
-// char str[100];  // Allocate enough space for the string
 
-// // Convert long double to string with 15 decimal places
-//  double double_num = (double) num;
+void display_toggle_display(void)
+{
 
-// // Use snprintf to format the double as a string
-// snprintf(str, sizeof(str), "%.8f", double_num);
-// display_print_string("2.54");
+  display_counter = (display_counter + 1) % 3;
+}

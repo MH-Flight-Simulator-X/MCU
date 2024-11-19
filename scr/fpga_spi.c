@@ -74,8 +74,9 @@ void print_buffer(uint8_t *buffer, int size)
 
 void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count)
 {
+
   const int entry_size = 1 + 16 * 3;
-  const int total_size = 1 + entry_count * entry_size;
+  const int total_size = 1 + (entry_count) * entry_size;
 
   uint8_t buffer[total_size];
   memset(buffer, 0, total_size);

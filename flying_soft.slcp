@@ -1,9 +1,7 @@
 # Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
 project_name: flying_soft
 label: flying_soft
-description: |
-  MicroHard Flight Simulator X | 
-  A basic flight simulator.
+description: "MicroHard Flight Simulator X | \nA basic flight simulator.\n"
 category: Embedded game system
 filter:
 - name: Device Type
@@ -30,7 +28,7 @@ component:
 - {id: EFM32GG842F1024}
 - {id: debug_swo}
 - {id: device_init}
-- instance: [FPGA_Reset]
+- instance: [FPGA_Reset, button_fire, button_led]
   id: emlib_gpio_simple_init
 - instance: [display]
   id: i2cspm

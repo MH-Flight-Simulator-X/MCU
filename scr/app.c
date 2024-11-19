@@ -28,6 +28,7 @@
 sl_sleeptimer_timer_handle_t frame_timer;
 bool frame_ready = false;
 uint32_t frame_counter = 0;
+uint32_t game_active;
 
 static void on_frame_timeout(sl_sleeptimer_timer_handle_t *handle, void *data);
 
@@ -42,6 +43,7 @@ void app_init()
 {
   frame_timer_init();
   game_init();
+  game_active = 0;
 }
 
 void app_process_action(void)
@@ -51,7 +53,16 @@ void app_process_action(void)
   {
     frame_counter++;
     frame_ready = false;
-    game_process_action(frame_counter);
+//    debug_print_float((float) game_active);
+//    debug_printf("\n");
+    if (game_active)
+      {
+        game_process_action(frame_counter, &game_active);
+      }
+    else
+      {
+        game_process_wait(frame_counter, &game_active);
+      }
   }
 }
 
