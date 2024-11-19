@@ -53,7 +53,6 @@ void game_init()
   //
   //  debug_printf("Game initialized, waiting to start... ");
   display_set_string("WAITING TO START MICROHARD FLIGHT SIMULATOR ");
-
 }
 
 void game_process_action(uint32_t frame_counter, uint32_t *game_active)
@@ -103,14 +102,19 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
     display_set_number();
     display_print_string();
   }
+
+  /// TOGGLE DISPLAY NUMBER ///
+  if (frame_counter % 167 == 0)
+  {
+    display_toggle_display();
+  }
 }
 
 void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
 {
-//  debug_printf( "In wait state");
-//  debug_print_float( (float) controller.fire);
-//  debug_printf( "\n");
-
+  //  debug_printf( "In wait state");
+  //  debug_print_float( (float) controller.fire);
+  //  debug_printf( "\n");
 
   if (frame_counter % 30 == 0)
   {
