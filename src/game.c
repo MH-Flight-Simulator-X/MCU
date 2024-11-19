@@ -92,6 +92,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
       display_set_string("ALL AIRCRAFT GONE. BOO-YAH ");
     }
   }
+}
 
   void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
   {
