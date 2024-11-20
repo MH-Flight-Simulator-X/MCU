@@ -30,7 +30,7 @@ typedef struct
 {
   double x, y, z;
   double dx, dy, dz;
-  double roll, pitch;
+  double pitch, yaw, roll;
   double speed;
   int id;
 } Aircraft;
@@ -43,7 +43,7 @@ typedef struct
 typedef struct
 {
   double x, y, z;
-  double roll, pitch;
+  double pitch, yaw, roll;
   uint32_t counter, status;
 } Sprite;
 

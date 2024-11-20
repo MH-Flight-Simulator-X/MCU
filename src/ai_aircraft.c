@@ -61,6 +61,8 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
     }
     Heading *headings = craft->headings;
 
+    // Total duration is the last heading (because of cumulative duration)
+    // Mulitplied by 2 since we move backwards on the same headings
     int total_duration = headings[craft->num_headings - 1].duration * 2;
     int current_frame = frame_counter % total_duration;
 
