@@ -149,15 +149,15 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   fpga_frame_send(matrix_entries, num_alive + 1, frame_counter);
 
   /// UPDATE DISPLAY ///
-  if (frame_counter % 30 == 0)
+  if (frame_counter % 15 == 0)
   {
     display_set_number();
     display_print_string();
   }
   /// TOGGLE DISPLAY NUMBER ///
-  if (frame_counter % 180 == 0)
+  if (frame_counter % 240 == 0)
   {
-    //    display_toggle_display();
+    display_toggle_display();
     /// CHECK IF GAME IS OVER ///
     if (num_alive == 0)
     {

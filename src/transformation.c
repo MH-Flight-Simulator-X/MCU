@@ -92,7 +92,7 @@ static void generate_rotation_matrix(float pitch, float yaw, float roll, mat4 re
  * @note Early returns if sprite->status == 2
  * @note Camera position is computed in aircraft's local space then transformed to world space
  *********************************************************************************************/
-void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
+void generate_mvp_matrix(Sprite *sprite, Sprite *camera, mat4 result)
 {
   if (sprite->status == 2)
   {
