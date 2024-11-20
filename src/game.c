@@ -26,7 +26,6 @@
 #include "display.h"
 #include "transformation.h"
 
-
 int iteration = 0;
 Aircraft aircraft;              // The player's aircraft
 Controller controller;          // The controller
@@ -38,10 +37,10 @@ int toggle_display_cooldown = 0;
 
 /*********************************************************************************************
  * @brief Initializes the game state and all required components
- * 
+ *
  * Sets up the game environment including hardware peripherals, player aircraft,
  * AI aircraft, and rendering matrices. Must be called before any other game functions.
- * 
+ *
  * @return void
  *********************************************************************************************/
 void game_init()
@@ -71,7 +70,7 @@ void game_init()
 
 /*********************************************************************************************
  * @brief Processes a single frame of active gameplay
- * 
+ *
  * Handles all game logic for one frame including:
  * - Controller input processing
  * - Aircraft movement and physics
@@ -79,7 +78,7 @@ void game_init()
  * - Weapon systems
  * - Camera positioning
  * - Display updates
- * 
+ *
  * @param frame_counter Current frame number
  * @param game_active Pointer to game state flag. Set to 0 when game ends
  * @return void
@@ -92,7 +91,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   if (controller.fire)
   {
     controller_led_turn_on();
-    if(toggle_display_cooldown < 0)
+    if (toggle_display_cooldown < 0)
     {
       toggle_display_cooldown = 30;
       display_toggle_display();
@@ -147,7 +146,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   }
 
   /// SEND NEW MATRICES TO FPGA ///
-  fpga_frame_send(matrix_entries, num_alive, frame_counter);
+  fpga_frame_send(matrix_entries, num_alive + 1, frame_counter);
 
   /// UPDATE DISPLAY ///
   if (frame_counter % 30 == 0)
@@ -158,7 +157,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   /// TOGGLE DISPLAY NUMBER ///
   if (frame_counter % 180 == 0)
   {
-//    display_toggle_display();
+    //    display_toggle_display();
     /// CHECK IF GAME IS OVER ///
     if (num_alive == 0)
     {
@@ -170,10 +169,10 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
 
 /*********************************************************************************************
  * @brief Handles the game's waiting/menu state
- * 
+ *
  * Displays the menu screen and waits for player input to start the game.
  * Controls LED indicators and rotating display text.
- * 
+ *
  * @param frame_counter Current frame number
  * @param game_active Pointer to game state flag
  * @return void
@@ -185,9 +184,9 @@ void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
   {
     display_print_and_rotate_string();
   }
-  if (frame_counter% 60 == 0)
+  if (frame_counter % 60 == 0)
     controller_led_turn_on();
-  if (frame_counter% 60 == 8)
+  if (frame_counter % 60 == 8)
     controller_led_turn_off();
 
   button_read(&controller);
@@ -197,4 +196,3 @@ void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
     *game_active = 1;
   }
 }
-

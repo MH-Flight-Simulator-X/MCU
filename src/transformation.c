@@ -122,7 +122,7 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   // Generate the camera's local transformation
   mat4 camera_rotation_matrix;
-  generate_rotation_matrix(aircraft->pitch, aircraft->yaw, aircraft->roll, camera_rotation_matrix);
+  generate_rotation_matrix(camera->pitch, camera->yaw, camera->roll, camera_rotation_matrix);
 
   // Combine the fixed tilt with the camera's rotation
   glm_mat4_mul(camera_rotation_matrix, camera_tilt_matrix, camera_rotation_matrix);
@@ -134,9 +134,9 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   // Update camera position in world space
   vec3 adjusted_camera_position = {
-      aircraft->x + translated_offset[0],
-      aircraft->y + translated_offset[1],
-      aircraft->z + translated_offset[2]};
+      camera->x + translated_offset[0],
+      camera->y + translated_offset[1],
+      camera->z + translated_offset[2]};
 
   // View matrix (inverse of camera's transformation)
   mat4 camera_translation_matrix;
@@ -145,7 +145,6 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
       -adjusted_camera_position[1],
       -adjusted_camera_position[2]};
   glm_translate_make(camera_translation_matrix, neg_adjusted_camera_position);
-
 
   mat4 transposed_camera_rotation_matrix;
   glm_mat4_transpose_to(camera_rotation_matrix, transposed_camera_rotation_matrix);
@@ -162,4 +161,3 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   glm_mat4_mul(view_projection, model_matrix, result);
 }
-
