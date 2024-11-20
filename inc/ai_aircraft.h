@@ -30,7 +30,6 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
 void ai_aircraft_create(AiAircraft *dest, const AiAircraft *src, int count);
 void ai_aircraft_move(AiAircraft *aircraft, Heading heading);
 void ai_aircraft_update_status(AiAircraft * crafts, int num_aircraft);
-void print_status(const AiAircraft *aircraft);
 void normalize_vector(double *dx, double *dy, double *dz);
 
 #endif // AI_AIRCRAFT_H
