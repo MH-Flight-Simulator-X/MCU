@@ -98,7 +98,6 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
   }
 }
 
-
 void ai_aircraft_move(AiAircraft *aircraft, Heading heading)
 {
   double dx = heading.dx;
