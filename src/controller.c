@@ -103,15 +103,16 @@ void adc_read(uint32_t *adcSamples)
 
 void button_read(Controller *controller)
 {
-  controller->fire = GPIO_PinInGet(3, 3);
-}
-
-void controller_led_turn_on()
-{
-  GPIO_PinOutClear(3, 4);
+  sl_button_poll_step(&sl_button_fire);
+  controller->fire = sl_button_get_state(&sl_button_fire) != SL_SIMPLE_BUTTON_PRESSED;
 }
 
 void controller_led_turn_off()
 {
-  GPIO_PinOutSet(3, 4);
+  GPIO_PinOutClear(gpioPortD, 4);
+}
+
+void controller_led_turn_on()
+{
+  GPIO_PinOutSet(gpioPortD, 4);
 }

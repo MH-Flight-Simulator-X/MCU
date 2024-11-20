@@ -24,7 +24,7 @@ float convert_fixedpoint_bytes_to_float(const uint8_t *buffer)
   return fp2fl(fixed_value);
 }
 
-void print_buffer(uint8_t *buffer, int size)
+void print_buffer(uint8_t *buffer, int size, bool hexdump)
 {
   uint8_t entry_count = buffer[0];
   debug_printf("Entry count: %d\n", entry_count);
@@ -62,19 +62,21 @@ void print_buffer(uint8_t *buffer, int size)
     }
   }
 
-  debug_printf("\nBuffer (Hex Dump):\n");
-  for (int i = 0; i < size; i++)
-  {
-    debug_printf("0x%02X ", buffer[i]);
-    if ((i + 1) % 8 == 0)
+  if (hexdump){
+    debug_printf("\nBuffer (Hex Dump):\n");
+    for (int i = 0; i < size; i++)
     {
-      debug_printf("\n");
+      debug_printf("0x%02X ", buffer[i]);
+      if ((i + 1) % 8 == 0)
+      {
+        debug_printf("\n");
+      }
     }
+    debug_printf("\n");
   }
-  debug_printf("\n");
 }
 
-void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count)
+void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count, uint32_t frame_counter)
 {
 
   const int entry_size = 1 + 16 * 3;
@@ -95,13 +97,14 @@ void fpga_frame_send(MvpMatrixEntry *entries, uint8_t entry_count)
     {
       for (int j = 0; j < 4; j++)
       {
-        convert_float_to_fixedpoint_bytes(entries[n].mvp_matrix[i][j], &buffer[offset]);
+        convert_float_to_fixedpoint_bytes(entries[n].mvp_matrix[j][i], &buffer[offset]);
         offset += 3;
       }
     }
   }
   spi_transfer(buffer, total_size);
-  //  print_buffer(buffer, total_size);
+  if (frame_counter % 30 == 0)
+    print_buffer(buffer, total_size, 0);
 }
 
 void fpga_reset()

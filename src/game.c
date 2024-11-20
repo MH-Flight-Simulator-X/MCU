@@ -2,6 +2,7 @@
 #include "../include/cglm/cglm.h"
 #include <string.h>
 #include <stdio.h>
+#include "em_gpio.h"
 #include "aircraft.h"
 #include "ai_aircraft.h"
 #include "ai_aircraft_init.h"
@@ -19,6 +20,7 @@ AiAircraft *ai_aircraft;        // The "enemy" aircraft
 MvpMatrixEntry *matrix_entries; // The MVP matrices for all aircraft
 Sprite camera_queue[CAMERA_LAG];
 int current_camera_index = 0;
+int toggle_display_cooldown = 0;
 
 void game_init()
 {
@@ -52,9 +54,18 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   /// CHECK FOR HIT WHEN FIRING ///
   if (controller.fire)
   {
+    controller_led_turn_on();
+    if(toggle_display_cooldown < 0)
+    {
+      toggle_display_cooldown = 30;
+      display_toggle_display();
+    }
     controller.fire = 0;
     aircraft_check_hit(&aircraft, ai_aircraft, num_aircraft);
   }
+  else
+    controller_led_turn_off();
+  toggle_display_cooldown--;
 
   /// CHECK FOR COLLISION ///
   aircraft_check_collision(&aircraft, ai_aircraft, num_aircraft);
@@ -99,7 +110,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   }
 
   /// SEND NEW MATRICES TO FPGA ///
-  fpga_frame_send(matrix_entries, num_alive);
+  fpga_frame_send(matrix_entries, num_alive, frame_counter);
 
   /// UPDATE DISPLAY ///
   if (frame_counter % 30 == 0)
@@ -110,7 +121,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   /// TOGGLE DISPLAY NUMBER ///
   if (frame_counter % 180 == 0)
   {
-    display_toggle_display();
+//    display_toggle_display();
     /// CHECK IF GAME IS OVER ///
     if (num_alive == 0)
     {
@@ -127,12 +138,12 @@ void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
   if (frame_counter % 20 == 0)
   {
     display_print_and_rotate_string();
+  }
+  if (frame_counter% 60 == 0)
     controller_led_turn_on();
-  }
-  if ((frame_counter + 5) % 60 == 0)
-  {
+  if (frame_counter% 60 == 8)
     controller_led_turn_off();
-  }
+
   button_read(&controller);
   if (controller.fire)
   {
