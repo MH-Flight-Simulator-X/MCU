@@ -33,8 +33,13 @@ void ai_aircraft_init(AiAircraft *aircraft, int num_aircraft)
 {
   for (int i = 0; i < num_aircraft; i++)
   {
+    // Give unique ID
     aircraft[i].id = i + 1;
+
+    // Durations are added to be accumulative
     accumulate_heading_durations(aircraft[i].headings, aircraft[i].num_headings);
+
+    // Each vector is normalized to unitvector
     for (int j = 0; j < aircraft[i].num_headings; j++)
     {
       normalize_vector(&(aircraft[i].headings[j].dx),
@@ -50,18 +55,27 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
   {
     AiAircraft *craft = &aircraft[i];
     if (craft->status == 2)
-      {
-        continue;
-      }
+    {
+    // Aircraft is dead
+      continue;
+    }
     Heading *headings = craft->headings;
 
-    int total_duration = headings[craft->num_headings - 1].duration;
+    int total_duration = headings[craft->num_headings - 1].duration * 2;
     int current_frame = frame_counter % total_duration;
+
+    // Reset the position each turnaround to ensure not moving
     if (current_frame == 0)
     {
       craft->x = original_aircraft[i].x;
       craft->y = original_aircraft[i].y;
       craft->z = original_aircraft[i].z;
+    }
+
+    bool reverse = current_frame >= total_duration / 2;
+    if (reverse)
+    {
+      current_frame = total_duration - current_frame;
     }
 
     int heading_index = 0;
@@ -71,6 +85,14 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
     }
 
     Heading current_heading = headings[heading_index];
+
+    if (reverse)
+    {
+      // Negate the direction for reverse motion
+      current_heading.dx = -current_heading.dx;
+      current_heading.dy = -current_heading.dy;
+      current_heading.dz = -current_heading.dz;
+    }
 
     ai_aircraft_move(craft, current_heading);
   }
