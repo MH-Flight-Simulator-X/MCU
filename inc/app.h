@@ -1,22 +1,20 @@
 /***************************************************************************//**
- * @file
- * @brief Top level application functions
- *******************************************************************************
- * # License
- * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
- ******************************************************************************/
+    __  ____                 __  __               __
+   /  |/  (_)_____________  / / / /___ __________/ /
+  / /|_/ / / ___/ ___/ __ \/ /_/ / __ `/ ___/ __  /
+ / /  / / / /__/ /  / /_/ / __  / /_/ / /  / /_/ /
+/_/  /_/_/\___/_/_  \____/_/ /_/\__,_/_/___\__,_/             __      __                _  __
+        / ____/ (_)___ _/ /_  / /_   / ___/(_)___ ___  __  __/ /___ _/ /_____  _____   | |/ /
+       / /_  / / / __ `/ __ \/ __/   \__ \/ / __ `__ \/ / / / / __ `/ __/ __ \/ ___/   |   /
+      / __/ / / / /_/ / / / / /_    ___/ / / / / / / / /_/ / / /_/ / /_/ /_/ / /      /   |
+     /_/   /_/_/\__, /_/ /_/\__/   /____/_/_/ /_/ /_/\__,_/_/\__,_/\__/\____/_/      /_/|_|
+               /____/
+/***************************************************************************/
 
 #ifndef APP_H
 #define APP_H
+
+#define FPS 60
 
 /***************************************************************************//**
  * Initialize application.
@@ -27,5 +25,6 @@ void app_init(void);
  * App ticking function.
  ******************************************************************************/
 void app_process_action(void);
+
 
 #endif  // APP_H

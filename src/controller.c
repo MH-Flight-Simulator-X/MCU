@@ -40,13 +40,13 @@ void controller_get_inputs(Controller *controller, uint32_t frame_counter)
 void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller)
 {
   // CONVERT THUMBSTICK TO PITCH
-  if (adcValues[0] < 1300 || 1700 < adcValues[0])
+  if (adcValues[0] < 1200 || 1800 < adcValues[0])
     controller->roll = adcValues[0] / 3300.0 - 0.5;
   else
     controller->roll = 0.0;
 
   // CONVERT THUMBSTICK TO ROLL
-  if (adcValues[1] < 1300 || 1700 < adcValues[1])
+  if (adcValues[1] < 1200 || 1800 < adcValues[1])
     controller->pitch = adcValues[1] / 3300.0 - 0.5;
   else
     controller->pitch = 0.0;
@@ -68,7 +68,6 @@ void controller_convert_voltage(volatile uint32_t *adcValues, Controller *contro
 void adc_init()
 {
   CMU_ClockEnable(cmuClock_ADC0, true);
-  CMU_ClockEnable(cmuClock_GPIO, true);
 
   ADC_Init_TypeDef init = ADC_INIT_DEFAULT;
   init.timebase = ADC_TimebaseCalc(0);
@@ -76,12 +75,11 @@ void adc_init()
   ADC_Init(ADC0, &init);
 
   ADC_InitScan_TypeDef initScan = ADC_INITSCAN_DEFAULT;
-  // Set reference voltage to VDD
-  initScan.reference = adcRefVDD;
-  // Set acquisition time to 64 ADC clock cycles
-  initScan.acqTime = adcAcqTime64;
-  // Use channels 0, 1 and 2 for thumb_x, thumb_y and slider inputs
-  initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 | ADC_SCANCTRL_INPUTMASK_CH1 | ADC_SCANCTRL_INPUTMASK_CH2;
+  initScan.reference = adcRefVDD; // Set reference voltage to VDD
+  initScan.acqTime = adcAcqTime64; // Set acquisition time to 64 ADC clock cycles
+  initScan.input = ADC_SCANCTRL_INPUTMASK_CH0 // Use channels 0, 1 and 2 for thumb_x, thumb_y and slider inputs
+                  | ADC_SCANCTRL_INPUTMASK_CH1
+                  | ADC_SCANCTRL_INPUTMASK_CH2;
   ADC_InitScan(ADC0, &initScan);
 }
 

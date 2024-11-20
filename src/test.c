@@ -1,4 +1,4 @@
-#include <fpga_spi.h>
+#include <fpga.h>
 #include "sl_simple_button_instances.h"
 #include "sl_simple_led_instances.h"
 #include "transformation.h"
@@ -22,8 +22,6 @@
 #define LED_INSTANCE_1 sl_led_led1
 #endif
 
-
-
 void sl_button_on_change(const sl_button_t *handle)
 {
   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED)
@@ -34,7 +32,6 @@ void sl_button_on_change(const sl_button_t *handle)
       debug_print("Dette funker hvertfall:)");
       debug_print("Knapp 1 trykket");
       display_toggle_display();
-
     }
     if (&BUTTON_INSTANCE_0 == handle)
     {

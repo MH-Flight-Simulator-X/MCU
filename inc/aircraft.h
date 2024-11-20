@@ -19,9 +19,9 @@ static inline float sin_deg(float degrees) { return sin(deg_to_rad(degrees)); }
 
 static inline float normalize_angle(float angle)
 {
-  while (angle < 0)
+  while (angle < -180.0f)
     angle += 360.0f;
-  while (angle >= 360)
+  while (angle >= 180)
     angle -= 360.0f;
   return angle;
 }

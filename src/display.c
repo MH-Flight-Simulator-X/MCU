@@ -142,7 +142,7 @@ void display_set_number()
   value[4] = 0b00010000;
   value[5] = display_counter == 0   ? 0b01110000
              : display_counter == 1 ? 0b01110010
-             : display_counter == 2 ? 0b01110100
+             : display_counter == 2 ? 0b01010011
                                     : 0;
 
   display_set_string(value);
