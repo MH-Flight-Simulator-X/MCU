@@ -1,4 +1,4 @@
-![MH Flight Simulator X](/docs/images/MHFS_Color.png)
+![MH Flight Simulator X](images/MHFS_Color.png)
 
 # Flight Simulator on Custom Hardware (TDT4295)
 
