@@ -1,9 +1,24 @@
+/*********************************************************************************************
+ * @file aircraft.c
+ * @brief Handles aircraft physics, movement, and collision detection
+ *
+ * This file implements the core aircraft mechanics including initialization,
+ * position/orientation updates, and collision detection systems. It manages
+ * both player-controlled aircraft and interactions with AI aircraft.
+ *********************************************************************************************/
 #include <aircraft.h>
 #include <ai_aircraft.h>
 #include "controller.h"
 #include "debug.h"
 #include <math.h>
 
+/*********************************************************************************************
+ * @brief Initializes an aircraft with default values
+ * @param aircraft Pointer to the Aircraft structure to initialize
+ * 
+ * Sets initial position (x,y,z) to origin, orientation (roll,pitch,yaw) to 0,
+ * and speed to BASE_SPEED.
+ *********************************************************************************************/
 void aircraft_init(Aircraft *aircraft)
 {
   aircraft->x = aircraft->y = aircraft->z = 0.0f;
@@ -11,6 +26,18 @@ void aircraft_init(Aircraft *aircraft)
   aircraft->speed = BASE_SPEED;
 }
 
+/*********************************************************************************************
+ * @brief Updates aircraft position and orientation based on controller input
+ * @param aircraft Pointer to the Aircraft structure to update
+ * @param controller Pointer to the Controller structure containing input states
+ * 
+ * Handles:
+ * - Roll and pitch updates from controller input
+ * - Angle normalization
+ * - Gravitational effects based on orientation
+ * - Speed calculations considering stall conditions
+ * - Position updates based on heading vector
+ *********************************************************************************************/
 void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
 {
   // Adding pitch and roll from joystick to aircraft
@@ -57,6 +84,15 @@ void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
   aircraft->z += dz * aircraft->speed / PRECISION;
 }
 
+/*********************************************************************************************
+ * @brief Checks if the aircraft's heading intersects with any AI aircraft
+ * @param a Pointer to the Aircraft structure of the player Aircraft
+ * @param opp Array of AI aircraft to check against
+ * @param num_aircraft Number of AI aircraft in the array
+ * 
+ * Implements ray-sphere intersection testing to detect if the player's
+ * aircraft heading vector intersects to check whether if the player is hitting the enemy while shooting
+ *********************************************************************************************/
 void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
 {
   // TODO: Implement checks to limit number of sprite comparisons, i.e if position of sprite is behind aircraft
@@ -118,6 +154,18 @@ void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
   }
 }
 
+/*********************************************************************************************
+ * @brief Checks for direct collisions between player aircraft and AI aircraft
+ * @param a Pointer to the player Aircraft
+ * @param opp Array of AI aircraft to check against
+ * @param num_aircraft Number of AI aircraft in the array
+ * 
+ * Performs simple sphere-sphere collision detection between player aircraft
+ * and AI aircraft using distance calculations. Uses squared distances to
+ * avoid unnecessary square root calculations.
+ * 
+ * Note: Uses a fixed collision radius of 5 units for all aircraft.
+ *********************************************************************************************/
 void aircraft_check_collision(Aircraft *a, AiAircraft *opp, int num_aircraft)
 {
 

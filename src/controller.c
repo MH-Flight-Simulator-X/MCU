@@ -6,10 +6,35 @@
 #include "sl_simple_led_instances.h"
 #include "em_gpio.h"
 #include "sl_simple_led_instances.h"
-
 #include "debug.h"
 #include "sl_led.h"
+/*********************************************************************************************
+ * @file controller.h
+ * @brief Controller interface for handling input devices (thumbstick, slider, and button)
+ *
+ * This module manages the interface between physical input devices and their digital 
+ * representations. It handles ADC readings from analog inputs (thumbstick and slider)
+ * and button state detection.
+ *********************************************************************************************/
 
+/*********************************************************************************************
+ * @struct Controller
+ * @brief Represents the state of all controller inputs
+ * 
+ * @param pitch     Normalized pitch value from thumbstick (-0.5 to 0.5)
+ * @param roll      Normalized roll value from thumbstick (-0.5 to 0.5)
+ * @param throttle  Normalized throttle value from slider (0.0 to 1.0)
+ * @param fire      Button state (1 = not pressed, 0 = pressed)
+ *********************************************************************************************/
+
+/*********************************************************************************************
+ * @brief Initializes the controller and its components
+ * 
+ * Sets default values for controller state and initializes the ADC for
+ * analog input reading.
+ * 
+ * @param controller Pointer to Controller structure to initialize
+ *********************************************************************************************/
 void controller_init(Controller *controller)
 {
   controller->pitch = 0;
@@ -20,6 +45,15 @@ void controller_init(Controller *controller)
   adc_init();
 }
 
+/*********************************************************************************************
+ * @brief Updates controller state with current input values
+ * 
+ * Reads ADC values and button state, then updates the controller structure
+ * with the processed values.
+ * 
+ * @param controller    Pointer to Controller structure to update
+ * @param frame_counter Current frame number (unused in current implementation)
+ *********************************************************************************************/
 void controller_get_inputs(Controller *controller, uint32_t frame_counter)
 {
   uint32_t adcSamples[3];
@@ -27,16 +61,18 @@ void controller_get_inputs(Controller *controller, uint32_t frame_counter)
   controller_convert_voltage(adcSamples, controller);
 
   button_read(controller);
-
-  //  if (frame_counter % 30 == 0)
-  //  {
-  //      debug_print_float((float)adcSamples[1]);
-  //      debug_print_float((float)adcSamples[0]);
-  //      debug_print_float((float)adcSamples[2]);
-  //      debug_printf("\n");
-  //  }
 }
 
+/*********************************************************************************************
+ * @brief Converts raw ADC values to normalized controller values
+ * 
+ * Processes raw ADC readings and converts them to normalized values:
+ * - Thumbstick X/Y: Converted to -0.5 to 0.5 range with deadzone (1200-1800)
+ * - Slider: Converted to discrete steps (0.0, 0.25, 0.50, 0.75, 1.0)
+ * 
+ * @param adcValues  Array of raw ADC values [thumb_x, thumb_y, slider]
+ * @param controller Pointer to Controller structure to update
+ *********************************************************************************************/
 void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller)
 {
   // CONVERT THUMBSTICK TO PITCH
@@ -64,7 +100,12 @@ void controller_convert_voltage(volatile uint32_t *adcValues, Controller *contro
     controller->throttle = 1.0;
 }
 
-// Initialize ADC
+/*********************************************************************************************
+ * @brief Initializes the ADC for analog input reading
+ * 
+ * Configures ADC0 for scanning channels 0-2 with VDD reference
+ * and 4MHz clock speed.
+ *********************************************************************************************/
 void adc_init()
 {
   CMU_ClockEnable(cmuClock_ADC0, true);
@@ -83,7 +124,13 @@ void adc_init()
   ADC_InitScan(ADC0, &initScan);
 }
 
-// Start ADC read, wait for conversions and convert to volts
+/*********************************************************************************************
+ * @brief Reads current ADC values from all channels
+ * 
+ * Performs sequential ADC reads and converts values to millivolts (0-3300mV range).
+ * 
+ * @param adcSamples Array to store the converted ADC values
+ *********************************************************************************************/
 void adc_read(uint32_t *adcSamples)
 {
   ADC_Start(ADC0, adcStartScan);
@@ -101,17 +148,34 @@ void adc_read(uint32_t *adcSamples)
   adcSamples[2] = 3300 - (ADC0->SCANDATA * 3300) / 4095;
 }
 
+/*********************************************************************************************
+ * @brief Updates the fire button state in the controller
+ * 
+ * Polls the button and updates the fire state in the controller structure.
+ * 
+ * @param controller Pointer to Controller structure to update
+ *********************************************************************************************/
 void button_read(Controller *controller)
 {
   sl_button_poll_step(&sl_button_fire);
   controller->fire = sl_button_get_state(&sl_button_fire) != SL_SIMPLE_BUTTON_PRESSED;
 }
 
+/*********************************************************************************************
+ * @brief Turns off the controller LED
+ * 
+ * Clears the GPIO pin for the controller LED (Port D, Pin 4).
+ *********************************************************************************************/
 void controller_led_turn_off()
 {
   GPIO_PinOutClear(gpioPortD, 4);
 }
 
+/*********************************************************************************************
+ * @brief Turns on the controller LED
+ * 
+ * Sets the GPIO pin for the controller LED (Port D, Pin 4).
+ *********************************************************************************************/
 void controller_led_turn_on()
 {
   GPIO_PinOutSet(gpioPortD, 4);

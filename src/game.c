@@ -36,6 +36,14 @@ Sprite camera_queue[CAMERA_LAG];
 int current_camera_index = 0;
 int toggle_display_cooldown = 0;
 
+/*********************************************************************************************
+ * @brief Initializes the game state and all required components
+ * 
+ * Sets up the game environment including hardware peripherals, player aircraft,
+ * AI aircraft, and rendering matrices. Must be called before any other game functions.
+ * 
+ * @return void
+ *********************************************************************************************/
 void game_init()
 {
   // INIT PERIPHERAL DEVICES
@@ -61,6 +69,21 @@ void game_init()
   }
 }
 
+/*********************************************************************************************
+ * @brief Processes a single frame of active gameplay
+ * 
+ * Handles all game logic for one frame including:
+ * - Controller input processing
+ * - Aircraft movement and physics
+ * - Collision detection
+ * - Weapon systems
+ * - Camera positioning
+ * - Display updates
+ * 
+ * @param frame_counter Current frame number
+ * @param game_active Pointer to game state flag. Set to 0 when game ends
+ * @return void
+ *********************************************************************************************/
 void game_process_action(uint32_t frame_counter, uint32_t *game_active)
 {
   controller_get_inputs(&controller, frame_counter);
@@ -145,7 +168,16 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   }
 }
 
-
+/*********************************************************************************************
+ * @brief Handles the game's waiting/menu state
+ * 
+ * Displays the menu screen and waits for player input to start the game.
+ * Controls LED indicators and rotating display text.
+ * 
+ * @param frame_counter Current frame number
+ * @param game_active Pointer to game state flag
+ * @return void
+ *********************************************************************************************/
 void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
 {
 
@@ -165,3 +197,4 @@ void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
     *game_active = 1;
   }
 }
+

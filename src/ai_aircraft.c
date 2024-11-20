@@ -1,7 +1,22 @@
+/*********************************************************************************************
+ * @file ai_aircraft.c
+ * @brief Implementation of AI-controlled aircraft movement and behavior systems
+ *
+ * This file contains the core functionality for managing AI aircraft, including
+ * initialization, movement patterns, and status updates. Aircraft follow predefined
+ * heading patterns and can move in both forward and reverse directions along these paths.
+ *********************************************************************************************/
+
 #include "ai_aircraft_init.h"
 #include "ai_aircraft.h"
 #include "aircraft.h"
 
+/*********************************************************************************************
+ * @brief Copies AI aircraft data from source to destination
+ * @param dest Pointer to destination array of AiAircraft
+ * @param src Pointer to source array of AiAircraft
+ * @param count Number of aircraft to copy
+ *********************************************************************************************/
 void ai_aircraft_copy(AiAircraft *dest, const AiAircraft *src, int count)
 {
   for (int i = 0; i < count; i++)
@@ -10,6 +25,12 @@ void ai_aircraft_copy(AiAircraft *dest, const AiAircraft *src, int count)
   }
 }
 
+/*********************************************************************************************
+ * @brief Normalizes a 3D vector to unit length
+ * @param dx Pointer to x component
+ * @param dy Pointer to y component
+ * @param dz Pointer to z component
+ *********************************************************************************************/
 void normalize_vector(double *dx, double *dy, double *dz)
 {
   double length = sqrt((*dx) * (*dx) + (*dy) * (*dy) + (*dz) * (*dz));
@@ -21,6 +42,13 @@ void normalize_vector(double *dx, double *dy, double *dz)
   }
 }
 
+/*********************************************************************************************
+ * @brief Converts heading durations to cumulative values
+ * @param headings Array of Heading structures
+ * @param num_headings Number of headings in the array
+ * 
+ * Each heading's duration becomes the sum of its own duration plus all previous durations.
+ *********************************************************************************************/
 void accumulate_heading_durations(Heading *headings, int num_headings)
 {
   for (int i = 1; i < num_headings; i++)
@@ -29,6 +57,16 @@ void accumulate_heading_durations(Heading *headings, int num_headings)
   }
 }
 
+/*********************************************************************************************
+ * @brief Initializes an array of AI aircraft
+ * @param aircraft Array of AiAircraft structures to initialize
+ * @param num_aircraft Number of aircraft to initialize
+ *
+ * Performs the following initialization steps:
+ * 1. Assigns unique IDs to each aircraft
+ * 2. Accumulates heading durations
+ * 3. Normalizes heading vectors
+ *********************************************************************************************/
 void ai_aircraft_init(AiAircraft *aircraft, int num_aircraft)
 {
   for (int i = 0; i < num_aircraft; i++)
@@ -49,6 +87,16 @@ void ai_aircraft_init(AiAircraft *aircraft, int num_aircraft)
   }
 }
 
+/*********************************************************************************************
+ * @brief Updates the position and orientation of AI aircraft
+ * @param aircraft Array of AiAircraft structures
+ * @param num_aircraft Number of aircraft to update
+ * @param frame_counter Current frame number for timing
+ *
+ * Updates aircraft positions based on their heading patterns. Aircraft follow their
+ * paths forward, then reverse direction and return along the same path.
+ * Dead aircraft (status == 2) are skipped.
+ *********************************************************************************************/
 void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_counter)
 {
   for (int i = 0; i < num_aircraft; i++)
@@ -100,6 +148,14 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
   }
 }
 
+/*********************************************************************************************
+ * @brief Moves an aircraft according to its current heading
+ * @param aircraft Pointer to AiAircraft structure
+ * @param heading Current heading to follow
+ *
+ * Updates aircraft position and orientation (yaw, pitch, roll) based on the
+ * provided heading vector. Movement speed is controlled by AI_SPEED/PRECISION.
+ *********************************************************************************************/
 void ai_aircraft_move(AiAircraft *aircraft, Heading heading)
 {
   double dx = heading.dx;
@@ -118,6 +174,15 @@ void ai_aircraft_move(AiAircraft *aircraft, Heading heading)
   aircraft->z += dz * AI_SPEED / PRECISION;
 }
 
+/*********************************************************************************************
+ * @brief Updates the status of AI aircraft
+ * @param aircraft Array of AiAircraft structures
+ * @param num_aircraft Number of aircraft to update
+ *
+ * Manages aircraft status changes:
+ * - status 2: Aircraft is dead (set after counter reaches 30)
+ * - status alternates between 0 and 1 every 5 frames while counter is active
+ *********************************************************************************************/
 void ai_aircraft_update_status(AiAircraft *aircraft, int num_aircraft)
 {
   for (int i = 0; i < num_aircraft; i++)

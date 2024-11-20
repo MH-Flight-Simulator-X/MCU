@@ -4,7 +4,22 @@
 #include <stdio.h>
 #include "debug.h"
 
-// Helper function to print a matrix for debugging
+/*********************************************************************************************
+ * @file transformation.c
+ * @brief Implementation of 3D transformation utilities for aircraft and sprite rendering
+ *
+ * This file implements the core transformation logic for 3D graphics rendering,
+ * including matrix operations for Model-View-Projection (MVP) calculations.
+ *********************************************************************************************/
+
+/*********************************************************************************************
+ * @brief Debug utility to print a 4x4 matrix
+ *
+ * Prints each element of the matrix in a formatted grid layout.
+ * Uses debug_print_float for consistent floating-point output formatting.
+ *
+ * @param matrix The 4x4 matrix to print
+ *********************************************************************************************/
 void print_matrix(mat4 matrix)
 {
   for (int i = 0; i < 4; i++)
@@ -19,7 +34,17 @@ void print_matrix(mat4 matrix)
   debug_printf("\n");
 }
 
-// Generate a combined rotation matrix from pitch, yaw and roll
+/*********************************************************************************************
+ * @brief Creates a combined rotation matrix from Euler angles
+ *
+ * Generates rotation matrices for pitch, yaw, and roll separately, then combines them
+ * in the order: Yaw * Roll * Pitch. This order ensures proper aircraft-like rotations.
+ *
+ * @param pitch Rotation around X-axis in degrees
+ * @param yaw Rotation around Y-axis in degrees
+ * @param roll Rotation around Z-axis in degrees
+ * @param result Output parameter for the combined rotation matrix
+ *********************************************************************************************/
 static void generate_rotation_matrix(double pitch, double yaw, double roll, mat4 result)
 {
   mat4 pitch_matrix, yaw_matrix, roll_matrix;
@@ -39,7 +64,34 @@ static void generate_rotation_matrix(double pitch, double yaw, double roll, mat4
   glm_mat4_mul(result, pitch_matrix, result);
 }
 
-// Generate the Model-View-Projection (MVP) matrix
+/*********************************************************************************************
+ * @brief Generates the Model-View-Projection (MVP) matrix for rendering
+ *
+ * Creates the complete transformation pipeline for rendering sprites relative to
+ * an aircraft's position and orientation. The transformation consists of:
+ *
+ * 1. Model Matrix:
+ *    - Translates sprite to its world position
+ *    - Applies sprite's local rotation
+ *
+ * 2. View Matrix:
+ *    - Positions camera behind aircraft (-Z axis)
+ *    - Applies fixed -20° downward tilt
+ *    - Includes aircraft's orientation
+ *    - Translates 20 units back from aircraft
+ *
+ * 3. Projection Matrix:
+ *    - 45° field of view
+ *    - 4:3 aspect ratio
+ *    - Near plane: 1.0, Far plane: 1000.0
+ *
+ * @param sprite Pointer to the Sprite being rendered
+ * @param aircraft Pointer to the Aircraft (camera position)
+ * @param result Output parameter for the final MVP matrix
+ *
+ * @note Early returns if sprite->status == 2
+ * @note Camera position is computed in aircraft's local space then transformed to world space
+ *********************************************************************************************/
 void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 {
   if (sprite->status == 2)
@@ -110,3 +162,4 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   glm_mat4_mul(view_projection, model_matrix, result);
 }
+

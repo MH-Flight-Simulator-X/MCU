@@ -7,10 +7,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*********************************************************************************************
+ * @file display.c
+ * @brief Driver for controlling a 7-segment I2C LED display module
+ *
+ * This file implements a driver for controlling a 6-digit 7-segment LED display via I2C.
+ * It provides functionality for displaying aircraft telemetry data (pitch, roll, speed)
+ * with proper decimal point formatting and text scrolling capabilities.
+ * 
+ * Key features:
+ * - I2C communication (address 0xC0)
+ * - Three display modes for aircraft parameters
+ * - Dynamic string handling with scrolling
+ * - Decimal point formatting for numeric values
+ * - Configurable brightness and power modes
+ *********************************************************************************************/
+
+
 char *string;
 int display_counter;
 Aircraft *aircraft_pointer;
 
+/*********************************************************************************************
+ * @brief Writes a single command byte to a specific register on the display
+ * @param reg The register address to write to (0x00-0xFF)
+ * @param command The command byte to write
+ *********************************************************************************************/
 void display_write_single_data(uint8_t reg, uint8_t command)
 {
   I2C_TransferSeq_TypeDef seq;
@@ -31,6 +53,11 @@ void display_write_single_data(uint8_t reg, uint8_t command)
   I2CSPM_Transfer(sl_i2cspm_display, &seq);
 }
 
+/*********************************************************************************************
+ * @brief Writes multiple bytes of data to consecutive registers starting at 0x60
+ * @param command Pointer to array of bytes to write (expects 6 bytes)
+ * @details Writes to registers 0x60-0x65, which control individual display digits
+ *********************************************************************************************/
 void display_write_data(uint8_t *command)
 {
   I2C_TransferSeq_TypeDef seq;
@@ -54,6 +81,10 @@ void display_write_data(uint8_t *command)
   I2CSPM_Transfer(sl_i2cspm_display, &seq);
 }
 
+/*********************************************************************************************
+ * @brief Clears all segments on the display
+ * @details Writes 0x20 (blank) to registers 0x60-0x65
+ *********************************************************************************************/
 void display_clear(void)
 {
   display_write_single_data(0x60, 0b00100000);
@@ -64,6 +95,10 @@ void display_clear(void)
   display_write_single_data(0x65, 0b00100000);
 }
 
+/*********************************************************************************************
+ * @brief Displays the current string on the LED display
+ * @details Converts the global string to ASCII values and writes to display
+ *********************************************************************************************/
 void display_print_string()
 {
   display_clear();
@@ -79,6 +114,10 @@ void display_print_string()
   display_write_data(ascii_values);
 }
 
+/*********************************************************************************************
+ * @brief Displays string and rotates it one position left
+ * @details Used for scrolling text effect. First character moves to end of string
+ *********************************************************************************************/
 void display_print_and_rotate_string(void)
 {
   int len = strlen(string);
@@ -92,12 +131,24 @@ void display_print_and_rotate_string(void)
   string[len - 1] = first_char;
 }
 
+/*********************************************************************************************
+ * @brief Updates the global string variable with new content
+ * @param str New string to be displayed
+ * @details Reallocates memory for string and copies new content
+ *********************************************************************************************/
 void display_set_string(char str[])
 {
   string = (char *)realloc(string, strlen(str) * sizeof(char));
   strcpy(string, str);
 }
 
+/*********************************************************************************************
+ * @brief Converts float number to display-friendly string format
+ * @param buffer Output buffer for converted string
+ * @param size Size of output buffer
+ * @param number Float number to convert
+ * @details Sets MSB of digit before decimal point for decimal point display
+ *********************************************************************************************/
 void float_to(char *buffer, size_t size, double number)
 {
 
@@ -129,6 +180,14 @@ void float_to(char *buffer, size_t size, double number)
   }
 }
 
+/*********************************************************************************************
+ * @brief Updates display with current aircraft parameter value
+ * @details Displays either pitch, roll, or speed based on display_counter:
+ *          - 0: Pitch
+ *          - 1: Roll
+ *          - 2: Speed
+ *          Formats number with appropriate decimal point and unit indicator
+ *********************************************************************************************/
 void display_set_number()
 {
 
@@ -148,6 +207,17 @@ void display_set_number()
   display_set_string(value);
 }
 
+/*********************************************************************************************
+ * @brief Initializes the display module
+ * @param aircraft Pointer to Aircraft structure containing flight data
+ * @details Configures:
+ *          - Test mode off
+ *          - Standby mode off
+ *          - Maximum brightness
+ *          - 5-digit display
+ *          - 16-segment mode
+ *          - Decode mode on
+ *********************************************************************************************/
 void display_init(Aircraft *aircraft)
 {
   aircraft_pointer = aircraft;
@@ -161,8 +231,16 @@ void display_init(Aircraft *aircraft)
   display_write_single_data(0x01, 0xFF); // Ensure decode mode is on (Can be removed)
 }
 
+/*********************************************************************************************
+ * @brief Cycles through display modes
+ * @details Increments display_counter (0->1->2->0) to switch between:
+ *          - Pitch display
+ *          - Roll display
+ *          - Speed display
+ *********************************************************************************************/
 void display_toggle_display(void)
 {
 
   display_counter = (display_counter + 1) % 3;
 }
+
