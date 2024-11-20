@@ -41,11 +41,15 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
 {
   controller_get_inputs(&controller, frame_counter);
 
+  /// CHECK FOR HIT WHEN FIRING ///
   if (controller.fire)
   {
     controller.fire = 0;
     aircraft_check_hit(&aircraft, ai_aircraft, num_aircraft);
   }
+
+  /// CHECK FOR COLLISION ///
+  aircraft_check_collision(&aircraft, ai_aircraft, num_aircraft);
 
   ai_aircraft_update_status(ai_aircraft, num_aircraft); // Update status or counter for ai aircraft
 
