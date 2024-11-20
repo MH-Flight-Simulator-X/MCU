@@ -138,7 +138,7 @@ void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
     float discriminant = B * B - 4 * A * C;
     if (discriminant < 0)
     {
-      return;
+      continue;
     }
 
     // Calculate both potential solutions for t
@@ -149,7 +149,7 @@ void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
     // Check for positive t solutions (in the direction of the ray)
     if (t1 > 0 || t2 > 0)
     {
-      ai.status = 1;
+      ai.counter = 1;
     }
   }
 }
