@@ -28,22 +28,22 @@ static inline float normalize_angle(float angle)
 
 typedef struct
 {
-  double x, y, z;
-  double dx, dy, dz;
-  double pitch, yaw, roll;
-  double speed;
+  float x, y, z;
+  float dx, dy, dz;
+  float pitch, yaw, roll;
+  float speed;
   int id;
 } Aircraft;
 
 typedef struct
 {
-  double x, y, z;
+  float x, y, z;
 } Vec3;
 
 typedef struct
 {
-  double x, y, z;
-  double pitch, yaw, roll;
+  float x, y, z;
+  float pitch, yaw, roll;
   uint32_t counter, status;
 } Sprite;
 

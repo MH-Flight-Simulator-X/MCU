@@ -31,9 +31,9 @@ void ai_aircraft_copy(AiAircraft *dest, const AiAircraft *src, int count)
  * @param dy Pointer to y component
  * @param dz Pointer to z component
  *********************************************************************************************/
-void normalize_vector(double *dx, double *dy, double *dz)
+void normalize_vector(float *dx, float *dy, float *dz)
 {
-  double length = sqrt((*dx) * (*dx) + (*dy) * (*dy) + (*dz) * (*dz));
+  float length = sqrt((*dx) * (*dx) + (*dy) * (*dy) + (*dz) * (*dz));
   if (length > 0)
   {
     *dx /= length;
@@ -158,13 +158,13 @@ void ai_aircraft_update_pose(AiAircraft *aircraft, int num_aircraft, int frame_c
  *********************************************************************************************/
 void ai_aircraft_move(AiAircraft *aircraft, Heading heading)
 {
-  double dx = heading.dx;
-  double dy = heading.dy;
-  double dz = heading.dz;
+  float dx = heading.dx;
+  float dy = heading.dy;
+  float dz = heading.dz;
 
   aircraft->yaw = atan2(dz, dx) * (180.0 / PI);
 
-  double horizontal_length = sqrt(dx * dx + dz * dz);
+  float horizontal_length = sqrt(dx * dx + dz * dz);
   aircraft->pitch = atan2(dy, horizontal_length) * (180.0 / PI);
 
   aircraft->roll = 0.0;

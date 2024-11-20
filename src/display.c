@@ -9,9 +9,9 @@
 
 /*********************************************************************************************
  * @file display.c
- * @brief Driver for controlling a 7-segment I2C LED display module
+ * @brief Driver for controlling a 16-segment I2C LED display module
  *
- * This file implements a driver for controlling a 6-digit 7-segment LED display via I2C.
+ * This file implements a driver for controlling a 6-digit 16-segment LED display via I2C.
  * It provides functionality for displaying aircraft telemetry data (pitch, roll, speed)
  * with proper decimal point formatting and text scrolling capabilities.
  * 
@@ -149,7 +149,7 @@ void display_set_string(char str[])
  * @param number Float number to convert
  * @details Sets MSB of digit before decimal point for decimal point display
  *********************************************************************************************/
-void float_to(char *buffer, size_t size, double number)
+void float_to(char *buffer, size_t size, float number)
 {
 
   char tempBuffer[50];
@@ -191,7 +191,7 @@ void float_to(char *buffer, size_t size, double number)
 void display_set_number()
 {
 
-  double num = display_counter == 0   ? aircraft_pointer->pitch
+  float num = display_counter == 0   ? aircraft_pointer->pitch
                : display_counter == 1 ? aircraft_pointer->roll
                : display_counter == 2 ? aircraft_pointer->speed
                                       : 0;

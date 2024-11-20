@@ -51,39 +51,43 @@ Complete documentation: http://cglm.readthedocs.io
 
 #### 📌 Note for previous versions:
 
-- _dup (duplicate) is changed to _copy. For instance `glm_vec_dup -> glm_vec3_copy`
+- \_dup (duplicate) is changed to \_copy. For instance `glm_vec_dup -> glm_vec3_copy`
 - OpenGL related functions are dropped to make this lib platform/third-party independent
 - make sure you have latest version and feel free to report bugs, troubles
 - **[bugfix]** euler angles was implemented in reverse order (extrinsic) it was fixed, now they are intrinsic. Make sure that
-you have the latest version
+  you have the latest version
 - **[major change]** by starting v0.4.0, quaternions are stored as [x, y, z, w], it was [w, x, y, z] in v0.3.5 and earlier versions
-- **[api rename]** by starting v0.4.5, **glm_simd** functions are renamed to **glmm_**  
-- **[new option]** by starting v0.4.5, you can disable alignment requirement, check options in docs.  
-- **[major change]** by starting v0.5.0, vec3 functions use **glm_vec3_** namespace, it was **glm_vec_** until v0.5.0
+- **[api rename]** by starting v0.4.5, **glm_simd** functions are renamed to **glmm\_**
+- **[new option]** by starting v0.4.5, you can disable alignment requirement, check options in docs.
+- **[major change]** by starting v0.5.0, vec3 functions use **glm*vec3*** namespace, it was **glm*vec*** until v0.5.0
 - **[major change]** by starting v0.5.1, built-in alignment is removed from **vec3** and **mat3** types
-- **[major change]** by starting v0.7.3, inline print functions are disabled in release/production mode to eliminate print costs (see options in documentation). Print output also improved. You can disable colors if you need  (see documentation)
-- **[major change]** by starting v0.8.3, **cglm** supports alternative clipspace configurations e.g. Left Handed, Zero-to-One (_zo)... `CGLM_FORCE_DEPTH_ZERO_TO_ONE` and `CGLM_FORCE_LEFT_HANDED` is provided to control clipspace. You should be able to use **cglm** with Vulkan, DirectX and Metal now... see https://cglm.readthedocs.io/en/latest/opt.html#clipspace-option-s
+- **[major change]** by starting v0.7.3, inline print functions are disabled in release/production mode to eliminate print costs (see options in documentation). Print output also improved. You can disable colors if you need (see documentation)
+- **[major change]** by starting v0.8.3, **cglm** supports alternative clipspace configurations e.g. Left Handed, Zero-to-One (\_zo)... `CGLM_FORCE_DEPTH_ZERO_TO_ONE` and `CGLM_FORCE_LEFT_HANDED` is provided to control clipspace. You should be able to use **cglm** with Vulkan, DirectX and Metal now... see https://cglm.readthedocs.io/en/latest/opt.html#clipspace-option-s
 
 #### 📌 Note for C++ developers:
+
 If you are not aware of the original GLM library yet, you may also want to look at:
 https://github.com/g-truc/glm
 
 #### 📌 Note for new comers (Important):
+
 - `vec4` and `mat4` variables must be aligned. (There will be unaligned versions later)
-- **in** and **[in, out]** parameters must be initialized (please). But **[out]** parameters not, initializing out param is  also redundant
-- All functions are inline if you don't want to use pre-compiled versions with glmc_ prefix, you can ignore build process. Just include headers.
+- **in** and **[in, out]** parameters must be initialized (please). But **[out]** parameters not, initializing out param is also redundant
+- All functions are inline if you don't want to use pre-compiled versions with glmc\_ prefix, you can ignore build process. Just include headers.
 - if your debugger takes you to cglm headers then make sure you are not trying to copy vec4 to vec3 or alig issues...
 - Welcome!
 
 #### 📌 Note for experienced developers:
+
 - Since I'm testing this library in my projects, sometimes bugs occurs; finding that bug[s] and making improvements would be more easy with multiple developer/contributor and their projects or knowledge. Consider to make some tests if you suspect something is wrong and any feedbacks, contributions and bug reports are always welcome.
 
 #### 📌 Allocations?
-`cglm` doesn't alloc any memory on heap. So it doesn't provide any allocator. You should alloc memory for **out** parameters too if you pass pointer of memory location. Don't forget that **vec4** (also quat/**versor**) and **mat4** must be aligned (16-bytes), because *cglm* uses SIMD instructions to optimize most operations if available.
+
+`cglm` doesn't alloc any memory on heap. So it doesn't provide any allocator. You should alloc memory for **out** parameters too if you pass pointer of memory location. Don't forget that **vec4** (also quat/**versor**) and **mat4** must be aligned (16-bytes), because _cglm_ uses SIMD instructions to optimize most operations if available.
 
 #### 📌 Returning vector or matrix... ?
 
-**cglm** supports both *ARRAY API* and *STRUCT API*, so you can return structs if you utilize struct api (`glms_`).
+**cglm** supports both _ARRAY API_ and _STRUCT API_, so you can return structs if you utilize struct api (`glms_`).
 
 <hr/>
 
@@ -103,6 +107,7 @@ https://github.com/g-truc/glm
 </table>
 
 ## 🚀 Features
+
 - **scalar** and **simd** (sse, avx, neon...) optimizations
 - option to use different clipspaces e.g. Left Handed, Zero-to-One... (currently right handed negative-one is default)
 - array api and struct api, you can use arrays or structs.
@@ -132,8 +137,8 @@ https://github.com/g-truc/glm
 <hr />
 
 You have two options to call a function/operation: inline or library call (link)
-Almost all functions are marked inline (always_inline) so compiler will probably inline.
-To call pre-compiled versions, just use `glmc_` (c stands for 'call') instead of `glm_`.
+Almost all functions are marked inline (always*inline) so compiler will probably inline.
+To call pre-compiled versions, just use `glmc*`(c stands for 'call') instead of`glm\_`.
 
 ```C
   #include <cglm/cglm.h>   /* for inline */
@@ -144,6 +149,7 @@ To call pre-compiled versions, just use `glmc_` (c stands for 'call') instead of
   glm_mul(trans, rot, rt);  /* inline */
   glmc_mul(trans, rot, rt); /* call from library */
 ```
+
 Most of math functions are optimized manually with SSE2 if available, if not? Dont worry there are non-sse versions of all operations
 
 You can pass matrices and vectors as array to functions rather than get address.
@@ -160,6 +166,7 @@ You can pass matrices and vectors as array to functions rather than get address.
 ```
 
 Library contains general purpose mat4 mul and inverse functions, and also contains some special forms (optimized) of these functions for affine transformations' matrices. If you want to multiply two affine transformation matrices you can use glm_mul instead of glm_mat4_mul and glm_inv_tr (ROT + TR) instead glm_mat4_inv
+
 ```C
 /* multiplication */
 mat4 modelMat;
@@ -180,13 +187,14 @@ mat4s mat = GLMS_MAT4_IDENTITY_INIT;
 mat4s inv = glms_mat4_inv(mat);
 ```
 
-Struct functions generally take their parameters as *values* and *return* their results, rather than taking pointers and writing to out parameters. That means your parameters can usually be `const`, if you're into that.
+Struct functions generally take their parameters as _values_ and _return_ their results, rather than taking pointers and writing to out parameters. That means your parameters can usually be `const`, if you're into that.
 
 The types used are actually unions that allow access to the same data multiple ways. One of those ways involves anonymous structures, available since C11. MSVC also supports it for earlier C versions out of the box and GCC/Clang do if you enable `-fms-extensions`. To explicitly enable these anonymous structures, `#define CGLM_USE_ANONYMOUS_STRUCT` to `1`, to disable them, to `0`. For backward compatibility, you can also `#define CGLM_NO_ANONYMOUS_STRUCT` (value is irrelevant) to disable them. If you don't specify explicitly, cglm will do a best guess based on your compiler and the C version you're using.
 
 ## 🔨 Build
 
 ### CMake (All platforms)
+
 ```bash
 $ mkdir build
 $ cd build
@@ -200,7 +208,7 @@ $ sudo make install # [Optional]
 ```CMake
 option(CGLM_SHARED "Shared build" ON)
 option(CGLM_STATIC "Static build" OFF)
-option(CGLM_USE_C99 "" OFF) # C11 
+option(CGLM_USE_C99 "" OFF) # C11
 option(CGLM_USE_TEST "Enable Tests" OFF) # for make check - make test
 ```
 
@@ -208,9 +216,9 @@ option(CGLM_USE_TEST "Enable Tests" OFF) # for make check - make test
 
 This requires no building or installation of cglm.
 
-* Example:
+- Example:
 
-``` cmake
+```cmake
 cmake_minimum_required(VERSION 3.8.2)
 
 project(<Your Project Name>)
@@ -223,7 +231,9 @@ add_subdirectory(external/cglm/ EXCLUDE_FROM_ALL)
 ```
 
 #### Use with your CMake project
-* Example:
+
+- Example:
+
 ```cmake
 cmake_minimum_required(VERSION 3.8.2)
 
@@ -287,8 +297,11 @@ buildtype=release
 default_library=shared
 build_tests=true # to run tests: ninja test
 ```
+
 #### Use with your Meson project
-* Example:
+
+- Example:
+
 ```meson
 # Clone cglm or create a cglm.wrap under <source_root>/subprojects
 project('name', 'c')
@@ -304,7 +317,7 @@ Currently only default build options are supported. Add **cglm** dependency to y
 
 ```swift
 ...
-Package( 
+Package(
   ...
   dependencies: [
     ...
@@ -315,6 +328,7 @@ Package(
 ```
 
 Now add **cgml** as a dependency to your target. Product choices are:
+
 - **cglm** for inlined version of the library which can be linked only statically
 - **cglmc** for a compiled version of the library with no linking limitation
 
@@ -353,6 +367,7 @@ pc_path pkg-config` and change the path the files are installed to via
 prefix path to your `PKG_CONFIG_PATH` environment variable.
 
 ### Windows (MSBuild)
+
 Windows related build file and project files are located in `win` folder,
 make sure you are inside `cglm/win` folder.
 Code Analysis is enabled, so it may take awhile to build.
@@ -361,7 +376,9 @@ Code Analysis is enabled, so it may take awhile to build.
 $ cd win
 $ .\build.bat
 ```
+
 if `msbuild` won't work (because of multi version VS) then try to build with `devenv`:
+
 ```Powershell
 $ devenv cglm.sln /Build Release
 ```
@@ -371,55 +388,72 @@ $ devenv cglm.sln /Build Release
 You can see test project in same visual studio solution file. It is enough to run that project to run tests.
 
 ### Building Docs
+
 First you need install Sphinx: http://www.sphinx-doc.org/en/master/usage/installation.html
 then:
+
 ```bash
 $ cd docs
 $ sphinx-build source build
 ```
+
 it will compile docs into build folder, you can run index.html inside that function.
 
 ## How to use
+
 If you want to use the inline versions of functions, then include the main header
+
 ```C
 #include <cglm/cglm.h>
 ```
+
 the header will include all headers. Then call the func you want e.g. rotate vector by axis:
+
 ```C
 glm_vec3_rotate(v1, glm_rad(45), (vec3){1.0f, 0.0f, 0.0f});
 ```
+
 some functions are overloaded :) e.g you can normalize vector:
+
 ```C
 glm_vec3_normalize(vec);
 ```
+
 this will normalize vec and store normalized vector into `vec` but if you will store normalized vector into another vector do this:
+
 ```C
 glm_vec3_normalize_to(vec, result);
 ```
+
 like this function you may see `_to` postfix, this functions store results to another variables and save temp memory
 
-
 to call pre-compiled versions include header with `c` postfix, c means call. Pre-compiled versions are just wrappers.
+
 ```C
 #include <cglm/call.h>
 ```
+
 this header will include all headers with c postfix. You need to call functions with c posfix:
+
 ```C
 glmc_vec3_normalize(vec);
 ```
 
 Function usage and parameters are documented inside related headers. You may see same parameter passed twice in some examples like this:
+
 ```C
 glm_mat4_mul(m1, m2, m1);
 
 /* or */
 glm_mat4_mul(m1, m1, m1);
 ```
-the first two parameter are **[in]** and the last one is **[out]** parameter. After multiplying *m1* and *m2*, the result is stored in *m1*. This is why we send *m1* twice. You may store the result in a different matrix, this is just an example.
+
+the first two parameter are **[in]** and the last one is **[out]** parameter. After multiplying _m1_ and _m2_, the result is stored in _m1_. This is why we send _m1_ twice. You may store the result in a different matrix, this is just an example.
 
 ### Example: Computing MVP matrix
 
 #### Option 1
+
 ```C
 mat4 proj, view, model, mvp;
 
@@ -430,6 +464,7 @@ glm_mat4_mul(viewProj, model, mvp);
 ```
 
 #### Option 2
+
 ```C
 mat4 proj, view, model, mvp;
 
@@ -440,9 +475,10 @@ glm_mat4_mulN((mat4 *[]){&proj, &view, &model}, 3, mvp);
 
 ## How to send matrix to OpenGL
 
-mat4 is array of vec4 and vec4 is array of floats. `glUniformMatrix4fv` functions accecpts `float*` as `value` (last param), so you can cast mat4 to float* or you can pass first column of matrix as beginning of memory of matrix:
+mat4 is array of vec4 and vec4 is array of floats. `glUniformMatrix4fv` functions accecpts `float*` as `value` (last param), so you can cast mat4 to float\* or you can pass first column of matrix as beginning of memory of matrix:
 
 Option 1: Send first column
+
 ```C
 glUniformMatrix4fv(location, 1, GL_FALSE, matrix[0]);
 
@@ -451,6 +487,7 @@ glUniformMatrix4fv(location, 1, GL_FALSE, matrix[0][0]);
 ```
 
 Option 2: Cast matrix to pointer type (also valid for multiple dimensional arrays)
+
 ```C
 glUniformMatrix4fv(location, 1, GL_FALSE, (float *)matrix);
 ```
@@ -463,6 +500,7 @@ You can pass matrices the same way to other APIs e.g. Vulkan, DX...
 - If headers are not working properly with your compiler, IDE please open an issue, because I'm using GCC and clang to test it maybe sometimes MSVC
 
 **TODO:**
+
 - [ ] Unit tests (In Progress)
 - [ ] Unit tests for comparing cglm with glm results
 - [x] Add version info
@@ -470,19 +508,16 @@ You can pass matrices the same way to other APIs e.g. Vulkan, DX...
 - [x] Extra documentation
 - [x] ARM Neon Arch
 
-
 ## Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/recp/cglm/graphs/contributors"><img src="https://opencollective.com/cglm/contributors.svg?width=890&button=false" /></a>
-
 
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/cglm#backer)]
 
 <a href="https://opencollective.com/cglm#backers" target="_blank"><img src="https://opencollective.com/cglm/backers.svg?width=890"></a>
-
 
 ## Sponsors
 
@@ -500,4 +535,5 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/cglm/sponsor/9/website" target="_blank"><img src="https://opencollective.com/cglm/sponsor/9/avatar.svg"></a>
 
 ## License
+
 MIT. check the LICENSE file

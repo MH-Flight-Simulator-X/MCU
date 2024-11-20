@@ -45,7 +45,7 @@ void print_matrix(mat4 matrix)
  * @param roll Rotation around Z-axis in degrees
  * @param result Output parameter for the combined rotation matrix
  *********************************************************************************************/
-static void generate_rotation_matrix(double pitch, double yaw, double roll, mat4 result)
+static void generate_rotation_matrix(float pitch, float yaw, float roll, mat4 result)
 {
   mat4 pitch_matrix, yaw_matrix, roll_matrix;
 

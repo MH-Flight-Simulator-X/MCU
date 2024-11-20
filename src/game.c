@@ -25,7 +25,7 @@
 #include "debug.h"
 #include "display.h"
 #include "transformation.h"
-#include "spi.h"
+
 
 int iteration = 0;
 Aircraft aircraft;              // The player's aircraft

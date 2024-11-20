@@ -7,9 +7,9 @@
 
 typedef struct
 {
-  double pitch;
-  double roll;
-  double throttle;
+  float pitch;
+  float roll;
+  float throttle;
   int fire;
   int led;
 } Controller;
