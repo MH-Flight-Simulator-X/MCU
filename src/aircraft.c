@@ -16,7 +16,7 @@ void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
   // Adding pitch and roll from joystick to aircraft
   aircraft->roll += controller->roll * 1.5f;
   float pitch = controller->pitch * 0.7f;
-  aircraft->pitch += pitch;
+  aircraft->pitch -= pitch;
 
   // Normalizes angles to be between 0° and 360°
   aircraft->roll = normalize_angle(aircraft->roll);
@@ -27,6 +27,8 @@ void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
   float gravity_effect = GRAVITY * (1 - lift);
 
   float vert_pitch = aircraft->pitch * cos_deg(aircraft->roll);
+  debug_print_float(vert_pitch);
+  debug_printf("\n");
   float hori_pitch = aircraft->pitch * sin_deg(aircraft->roll);
 
   // Computes target speed based on aircrafts pitch and throttle

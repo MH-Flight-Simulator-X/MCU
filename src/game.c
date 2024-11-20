@@ -1,3 +1,4 @@
+#include <fpga.h>
 #include "../include/cglm/cglm.h"
 #include <string.h>
 #include <stdio.h>
@@ -10,8 +11,6 @@
 #include "display.h"
 #include "transformation.h"
 #include "spi.h"
-#include "fpga_spi.h"
-#include "fpga.h"
 
 int iteration = 0;
 Aircraft aircraft;              // The player's aircraft
@@ -31,13 +30,11 @@ void game_init()
 
   // GENERATE ENEMY AIRCRAFT
   ai_aircraft = (AiAircraft *)malloc(num_aircraft * sizeof(AiAircraft));
-  ai_aircraft_create(ai_aircraft, original_aircraft, num_aircraft);
+  ai_aircraft_copy(ai_aircraft, original_aircraft, num_aircraft);
   ai_aircraft_init(ai_aircraft, num_aircraft);
 
   // ALLOCATE MATRIX ENTRIES
   matrix_entries = (MvpMatrixEntry *)malloc((num_aircraft + 1) * sizeof(MvpMatrixEntry));
-
-  display_set_string("WAITING TO START MICROHARD FLIGHT SIMULATOR ");
 }
 
 void game_process_action(uint32_t frame_counter, uint32_t *game_active)
@@ -82,7 +79,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
     display_print_string();
   }
   /// TOGGLE DISPLAY NUMBER ///
-  if (frame_counter % 120 == 0)
+  if (frame_counter % 180 == 0)
   {
     display_toggle_display();
     /// CHECK IF GAME IS OVER ///
@@ -94,22 +91,22 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
   }
 }
 
-  void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
-  {
+void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
+{
 
-    if (frame_counter % 20 == 0)
-    {
-      display_print_and_rotate_string();
-      controller_led_turn_on();
-    }
-    if ((frame_counter + 5) % 60 == 0)
-    {
-      controller_led_turn_off();
-    }
-    button_read(&controller);
-    if (controller.fire)
-    {
-      controller_led_turn_on();
-      *game_active = 1;
-    }
+  if (frame_counter % 20 == 0)
+  {
+    display_print_and_rotate_string();
+    controller_led_turn_on();
   }
+  if ((frame_counter + 5) % 60 == 0)
+  {
+    controller_led_turn_off();
+  }
+  button_read(&controller);
+  if (controller.fire)
+  {
+    controller_led_turn_on();
+    *game_active = 1;
+  }
+}

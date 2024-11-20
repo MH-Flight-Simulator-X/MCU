@@ -2,7 +2,7 @@
 #include "ai_aircraft.h"
 #include "aircraft.h"
 
-void ai_aircraft_create(AiAircraft *dest, const AiAircraft *src, int count)
+void ai_aircraft_copy(AiAircraft *dest, const AiAircraft *src, int count)
 {
   for (int i = 0; i < count; i++)
   {
