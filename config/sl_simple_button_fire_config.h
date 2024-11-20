@@ -1,6 +1,6 @@
 /***************************************************************************//**
  * @file
- * @brief Simple Button Driver Instances
+ * @brief Simple Button Driver User Config
  *******************************************************************************
  * # License
  * <b>Copyright 2019 Silicon Laboratories Inc. www.silabs.com</b>
@@ -28,21 +28,34 @@
  *
  ******************************************************************************/
 
-#ifndef SL_SIMPLE_BUTTON_INSTANCES_H
-#define SL_SIMPLE_BUTTON_INSTANCES_H
+#ifndef SL_SIMPLE_BUTTON_FIRE_CONFIG_H
+#define SL_SIMPLE_BUTTON_FIRE_CONFIG_H
 
+#include "em_gpio.h"
 #include "sl_simple_button.h"
 
-extern const sl_button_t sl_button_btn0;
-extern const sl_button_t sl_button_btn1;
-extern const sl_button_t sl_button_fire;
+// <<< Use Configuration Wizard in Context Menu >>>
 
-extern const sl_button_t *sl_simple_button_array[];
+// <o SL_SIMPLE_BUTTON_FIRE_MODE>
+// <SL_SIMPLE_BUTTON_MODE_INTERRUPT=> Interrupt
+// <SL_SIMPLE_BUTTON_MODE_POLL_AND_DEBOUNCE=> Poll and Debounce
+// <SL_SIMPLE_BUTTON_MODE_POLL=> Poll
+// <i> Default: SL_SIMPLE_BUTTON_MODE_INTERRUPT
+#define SL_SIMPLE_BUTTON_FIRE_MODE       SL_SIMPLE_BUTTON_MODE_POLL
+// <<< end of configuration section >>>
 
-#define SL_SIMPLE_BUTTON_COUNT 3
-#define SL_SIMPLE_BUTTON_INSTANCE(n) (sl_simple_button_array[n])
+// <<< sl:start pin_tool >>>
 
-void sl_simple_button_init_instances(void);
-void sl_simple_button_poll_instances(void);
+// <gpio> SL_SIMPLE_BUTTON_FIRE
+// $[GPIO_SL_SIMPLE_BUTTON_FIRE]
+#ifndef SL_SIMPLE_BUTTON_FIRE_PORT              
+#define SL_SIMPLE_BUTTON_FIRE_PORT               gpioPortD
+#endif
+#ifndef SL_SIMPLE_BUTTON_FIRE_PIN               
+#define SL_SIMPLE_BUTTON_FIRE_PIN                3
+#endif
+// [GPIO_SL_SIMPLE_BUTTON_FIRE]$
 
-#endif // SL_SIMPLE_BUTTON_INSTANCES_H
+// <<< sl:end pin_tool >>>
+
+#endif // SL_SIMPLE_BUTTON_FIRE_CONFIG_H

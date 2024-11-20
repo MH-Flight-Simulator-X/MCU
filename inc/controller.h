@@ -21,8 +21,8 @@ void controller_init(Controller *controller);
 void controller_get_inputs(Controller *controller, uint32_t frame_counter);
 void controller_convert_voltage(volatile uint32_t *adcValues, Controller *controller);
 void controller_fire_active();
-void controller_led_turn_on();
 void controller_led_turn_off();
+void controller_led_turn_on();
 
 void button_init();
 void button_read(Controller *controller);

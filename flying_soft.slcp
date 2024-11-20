@@ -35,7 +35,7 @@ component:
 - {id: iostream_retarget_stdio}
 - {id: iostream_stdlib_config}
 - {id: iostream_vuart}
-- instance: [btn0, btn1]
+- instance: [btn0, btn1, fire]
   id: simple_button
 - instance: [led0, led1]
   id: simple_led

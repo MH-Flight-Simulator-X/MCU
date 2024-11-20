@@ -31,6 +31,7 @@
 #include "sl_simple_button.h"
 #include "sl_simple_button_btn0_config.h"
 #include "sl_simple_button_btn1_config.h"
+#include "sl_simple_button_fire_config.h"
 
 sl_simple_button_context_t simple_btn0_context = {
   .state = 0,
@@ -64,23 +65,42 @@ const sl_button_t sl_button_btn1 = {
   .enable = sl_simple_button_enable,
   .disable = sl_simple_button_disable,
 };
+sl_simple_button_context_t simple_fire_context = {
+  .state = 0,
+  .history = 0,
+  .port = SL_SIMPLE_BUTTON_FIRE_PORT,
+  .pin = SL_SIMPLE_BUTTON_FIRE_PIN,
+  .mode = SL_SIMPLE_BUTTON_FIRE_MODE,
+};
+
+const sl_button_t sl_button_fire = {
+  .context = &simple_fire_context,
+  .init = sl_simple_button_init,
+  .get_state = sl_simple_button_get_state,
+  .poll = sl_simple_button_poll_step,
+  .enable = sl_simple_button_enable,
+  .disable = sl_simple_button_disable,
+};
 
 // the table of buttons and button count are generated as a
 // convenience for the application
 const sl_button_t *sl_simple_button_array[] = {
   &sl_button_btn0, 
-  &sl_button_btn1
+  &sl_button_btn1, 
+  &sl_button_fire
 };
-const uint8_t simple_button_count = 2;
+const uint8_t simple_button_count = 3;
 
 void sl_simple_button_init_instances(void)
 {
   sl_button_init(&sl_button_btn0);
   sl_button_init(&sl_button_btn1);
+  sl_button_init(&sl_button_fire);
 }
 
 void sl_simple_button_poll_instances(void)
 {
   sl_button_poll_step(&sl_button_btn0);
   sl_button_poll_step(&sl_button_btn1);
+  sl_button_poll_step(&sl_button_fire);
 }

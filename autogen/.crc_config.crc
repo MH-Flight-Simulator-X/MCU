@@ -12,6 +12,7 @@ sl_memory_config.h=-995392215
 sl_simple_button_btn0_config.h=-1240424636
 sl_simple_button_btn1_config.h=-430585168
 sl_simple_button_config.h=-1269689451
+sl_simple_button_fire_config.h=223306914
 sl_simple_led_led0_config.h=261672838
 sl_simple_led_led1_config.h=809145489
 sl_sleeptimer_config.h=847044378
