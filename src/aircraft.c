@@ -120,15 +120,29 @@ void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircraft)
   }
 }
 
-void check_collision(Aircraft *aircraft, AiAircraft *ai)
+void aircraft_check_collision(Aircraft *a, AiAircraft *opp, int num_aircraft)
 {
-  float dx = aircraft->x - ai->x;
-  float dy = aircraft->y - ai->y;
-  float dz = aircraft->z - ai->z;
 
-  // Calculate distance squared (avoiding square root for performance)
-  float distance_squared = dx * dx + dy * dy + dz * dz;
+  for (int i = 0; i < num_aircraft; i++)
+  {
+    AiAircraft ai = opp[i];
 
-  // Compare with radius squared (5*5 = 25)
-  distance_squared <= 25.0f;
+    if (ai.status == 1 || ai.status == 2) // Sprite already hit or dead
+    {
+      continue;
+    }
+
+    float dx = a->x - ai.x;
+    float dy = a->y - ai.y;
+    float dz = a->z - ai.z;
+
+    // Calculate distance squared (avoiding square root for performance)
+    float distance_squared = dx * dx + dy * dy + dz * dz;
+
+    // Compare with radius squared (5*5 = 25)
+    if (distance_squared <= 25.0f)
+    {
+      ai.status = 1;
+    }
+  }
 }

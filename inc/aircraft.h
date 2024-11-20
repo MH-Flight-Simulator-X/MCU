@@ -49,7 +49,7 @@ typedef struct
 
 void aircraft_init(Aircraft *plane);
 void aircraft_check_hit(Aircraft *a, AiAircraft *opp, int num_aircrafts);
-void check_collision(Aircraft *aircraft, AiAircraft *ai);
+void aircraft_check_collision(Aircraft *a, AiAircraft *opp, int num_aircraft);
 void aircraft_update_pose(Aircraft *plane, Controller *controller);
 
 #endif // PLANE_H
