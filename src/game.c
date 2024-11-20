@@ -17,6 +17,8 @@ Aircraft aircraft;              // The player's aircraft
 Controller controller;          // The controller
 AiAircraft *ai_aircraft;        // The "enemy" aircraft
 MvpMatrixEntry *matrix_entries; // The MVP matrices for all aircraft
+Sprite camera_queue[CAMERA_LAG];
+int current_camera_index = 0;
 
 void game_init()
 {
@@ -35,6 +37,12 @@ void game_init()
 
   // ALLOCATE MATRIX ENTRIES
   matrix_entries = (MvpMatrixEntry *)malloc((num_aircraft + 1) * sizeof(MvpMatrixEntry));
+
+  // Initialize camera queue
+  for (int i = 0; i < CAMERA_LAG; i++)
+  {
+    memset(&camera_queue[i], 0, sizeof(Sprite));
+  }
 }
 
 void game_process_action(uint32_t frame_counter, uint32_t *game_active)
@@ -57,9 +65,26 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
 
   ai_aircraft_update_pose(ai_aircraft, num_aircraft, frame_counter); // Update pose of remaining ai aircraft
 
+  /// CAMERA QUEUE LOGIC ///
+  // Add current camera state to the queue
+  current_camera_index = (current_camera_index + 1) % CAMERA_LAG;
+  Sprite camera = {
+      .x = aircraft.x,
+      .y = aircraft.y,
+      .z = aircraft.z,
+      .roll = aircraft.roll,
+      .pitch = aircraft.pitch,
+      .yaw = aircraft.yaw,
+  };
+  camera_queue[current_camera_index] = camera;
+
+  // Retrieve the lagged camera state
+  int lagged_index = (current_camera_index + 1) % CAMERA_LAG;
+  Sprite lagged_camera = camera_queue[lagged_index];
+
   /// GENERATE MATRICES FOR PLAYER AND AI AIRCRAFT ///
   matrix_entries[0].flag_id = 0x0; // 66 // 00000000
-  generate_mvp_matrix((Sprite *)&aircraft, &aircraft, matrix_entries[0].mvp_matrix);
+  generate_mvp_matrix((Sprite *)&aircraft, &lagged_camera, matrix_entries[0].mvp_matrix);
 
   uint8_t num_alive = 0;
   for (int i = 0; i < num_aircraft; i++)
@@ -69,7 +94,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
       continue;
     uint8_t id = ai_aircraft[i].id;
     matrix_entries[num_alive + 1].flag_id = flag | id;
-    generate_mvp_matrix((Sprite *)&ai_aircraft[i], &aircraft, matrix_entries[num_alive + 1].mvp_matrix);
+    generate_mvp_matrix((Sprite *)&ai_aircraft[i], &lagged_camera, matrix_entries[num_alive + 1].mvp_matrix);
     num_alive++;
   }
 
@@ -94,6 +119,7 @@ void game_process_action(uint32_t frame_counter, uint32_t *game_active)
     }
   }
 }
+
 
 void game_process_wait(uint32_t frame_counter, uint32_t *game_active)
 {

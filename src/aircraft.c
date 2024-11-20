@@ -7,7 +7,7 @@
 void aircraft_init(Aircraft *aircraft)
 {
   aircraft->x = aircraft->y = aircraft->z = 0.0f;
-  aircraft->roll = aircraft->pitch = 0.0f;
+  aircraft->roll = aircraft->pitch = aircraft->yaw = 0.0f;
   aircraft->speed = BASE_SPEED;
 }
 
@@ -27,8 +27,6 @@ void aircraft_update_pose(Aircraft *aircraft, Controller *controller)
   float gravity_effect = GRAVITY * (1 - lift);
 
   float vert_pitch = aircraft->pitch * cos_deg(aircraft->roll);
-  debug_print_float(vert_pitch);
-  debug_printf("\n");
   float hori_pitch = aircraft->pitch * sin_deg(aircraft->roll);
 
   // Computes target speed based on aircrafts pitch and throttle

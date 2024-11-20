@@ -19,20 +19,24 @@ void print_matrix(mat4 matrix)
   debug_printf("\n");
 }
 
-// Generate a combined rotation matrix from pitch and roll
-static void generate_rotation_matrix(double pitch, double roll, mat4 result)
+// Generate a combined rotation matrix from pitch, yaw and roll
+static void generate_rotation_matrix(double pitch, double yaw, double roll, mat4 result)
 {
-  mat4 pitch_matrix, roll_matrix;
+  mat4 pitch_matrix, yaw_matrix, roll_matrix;
 
   vec3 pitch_axis = {1, 0, 0}; // Pitch rotates around X-axis
+  vec3 yaw_axis = {0, 1, 0};   // Yaw rotates around Y-axis
   vec3 roll_axis = {0, 0, 1};  // Roll rotates around Z-axis
 
   glm_rotate_make(pitch_matrix, glm_rad(pitch), pitch_axis);
 
+  glm_rotate_make(yaw_matrix, glm_rad(yaw), yaw_axis);
+
   glm_rotate_make(roll_matrix, glm_rad(roll), roll_axis);
 
   // Combine roll and pitch
-  glm_mat4_mul(roll_matrix, pitch_matrix, result);
+  glm_mat4_mul(yaw_matrix, roll_matrix, result);
+  glm_mat4_mul(result, pitch_matrix, result);
 }
 
 // Generate the Model-View-Projection (MVP) matrix
@@ -54,7 +58,7 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   // Generate the model matrix: translation * rotation
   mat4 sprite_rotation_matrix;
-  generate_rotation_matrix(sprite->pitch, sprite->roll, sprite_rotation_matrix);
+  generate_rotation_matrix(sprite->pitch, sprite->yaw, sprite->roll, sprite_rotation_matrix);
 
   mat4 model_matrix;
   glm_mat4_mul(sprite_translation_matrix, sprite_rotation_matrix, model_matrix);
@@ -66,7 +70,7 @@ void generate_mvp_matrix(Sprite *sprite, Aircraft *aircraft, mat4 result)
 
   // Generate the camera's local transformation
   mat4 camera_rotation_matrix;
-  generate_rotation_matrix(aircraft->pitch, aircraft->roll, camera_rotation_matrix);
+  generate_rotation_matrix(aircraft->pitch, aircraft->yaw, aircraft->roll, camera_rotation_matrix);
 
   // Combine the fixed tilt with the camera's rotation
   glm_mat4_mul(camera_rotation_matrix, camera_tilt_matrix, camera_rotation_matrix);
